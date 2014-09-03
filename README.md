@@ -7,7 +7,7 @@ Team Composition:
 
 1. Raymond Clark (raymondwclark)
 2. Angel Lee (alee2011)
-3. David Zoellner (…)
+3. David Zoellner (davidzallen)
 4. David Califf (…)
 5. Manny Momot (…)
 
