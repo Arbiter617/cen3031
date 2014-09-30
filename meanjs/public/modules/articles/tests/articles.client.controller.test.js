@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 (function() {
 	// Articles Controller Spec
 	describe('ArticlesController', function() {
@@ -167,4 +167,4 @@
 			expect(scope.articles.length).toBe(0);
 		}));
 	});
-}());
+}());*/

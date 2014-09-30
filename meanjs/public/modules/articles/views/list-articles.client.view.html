@@ -1,4 +1,4 @@
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
+<section data-ng-controller="CoursesController" data-ng-init="find()">
 	<div class="page-header">
 		<h1>Courses:</h1>
 	</div>
@@ -17,5 +17,5 @@
 	<!--<li ui-route="/signup" ng-class="{active: $uiRoute}">
 				<a href="/#!/signup">Sign Up</a>
 			</li>-->
-	<button type="button" class="btn btn-large btn-primary" ui-route="/articles/create">Add new course</button>
+	<button type="button" class="btn btn-large btn-primary" ng-click="create()">Add new course</button>
 </section>
