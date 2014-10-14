@@ -1,0 +1,158 @@
+<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="find()">
+	<div class = "page-header">
+		<h1 class="text-center">Computer Engineering Program
+Course Committee Outcomes Assessment Evaluation Form</h1>	
+
+	</div>
+
+	<form class="form-horizontal" role="form">
+		<div class="form-group">
+			<label for="courseNumberAndTitle" class="col-sm-2.5 control-label">
+				Course Number and Title:{{course.courseID}}
+			</label>
+		</div>
+
+		 <div class="form-group">
+    		<label for="termAndYear" class="col-sm-2.5 control-label">Term and Year:</label>    		
+  		</div>		
+
+		<div class="form-group">
+			<div data-ng-show="authentication.user">
+			<label for="instructor" class="col-sm-2.5 control-label">
+				Instructor: 
+			</label>
+			<span data-ng-bind="authentication.user.displayName"></span>
+		</div>
+		</div>
+
+		<div class="form-group">
+			<label for="courseCommittee" class="col-sm-2.5 control-label">
+				Course Committee Participants:
+			</label>
+		</div>
+
+		<div class="form-group">
+			<label for="date" class="col-sm-2.5 control-label">
+				Date:
+			</label>
+		</div>
+
+		<div class="text-left">
+		<div>
+			<h3>I. Course Issues</h3>
+			<p class="radio-inline">Syllabus: Does the syllabus reflect current content?</p>
+
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Are there topics that should be dropped from the course?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="no"> NO
+			</label>
+		</div>
+		<div>
+
+			<p class="radio-inline">Are there topics that should be added to the course?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOption3" id="inlineRadio5" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOption3" id="inlineRadio6" value="no"> NO
+			</label>
+		</div>
+		<div>
+
+			<p class="radio-inline">Is the textbook working well?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions4" id="inlineRadio7" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions4" id="inlineRadio8" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Should changes be considered for the next academic</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions5" id="inlineRadio9" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions5" id="inlineRadio10" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Are there new books available that should be evaluated?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions6" id="inlineRadio11" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions6" id="inlineRadio12" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Does the book map well onto the syllabus?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions7" id="inlineRadio13" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions7" id="inlineRadio14" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Do other assessments (performance/exit surveys,student feedback) indicate issues that need to be addressed?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions8" id="inlineRadio15" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions8" id="inlineRadio16" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Student Performance: Did students master the material?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions9" id="inlineRadio17" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions9" id="inlineRadio18" value="no"> NO
+			</label>
+		</div>
+		<div>
+			<p class="radio-inline">Are there problems in the their knowledge of key concepts?</p>
+				<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions10" id="inlineRadio19" value="yes"> YES
+			</label>
+			<label class="radio-inline">
+  				<input type="radio" name="inlineRadioOptions10" id="inlineRadio20" value="no"> NO
+			</label>
+		</div>
+
+
+	<div>
+		<h5>ACTIONS/RECOMMENDATIONS:</h5>
+		<textarea class="form-control" rows="3"></textarea>
+	</div>
+
+
+
+		</div>
+
+		<div class="text-left">
+			<h3>II. Program Issues</h3>
+		</div>
+
+			<div class = "text-center">
+      			<button type="submit" class="btn btn-default">Submit</button>
+      		</div>
+   			
+		
+
+	</form>
+
+</section>

@@ -9,6 +9,10 @@ angular.module('courses').config(['$stateProvider',
 			url: '/list-courses',
 			templateUrl: 'modules/courses/views/list-courses.client.view.html'
 		}).
+		state('evalForm', {
+			url: '/outcomes-eval-form',
+			templateUrl: 'modules/courses/views/outcomes-eval-form.client.view.html'
+		}).
 		state('manageCourses', {
 			url: '/manage-courses',
 			templateUrl: 'modules/courses/views/manage-courses.client.view.html'

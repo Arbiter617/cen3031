@@ -4,6 +4,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 	function($scope, $stateParams, $location, Authentication, Courses) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
+		$scope.courseIndex = 0;
+
+		$scope.getCourseIndex = function(index) {
+			$scope.courseIndex = index;
+		};
 
 		$scope.create = function() {
 			var course = new Courses({
@@ -21,10 +26,21 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 			$scope.toggleCourseModal();
 		};
 
+
+		$scope.toggleShowDiv = function() {
+			$scope.clicked = !$scope.clicked;
+		};
+
 		$scope.edit = function(course) {
 			$scope.submitModal = $scope.update;
 			$scope.course = course;
 			$scope.toggleCourseModal();
+		};
+
+		$scope.displayOutcomes = function(index) {
+			$scope.index = index;
+			$scope.toggleCourseModal();
+		
 		};
 
 		$scope.new = function() {
