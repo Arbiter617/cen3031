@@ -1,14 +1,25 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Courses',
-	function($scope, $stateParams, $location, Authentication, Courses) {
+angular.module('courses').controller('CoursesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
+	function($scope, $stateParams, $location, Authentication, Courses, Users) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
 		$scope.courseIndex = 0;
+		$scope.user = new Users(Authentication.user);
 
 		$scope.getCourseIndex = function(index) {
 			$scope.courseIndex = index;
 		};
+
+		$scope.addCourse = function(course) {
+			$scope.user.courses.push(course._id);
+			$scope.user.$update(function(response) {
+				//Authentication.user = response;
+				//$location.path('articles/' + article._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		}
 
 		$scope.create = function() {
 			var course = new Courses({
@@ -16,7 +27,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 			});
 			course.$save(function(response) {
 				//reload courses
-				$scope.courses = Courses.query();
+				//$scope.courses = Courses.query();
+				course = response;
+				$scope.addCourse(course);
 
 				$scope.courseID = '';
 			}, function(errorResponse) {
@@ -26,21 +39,10 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 			$scope.toggleCourseModal();
 		};
 
-
-		$scope.toggleShowDiv = function() {
-			$scope.clicked = !$scope.clicked;
-		};
-
 		$scope.edit = function(course) {
 			$scope.submitModal = $scope.update;
 			$scope.course = course;
 			$scope.toggleCourseModal();
-		};
-
-		$scope.displayOutcomes = function(index) {
-			$scope.index = index;
-			$scope.toggleCourseModal();
-		
 		};
 
 		$scope.new = function() {
@@ -82,15 +84,15 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 			}
 		};
 
-		$scope.find = function() {
-			$scope.courses = Courses.query();
-		};
+		$scope.getUserCourses = function() {
+			$scope.userCourses = Users.query();
+		};	
 
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;
 		};
-	}
-])
+	
+}])
 
 .directive('modalDialog', function() {
   return {

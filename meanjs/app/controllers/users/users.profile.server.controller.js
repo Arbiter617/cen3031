@@ -7,7 +7,8 @@ var _ = require('lodash'),
 	errorHandler = require('../errors'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	Course = mongoose.model('Course');
 
 /**
  * Update user details
@@ -47,6 +48,23 @@ exports.update = function(req, res) {
 		});
 	}
 };
+
+exports.getCourses = function(req, res) {
+	if(!req.user) {
+		return res.status(400).send({
+			message: 'User not logged in'
+		});
+	}
+	Course.find( { _id: { $in: req.user.courses } } ).exec(function(err, courses) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(courses);
+		}
+	});
+}
 
 /**
  * Send User
