@@ -35,12 +35,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				courseName: this.courseName
 			});
 			course.$save(function(response) {
-				//reload courses
-				//$scope.courses = Courses.query();
-				course = response;
-				$scope.addCourse(course);
-
+				$scope.courses.push(response);
 				$scope.courseID = '';
+				$scope.courseName = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -74,9 +71,6 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		};
 
 		$scope.remove = function(course) {
-			$scope.removeCourse(course);
-			return;
-			/*
 			//Courses.delete({courseId:Id});
 			//$scope.courseId = course._id;
 			if (course) {
@@ -92,7 +86,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				//$scope.article.$remove(function() {
 				//	$location.path('articles');
 				//});
-			}*/
+			}
 		};
 
 		$scope.getUserCourses = function() {
@@ -101,8 +95,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
-			//$scope.userCourses = Users.query();
-		};	
+		};
+
+		$scope.getCourses = function() {
+			$scope.courses = Courses.query();
+		}
 
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;
