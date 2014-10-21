@@ -10,12 +10,12 @@ module.exports = function(app) {
 	// Article Routes
 	app.route('/courses')
 		.post(users.requiresLogin, courses.create)
-		.get(courses.list);
+		.get(users.requiresLogin, courses.list);
 
 	app.route('/courses/:courseId')
-		.get(users.requiresLogin, courses.hasAuthorization, courses.read)
-		.put(users.requiresLogin, courses.hasAuthorization, courses.update)
-		.delete(users.requiresLogin, courses.hasAuthorization, courses.remove);
+		.get(users.requiresLogin, courses.read)
+		.put(users.requiresLogin, courses.update)
+		.delete(users.requiresLogin, courses.remove);
 
 	// Finish by binding the article middleware
 	app.param('courseId', courses.courseByID);

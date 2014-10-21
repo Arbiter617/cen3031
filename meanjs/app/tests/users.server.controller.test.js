@@ -53,7 +53,7 @@ describe('User server controller Unit Tests:', function() {
 					console.log(res.status);
 					res.status.should.equal('400');
 					done();
-				})
+				});
 		});
 
 		it('should be able to save without problems', function(done) {

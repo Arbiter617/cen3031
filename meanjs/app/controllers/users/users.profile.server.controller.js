@@ -64,7 +64,45 @@ exports.getCourses = function(req, res) {
 			res.jsonp(courses);
 		}
 	});
-}
+};
+
+exports.removeCourse = function(req, res) {
+	var user = req.user;
+
+	if(user) {
+		var courseIndex = user.courses.indexOf(req.course._id);
+
+		//found element
+		if(courseIndex > -1) {
+			user.courses.splice(courseIndex, 1);
+			user.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(user);
+					/*req.login(user, function(err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.jsonp(user);
+						}
+					});*/
+				}
+			});
+		} else {
+			res.status(400).send({
+				message: 'User does not have this course'
+			});
+		}
+
+	} else {
+		res.status(400).send({
+			message: 'User is not signed in'
+		});
+	}
+};
 
 /**
  * Send User

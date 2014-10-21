@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
-	function($scope, $stateParams, $location, Authentication, Courses, Users) {
+angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
+	function($scope, $http, $stateParams, $location, Authentication, Courses, Users) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
 		$scope.courseIndex = 0;
@@ -19,11 +19,20 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-		}
+		};
+
+		$scope.removeCourse = function(course) {
+			$http.delete('users/courses/' + course._id, course).success(function(response) {
+
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
 		$scope.create = function() {
 			var course = new Courses({
-				courseID: this.courseID
+				courseID: this.courseID,
+				courseName: this.courseName
 			});
 			course.$save(function(response) {
 				//reload courses
@@ -65,7 +74,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 		};
 
 		$scope.remove = function(course) {
-
+			$scope.removeCourse(course);
+			return;
+			/*
 			//Courses.delete({courseId:Id});
 			//$scope.courseId = course._id;
 			if (course) {
@@ -81,11 +92,16 @@ angular.module('courses').controller('CoursesController', ['$scope', '$statePara
 				//$scope.article.$remove(function() {
 				//	$location.path('articles');
 				//});
-			}
+			}*/
 		};
 
 		$scope.getUserCourses = function() {
-			$scope.userCourses = Users.query();
+			$http.get('users/courses').success(function(response) {
+				$scope.userCourses = response;
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+			//$scope.userCourses = Users.query();
 		};	
 
 		$scope.toggleCourseModal = function() {

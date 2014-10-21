@@ -8,12 +8,9 @@ var mongoose = require('mongoose'),
 	Course = mongoose.model('Course'),
 	_ = require('lodash');
 
-/**
- * Create a article
- */
 exports.create = function(req, res) {
 	var course = new Course(req.body);
-	course.user = req.user;
+	console.log(course);
 
 	course.save(function(err) {
 		if (err) {
@@ -46,8 +43,6 @@ exports.remove = function(req, res) {
 
 	var course = req.course;
 
-	//console.log('\n\n' + course.Object + '\n\n');
-
 	course.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -64,7 +59,7 @@ exports.read = function(req, res) {
 };
 
 exports.list = function(req, res) {
-	Course.find().sort('-created').populate('user', 'displayName').exec(function(err, courses) {
+	Course.find().exec(function(err, courses) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -76,22 +71,10 @@ exports.list = function(req, res) {
 };
 
 exports.courseByID = function(req, res, next, id) {
-	Course.findById(id).populate('user', 'displayName').exec(function(err, course) {
+	Course.findById(id).exec(function(err, course) {
 		if (err) return next(err);
 		if (!course) return next(new Error('Failed to load course ' + id));
 		req.course = course;
 		next();
 	});
-};
-
-/**
- * Article authorization middleware
- */
-exports.hasAuthorization = function(req, res, next) {
-	if (req.course.user.id !== req.user.id) {
-		return res.status(403).send({
-			message: 'User is not authorized'
-		});
-	}
-	next();
 };

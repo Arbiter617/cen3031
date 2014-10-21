@@ -8,11 +8,13 @@ var passport = require('passport');
 module.exports = function(app) {
 	// User Routes
 	var users = require('../../app/controllers/users');
+	var courses = require('../../app/controllers/courses');
 
 	// Setting up the users profile api
 	app.route('/users/me').get(users.me);
 	app.route('/users').put(users.update);
-	app.route('/users').get(users.getCourses);
+	app.route('/users/courses').get(users.getCourses);
+	app.route('/users/courses/:courseId').delete(users.removeCourse);
 	app.route('/users/accounts').delete(users.removeOAuthProvider);  
 
 	// Setting up the users password api
@@ -55,4 +57,5 @@ module.exports = function(app) {
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);
+	app.param('courseId', courses.courseByID);
 };
