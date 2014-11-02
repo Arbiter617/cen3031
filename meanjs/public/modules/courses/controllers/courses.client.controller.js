@@ -1,48 +1,34 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
-	function($scope, $http, $stateParams, $location, Authentication, Courses, Users) {
+angular.module('courses').controller('CoursesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Courses',
+	function($scope, $stateParams, $location, Authentication, Courses) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
 		$scope.courseIndex = 0;
-		$scope.user = new Users(Authentication.user);
 
 		$scope.getCourseIndex = function(index) {
 			$scope.courseIndex = index;
 		};
 
-		$scope.addCourse = function(course) {
-			$scope.user.courses.push(course._id);
-			$scope.user.$update(function(response) {
-				//Authentication.user = response;
-				//$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.removeCourse = function(course) {
-			$http.delete('users/courses/' + course._id, course).success(function(response) {
-
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
-
 		$scope.create = function() {
 			var course = new Courses({
-				courseID: this.courseID,
-				courseName: this.courseName
+				courseID: this.courseID
 			});
 			course.$save(function(response) {
-				$scope.courses.push(response);
+				//reload courses
+				$scope.courses = Courses.query();
+
 				$scope.courseID = '';
-				$scope.courseName = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 
 			$scope.toggleCourseModal();
+		};
+
+
+		$scope.toggleShowDiv = function() {
+			$scope.clicked = !$scope.clicked;
 		};
 
 		$scope.edit = function(course) {
@@ -71,6 +57,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		};
 
 		$scope.remove = function(course) {
+
 			//Courses.delete({courseId:Id});
 			//$scope.courseId = course._id;
 			if (course) {
@@ -89,23 +76,15 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			}
 		};
 
-		$scope.getUserCourses = function() {
-			$http.get('users/courses').success(function(response) {
-				$scope.userCourses = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
-
-		$scope.getCourses = function() {
+		$scope.find = function() {
 			$scope.courses = Courses.query();
-		}
+		};
 
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;
 		};
-	
-}])
+	}
+])
 
 .directive('modalDialog', function() {
   return {

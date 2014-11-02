@@ -5,7 +5,6 @@
 	describe('CoursesController', function() {
 		// Initialize global variables
 		var CoursesController,
-			Authentication,
 			scope,
 			$httpBackend,
 			$stateParams,
@@ -50,18 +49,6 @@
 				$scope: scope
 			});
 		}));
-
-		if('$scope.addCourse() with valid course should send a PUT to update user with new course', inject(function(Courses, Users) {
-			var sampleCoursePostData = new Courses({
-				_id: '525cf20451979dea2c000001',
-				courseID: 'cen3031'
-			});
-
-			scope.user = new Users({courses:[]});
-			$httpBackend.expectPUT(/users/).respond();
-			scope.addCourse(sampleCoursePostData);
-			
-		}))
 
 		it('$scope.create() with valid form data should send a POST request with the form input values', inject(function(Courses) {
 			// Create a sample article object
