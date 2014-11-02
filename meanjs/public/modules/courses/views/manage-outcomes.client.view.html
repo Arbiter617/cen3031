@@ -1,0 +1,104 @@
+<!--Authors: Angel Lee, Raymond Clark-->
+
+<section ng-app="courses" data-ng-controller="OutcomesController" data-ng-init="find()">
+
+	<div class="page-header text-center">
+		<h1>Program Outcomes</h1>
+	</div>
+
+	<div class="text-right">
+	<button class="btn btn-default btn-success btn-md"  data-toggle="tooltip" data-placement="bottom" title="Create New Outcome" ng-click="addOutcome()"><span class="glyphicon glyphicon-plus"></button>
+	</div>
+		<modal-dialog show='showOutcomeModal' width='40%' height='50%'>
+			<h3 class="text-center">{{information}}</h3>
+			<form name="outcomeForm" class="form-horizontal" style="padding:10%" data-ng-submit="submitModal()">
+				<fieldset>
+
+				<!--Displays modal view for inputing outcome description-->			
+				<div class="form-group" ng-class="{ 'has-error': outcomeForm.outcomeName.$dirty && outcomeForm.outcomeID.$dirty && outcomeForm.outcomeName.$invalid && outcomeForm.outcomeID.$invalid}">
+					<div class="controls">
+						<label class="control-label" for="outcomeID">Outcome ID</label>
+  					<input name="outcomeID" type="text" data-ng-model="outcomeID" id="outcomeID" class="form-control" placeholder="{{IDPlaceholder}}" required>
+  					</div>
+  					<div class="controls">
+  						<label class="control-label" for="outcomeName">Outcome Description</label>
+  					<textarea name="outcomeName" rows="4" data-ng-model="outcomeName" id="outcomeName" class="form-control" placeholder="{{namePlaceholder}}" required></textarea>
+  					</div>
+				</div>
+
+				<div class="form-group text-center">
+					<input type="submit" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+			</form>
+		</modal-dialog>
+
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="text-center col-md-1">ID</th>
+					<th class="text-center">Description</th>
+					<th class="text-center col-md-1">Options</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="outcome in outcomes">
+					<td class="text-center">{{outcome.outcomeID}}</td>
+					<td>{{outcome.outcomeName}}</td>
+					<td class="text-center"><button class="btn btn-default btn-warning btn-xs" ng-click="edit(outcome)"><span class="glyphicon glyphicon-pencil"></button>
+				<button class="btn btn-default btn-danger btn-xs" ng-click="removeOutcome(outcome)"><span class="glyphicon glyphicon-minus"></button></td>
+
+				</tr>	
+			</tbody>
+		</table>
+
+
+<!--Alternate formats that were experimented with
+
+	<div class="list-group">
+		<a data-ng-repeat="outcome in outcomes" class="list-group-item">
+			<h4 class="list-group-item-heading">Program Outcome: {{outcome.outcomeID}}</h4>
+			<p class = "list-group-item-heading">{{outcome.outcomeName}}</p>
+			<button class="btn btn-default btn-danger btn-xs" ng-click="remove(outcome)"><span class="glyphicon glyphicon-minus"></span></button>
+		</a>
+	</div> -->
+
+	<!--Another experimental format
+
+<div class="row">
+  <div class="col-sm-6 col-md-4" height="50%" data-ng-repeat="outcome in outcomes">
+    <div class="thumbnail">
+      
+      <div class="caption">
+        <h3>{{outcome.outcomeID}}</h3>
+        <p>{{outcome.outcomeName}}</p>
+        <p><a href="" class="btn btn-primary" role="button">Button</a> <a href="" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<!--another format option
+	<accordion class = "row" close-others="true">
+		<accordion-group class="col-sm-6 col-md-4" data-ng-repeat="outcome in outcomes">
+			<accordion-heading>
+			<h4>Program Outcome: ({{outcome.outcomeID}})</h4>
+			</accordion-heading>
+			<accordion-inner>
+			<div>
+				{{outcome.outcomeName}}
+			</div>
+				<button class="btn btn-default btn-warning btn-xs" ng-click="edit(outcome)">Edit</button>
+				<button class="btn btn-default btn-danger btn-xs" ng-click="removeOutcome(outcome)">Remove</button>
+			</accordion-inner>
+		</accordion-group>
+	</accordion> -->
+
+
+</section>
