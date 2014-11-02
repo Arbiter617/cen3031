@@ -1,15 +1,9 @@
-<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="find()">
+<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="getUserCourses()">
 	<div class="page-header">
 		<h1>Courses:</h1>
 	</div>
 	<div class="list-group">
-		<a data-ng-repeat="course in courses" data-ng-href="" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="course.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="course.user.displayName"></span>
-			</small>
+		<a data-ng-repeat="course in userCourses" data-ng-href="#!/courses/{{course._id}}" class="list-group-item">
 			<h4 class="list-group-item-heading" data-ng-bind="course.courseID"></h4>
 			<h5 class = "list-group-item-heading" data-ng-bind = "course.courseName"></h5>
 			<button type="button" class="btn btn-large btn-primary" ng-click="edit(course)">Edit</button>
@@ -18,13 +12,17 @@
 	</div>
 	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
 	<modal-dialog show='showCourseModal' width='400px' height='60%'>
-      <h1>Add New Course</h1>
-      <form name="courseForm" class="form-horizontal" data-ng-submit="submitModal()">
+      <h1 class="text-center">Add New Course</h1>
+      <form name="courseForm" class="form-horizontal" style="padding:5%" data-ng-submit="submitModal()">
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
 					<label class="control-label" for="courseID">Course ID</label>
 					<div class="controls">
 						<input name="courseID" type="text" data-ng-model="courseID" id="courseID" class="form-control" placeholder="{{course.courseID}}" required>
+					</div>
+					<label class="control-label" for="courseID">Course Name</label>
+					<div class="controls">
+						<input name="courseName" type="text" data-ng-model="courseName" id="courseName" class="form-control" placeholder="{{course.courseName}}" required>
 					</div>
 				</div>
 				<div class="form-group">
