@@ -16,6 +16,10 @@ angular.module('courses').config(['$stateProvider',
 		state('manageCourses', {
 			url: '/manage-courses',
 			templateUrl: 'modules/courses/views/manage-courses.client.view.html'
+		}).
+		state('adminManageCourses', {
+			url: '/admin-manage-courses',
+			templateUrl: 'modules/courses/views/admin-manage-courses.client.view.html'
 		});
 	}
 ]);
