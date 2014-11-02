@@ -51,7 +51,7 @@
 			});
 		}));
 
-		if('$scope.addCourse() with valid course should send a PUT to update user with new course', inject(function(Courses, Users) {
+		it('$scope.addCourse() with valid course should send a PUT to update user with new course', inject(function(Courses, Users) {
 			var sampleCoursePostData = new Courses({
 				_id: '525cf20451979dea2c000001',
 				courseID: 'cen3031'

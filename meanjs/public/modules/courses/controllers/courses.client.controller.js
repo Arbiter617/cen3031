@@ -1,34 +1,48 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
-	function($scope, $http, $stateParams, $location, Authentication, Courses, Users) {
+angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', '$q', 'Authentication', 'Courses', 'Users',
+	function($scope, $http, $stateParams, $location, $q, Authentication, Courses, Users) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
-		$scope.courseIndex = 0;
 		$scope.user = new Users(Authentication.user);
+		$scope.userCourseOptions = [];
 
-		$scope.getCourseIndex = function(index) {
-			$scope.courseIndex = index;
-		};
-
+		//add course to user's courses list
 		$scope.addCourse = function(course) {
 			$scope.user.courses.push(course._id);
 			$scope.user.$update(function(response) {
-				//Authentication.user = response;
-				//$location.path('articles/' + article._id);
+				Authentication.user = response;
+				$scope.userCourses.push(course);
+				$scope.userCourse = '';
+				$scope.toggleCourseModal();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
+		//remove course from user's courses list
 		$scope.removeCourse = function(course) {
 			$http.delete('users/courses/' + course._id, course).success(function(response) {
-
+				Authentication.user = response;
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
 		};
 
+		//open edit course modal
+		$scope.edit = function(course) {
+			$scope.submitModal = $scope.update;
+			$scope.course = course;
+			$scope.toggleCourseModal();
+		};
+
+		//open create course modal
+		$scope.new = function() {
+			$scope.submitModal = $scope.create;
+			$scope.toggleCourseModal();
+		};
+
+		//create new course in db
 		$scope.create = function() {
 			var course = new Courses({
 				courseID: this.courseID,
@@ -45,20 +59,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			$scope.toggleCourseModal();
 		};
 
-		$scope.edit = function(course) {
-			$scope.submitModal = $scope.update;
-			$scope.course = course;
-			$scope.toggleCourseModal();
-		};
-
-		$scope.new = function() {
-			$scope.submitModal = $scope.create;
-			$scope.toggleCourseModal();
-		};
-
+		//update existing course in db
 		$scope.update = function() {
 			var course = $scope.course;
 			course.courseID = this.courseID;
+			course.courseName = this.courseName;
 
 			course.$update(function() {
 				//$location.path('articles/' + article._id);
@@ -70,36 +75,49 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			$scope.toggleCourseModal();
 		};
 
+		//remove existing course from db
 		$scope.remove = function(course) {
-			//Courses.delete({courseId:Id});
-			//$scope.courseId = course._id;
-			if (course) {
-				course.$delete();
+			course.$delete();
 
-				for (var i in $scope.courses) {
-					if ($scope.courses[i] === course) {
-						$scope.courses.splice(i, 1);
-					}
+			for (var i in $scope.courses) {
+				if ($scope.courses[i] === course) {
+					$scope.courses.splice(i, 1);
 				}
-			} else {
-				console.log('\n\n\n\n remove null course why \n\n\n\n');
-				//$scope.article.$remove(function() {
-				//	$location.path('articles');
-				//});
 			}
 		};
 
+		//populate $scope.userCourses
 		$scope.getUserCourses = function() {
-			$http.get('users/courses').success(function(response) {
-				$scope.userCourses = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
+			var d = $q.defer();
+			 	$http.get('users/courses').success(function(response) {
+						$scope.userCourses = response;
+					}).error(function(response) {
+						$scope.error = response.message;
+					});
+					return d.promise;
 		};
 
+		//populate $scope.courses
 		$scope.getCourses = function() {
-			$scope.courses = Courses.query();
-		}
+			var d = $q.defer();
+				$scope.courses = Courses.query();
+				return d.promise;
+		};
+
+		//init data needed for user manage-courses
+		$scope.initUserManageCourses = function() {
+			$q.all([
+				$scope.getCourses(),
+				$scope.getUserCourses()
+			]).then(function(data) {
+				//courses that user does not have yet
+				for(var i = 0; i < $scope.courses.length; i++) {
+					if(userCourses.indexOf(courses[i]) == -1) {
+						$scope.userCourseOptions.push(courses[i]);
+					}
+				}
+			});
+		};
 
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;

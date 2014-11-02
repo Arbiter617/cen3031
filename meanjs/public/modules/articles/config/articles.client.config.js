@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 // Configuring the Articles module
 angular.module('articles').run(['Menus',
 	function(Menus) {
@@ -8,4 +8,4 @@ angular.module('articles').run(['Menus',
 		Menus.addMenuItem('topbar', 'Manage Outcomes', 'manage-outcomes', '/manage-outcomes');
 		Menus.addMenuItem('topbar', 'Mangage Courses (Admin)', 'manage-courses-admin', '/manage-courses-admin');
 	}
-]);
+]);*/

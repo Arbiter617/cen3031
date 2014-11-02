@@ -29,6 +29,8 @@ exports.update = function(req, res) {
 
 		user.save(function(err) {
 			if (err) {
+				console.log('Error saving');
+				console.log(user);
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
@@ -77,6 +79,7 @@ exports.removeCourse = function(req, res) {
 			user.courses.splice(courseIndex, 1);
 			user.save(function(err) {
 				if (err) {
+					console.log('Error saving');
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
@@ -92,12 +95,14 @@ exports.removeCourse = function(req, res) {
 				}
 			});
 		} else {
+			console.log('User does not have this course');
 			res.status(400).send({
 				message: 'User does not have this course'
 			});
 		}
 
 	} else {
+		console.log('User is not signed in');
 		res.status(400).send({
 			message: 'User is not signed in'
 		});
