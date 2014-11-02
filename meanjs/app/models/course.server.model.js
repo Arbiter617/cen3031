@@ -16,16 +16,10 @@ var CourseSchema = new Schema({
 		trim: true,
 		required: 'Must have course ID'
 	},
-	courseName: {
-		type: String,
-		default: '',
-		trim: true,
-		required: 'Must have course Name'
-	},
-	outcomes: [{
+	user: {
 		type: Schema.ObjectId,
-		ref: 'Outcome'
-	}]
+		ref: 'User'
+	}
 });
 
 mongoose.model('Course', CourseSchema);

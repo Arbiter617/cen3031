@@ -1,3 +1,5 @@
+/* Authors: Angel Lee, Raymond Clark */
+
 'use strict';
 
 /**
@@ -5,90 +7,90 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
-	Course = mongoose.model('Course'),
+	Outcome = mongoose.model('Outcome'),
 	_ = require('lodash');
 
 /**
- * Create a article
+ * Create an outcome
  */
 exports.create = function(req, res) {
-	var course = new Course(req.body);
-	course.user = req.user;
+	var outcome = new Outcome(req.body);
+	outcome.user = req.user;
 
-	course.save(function(err) {
+	outcome.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(course);
+			res.jsonp(outcome);
 		}
 	});
 };
 
-exports.update = function(req, res) {
-	var course = req.course;
-	console.log(req.body);
-	course = _.extend(course, req.body);
+exports.read = function(req, res) {
+	res.jsonp(req.outcome);
+};
 
-	course.save(function(err) {
+exports.update = function(req, res) {
+	var outcome = req.outcome;
+	console.log(req.body);
+	outcome = _.extend(outcome, req.body);
+
+	outcome.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(course);
+			res.jsonp(outcome);
 		}
 	});
 };
 
 exports.remove = function(req, res) {
 
-	var course = req.course;
+	var outcome = req.outcome;
 
-	//console.log('\n\n' + course.Object + '\n\n');
 
-	course.remove(function(err) {
+	outcome.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(course);
+			res.jsonp(outcome);
 		}
 	});
 };
 
-exports.read = function(req, res) {
-	res.jsonp(req.course);
-};
 
 exports.list = function(req, res) {
-	Course.find().sort('-created').populate('user', 'displayName').exec(function(err, courses) {
+	Outcome.find().sort('-created').populate('user', 'displayName').exec(function(err, outcomes) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(courses);
+			res.jsonp(outcomes);
 		}
 	});
 };
 
-exports.courseByID = function(req, res, next, id) {
-	Course.findById(id).populate('user', 'displayName').exec(function(err, course) {
+exports.outcomeByID = function(req, res, next, id) {
+	Outcome.findById(id).populate('user', 'displayName').exec(function(err, outcome) {
 		if (err) return next(err);
-		if (!course) return next(new Error('Failed to load course ' + id));
-		req.course = course;
+		if (!outcome) return next(new Error('Failed to load outcome ' + id));
+		req.outcome = outcome;
 		next();
 	});
 };
 
 /**
- * Article authorization middleware
+ * Outcome authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.course.user.id !== req.user.id) {
+	if (req.outcome.user.id !== req.user.id) {
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});
