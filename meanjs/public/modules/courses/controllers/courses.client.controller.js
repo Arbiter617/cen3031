@@ -34,6 +34,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.edit = function(course) {
 			$scope.submitModal = $scope.update;
 			$scope.course = course;
+			$scope.courseID = course.courseID;
+			$scope.courseName = course.courseName;
+			//$scope.selectedOutcomes = course.outcomes;
 			$scope.toggleCourseModal();
 		};
 
@@ -57,9 +60,6 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			});
 			course.$save(function(response) {
 				$scope.initAdminManageCourses();
-				$scope.courseID = '';
-				$scope.courseName = '';
-				$scope.selectedOutcomes = [];
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -154,7 +154,6 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 						$scope.userCourses[i].outcomes[j] = outcomeById($scope.userCourses[i].outcomes[j]);
 					}
 				}
-				console.log("ok");
 			})
 		}
 
@@ -176,6 +175,12 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;
+			if(!$scope.showCourseModal) {
+				$scope.course = '';
+				$scope.courseID = '';
+				$scope.courseName = '';
+				$scope.selectedOutcomes = [];
+			}
 		};
 
 		function outcomeById(id) {

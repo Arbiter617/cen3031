@@ -3,7 +3,7 @@
 		<h1>Courses:</h1>
 	</div>
 	<div class="list-group">
-		<a data-ng-repeat="course in courses" data-ng-href="#!/courses/{{course._id}}" class="list-group-item">
+		<a data-ng-repeat="course in courses" class="list-group-item">
 			<h4 class="list-group-item-heading" data-ng-bind="course.courseID"></h4>
 			<h5 class = "list-group-item-heading" data-ng-bind = "course.courseName"></h5>
 			<button type="button" class="btn btn-large btn-primary" ng-click="edit(course)">Edit</button>
@@ -18,11 +18,11 @@
 				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
 					<label class="control-label" for="courseID">Course ID</label>
 					<div class="controls">
-						<input name="courseID" type="text" data-ng-model="courseID" id="courseID" class="form-control" placeholder="{{course.courseID}}" required>
+						<input type="text" data-ng-model="courseID" id="courseID" class="form-control" required>
 					</div>
 					<label class="control-label" for="courseName">Course Name</label>
 					<div class="controls">
-						<input name="courseName" type="text" data-ng-model="courseName" id="courseName" class="form-control" placeholder="{{course.courseName}}" required>
+						<input name="courseName" type="text" data-ng-model="courseName" id="courseName" class="form-control" required>
 					</div>
 					<label class="control-label" for="outcomeSelector">Select Outcomes</label>
 					<span class="nullable">

@@ -66,17 +66,23 @@
 		it('$scope.create() with valid form data should send a POST request with the form input values', inject(function(Courses) {
 			// Create a sample article object
 			var sampleCoursePostData = new Courses({
-				courseID: 'cen3031'
+				courseID: 'cen3031',
+				courseName: 'soft eng',
+				selectedOutcomes: []
 			});
 
 			// Create a sample article response
 			var sampleCourseResponse = new Courses({
 				_id: '525cf20451979dea2c000001',
-				courseID: 'cen3031'
+				courseID: 'cen3031',
+				courseName: 'soft eng',
+				selectedOutcomes: []
 			});
 
 			// Fixture mock form input values
 			scope.courseID = 'cen3031';
+			scope.courseName = 'soft eng';
+			scope.selectedOutcomes = [];
 
 			// Set POST response
 			$httpBackend.expectPOST('courses', sampleCoursePostData).respond(sampleCourseResponse);
@@ -87,6 +93,8 @@
 
 			// Test form inputs are reset
 			expect(scope.courseID).toEqual('');
+			expect(scope.courseName).toEqual('');
+			expect(scope.selectedOutcomes).toEqual([]);
 
 			// Test URL redirection after the article was created
 			//expect($location.path()).toBe('/articles/' + sampleArticleResponse._id);
@@ -97,6 +105,8 @@
 			var sampleCoursePutData = new Courses({
 				_id: '525cf20451979dea2c000001',
 				courseID: 'cen3031',
+				courseName: 'soft eng',
+				outcomes: []
 			});
 
 			// Mock article in scope
@@ -117,6 +127,7 @@
 			// Create sample article using the Articles service
 			var sampleCourse = new Courses({
 				courseID: 'cen3031'
+
 			});
 
 			// Create a sample articles array that includes the new article
