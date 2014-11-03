@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', '$q', 'Authentication', 'Courses', 'Users',
-	function($scope, $http, $stateParams, $location, $q, Authentication, Courses, Users) {
+angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', '$q', 'Authentication', 'Courses', 'Users', 'Outcomes',
+	function($scope, $http, $stateParams, $location, $q, Authentication, Courses, Users, Outcomes) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
 		$scope.user = new Users(Authentication.user);
 		$scope.userCourseOptions = [];
+		$scope.selectedOutcomes = [];
 
 		//add course to user's courses list
 		$scope.addCourse = function(course) {
@@ -44,14 +45,21 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 
 		//create new course in db
 		$scope.create = function() {
+			var outcomes = [];
+			for(var i = 0; i < $scope.selectedOutcomes.length; i++) {
+				outcomes.push($scope.selectedOutcomes[i]._id);
+			}
+
 			var course = new Courses({
 				courseID: this.courseID,
-				courseName: this.courseName
+				courseName: this.courseName,
+				outcomes: outcomes
 			});
 			course.$save(function(response) {
-				$scope.courses.push(response);
+				$scope.initAdminManageCourses();
 				$scope.courseID = '';
 				$scope.courseName = '';
+				$scope.selectedOutcomes = [];
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -91,6 +99,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			var d = $q.defer();
 			 	$http.get('users/courses').success(function(response) {
 						$scope.userCourses = response;
+						d.resolve();
 					}).error(function(response) {
 						$scope.error = response.message;
 					});
@@ -100,9 +109,19 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		//populate $scope.courses
 		$scope.getCourses = function() {
 			var d = $q.defer();
-				$scope.courses = Courses.query();
-				return d.promise;
+			$scope.courses = Courses.query(function() {
+				d.resolve();
+			});
+			return d.promise;
 		};
+
+		function getOutcomes() {
+			var d = $q.defer();
+			$scope.outcomes = Outcomes.query(function() {
+				d.resolve();
+			});
+			return d.promise;
+		}
 
 		//init data needed for user manage-courses
 		$scope.initUserManageCourses = function() {
@@ -112,16 +131,67 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			]).then(function(data) {
 				//courses that user does not have yet
 				for(var i = 0; i < $scope.courses.length; i++) {
-					if(userCourses.indexOf(courses[i]) == -1) {
-						$scope.userCourseOptions.push(courses[i]);
+					if(indexById($scope.userCourses, $scope.courses[i]) == -1) {
+						$scope.userCourseOptions.push($scope.courses[i]);
 					}
 				}
 			});
 		};
 
+		//init data needed for admin manage-courses
+		$scope.initAdminManageCourses = function() {
+			$scope.getCourses();
+			$scope.outcomes = Outcomes.query();
+		}
+
+		$scope.initListCourses = function() {
+			$q.all([
+				getOutcomes(),
+				$scope.getUserCourses()
+			]).then(function(data) {
+				for(var i = 0; i < $scope.userCourses.length; i++) {
+					for(var j = 0; j < $scope.userCourses[i].outcomes.length; j++) {
+						$scope.userCourses[i].outcomes[j] = outcomeById($scope.userCourses[i].outcomes[j]);
+					}
+				}
+				console.log("ok");
+			})
+		}
+
+		$scope.outcomeSelect = function(outcome) {
+			$scope.selectedOutcomes.push(outcome);
+			var i = $scope.outcomes.indexOf(outcome);
+			if (i >= 0) {
+				$scope.outcomes.splice(i, 1);
+			}
+		}
+
+		$scope.outcomeRemove = function( outcome ) {
+			var i = $scope.selectedOutcomes.indexOf(outcome);
+			if (i >= 0) {
+				$scope.selectedOutcomes.splice(i, 1);
+				$scope.outcomes.push(outcome);
+			}
+		}
+
 		$scope.toggleCourseModal = function() {
 			$scope.showCourseModal = !$scope.showCourseModal;
 		};
+
+		function outcomeById(id) {
+			for(var i = 0; i < $scope.outcomes.length; i++) {
+				if($scope.outcomes[i]._id === id)
+					return $scope.outcomes[i];
+			}
+		}
+
+		function indexById(list, element) {
+			for(var i = 0; i < list.length; i++) {
+				if(list[i]._id == element._id)
+					return i;
+			}
+			return -1;
+		}
 	
 }])
 

@@ -5,6 +5,7 @@ angular.module('courses').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'Manage courses', 'manage-courses');
-		Menus.addMenuItem('topbar', 'Admin Manage courses', 'admin-manage-courses');
+		Menus.addMenuItem('topbar', 'Admin Manage courses', 'manage-courses-admin');
+		Menus.addMenuItem('topbar', 'Manage Outcomes', 'manage-outcomes', '/manage-outcomes');
 	}
 ]);

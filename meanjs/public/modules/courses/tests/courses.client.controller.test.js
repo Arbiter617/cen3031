@@ -61,7 +61,7 @@
 			$httpBackend.expectPUT(/users/).respond();
 			scope.addCourse(sampleCoursePostData);
 			
-		}))
+		}));
 
 		it('$scope.create() with valid form data should send a POST request with the form input values', inject(function(Courses) {
 			// Create a sample article object
