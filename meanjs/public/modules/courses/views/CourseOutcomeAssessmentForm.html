@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+</head>
+  <body>
+    <table style="width:100%; padding:0px; border:hidden">
+      <tr>
+        <td style="padding:0px; text-align:left">
+          <style scoped>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+td {
+    padding: 5px;
+    text-align: left;    
+}
+th {
+  padding: 15px;
+  text-align: center;
+}
+p {
+  text-align: center;
+  line-height: 150%;
+}
+}
+</style>
+          <p> 
+          <br><br><br>
+          Computer Information Science and Engineering Department <br>
+          Electrical and Computer Engineering Department <br>
+          Computer Engineering Program <br>
+          Program Outcomes Assessment Report <br>
+          Outcome ( {{outcome}} ): Description: {{description}} <br>
+          Course Number: {{courseNumber}}  Term: {{term}} <br>
+          Course Title: {{courseTitle}} <br>
+          Instructor: {{instructor}}  Date: {{date}}
+          <br><br>
+          </p>
+
+          <table style="width:75%" align="center">
+            <tr>
+              <th colspan="3">Assessment Instrument</th>
+            </tr>
+            <tr>
+              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: {{descriptionOfInstrument}} </td>
+            </tr>
+            <tr>
+              <th colspan="2"> Assessment Item </th>
+              <th colspan="1" style="width:180px"> Value </th>
+            </tr>
+            <tr>
+              <td colspan="2" ><li style="list-style-type:disc"> Number of Students: </li> </td>
+              <td colspan="1"> {{numberOfStudents}} </td>
+            </tr>
+            <tr>
+              <td colspan="2"><li style-"list-style-type:disc:"> Grading Scale (e.g. 0-10) </li></td>
+              <td colspan="1"> {{gradingScale}} </td>
+            </tr>
+            <tr>
+              <td colspan="2"><li style-"list-style-type:disc:"> Average Score: </li></td>
+              <td colspan="1"> {{averageScore}} </td>
+            </tr>
+            <tr>
+              <td colspan="2"><li style-"list-style-type:disc:"> Score for Adequate Outcome Achievement (2 or better on the Likert 1-5 Scale):</li></td>
+              <td colspan="1"> {{scoreForAdequateOutcomeAchievement}} </td>
+            </tr>
+            <tr>
+              <td colspan="2"><li style-"list-style-type:disc:"> % of Students Achieving Outcome Adequately: </li></td>
+              <td colspan="1"> {{percentOfStudentsAchievingOutcomeAdequately}} </td>
+            </tr>
+            <tr>
+              <td colspan="2"><li style-"list-style-type:disc:"> Average Likert-scale value: </li></td>
+              <td colspan="1"> {{averageLikertScaleValue}} </td>
+            </tr>
+            <tr>
+              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: {{instructorComments}} </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="find()">
+            <div >
+              <form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" autocomplete="off">
+
+                <fieldset>
+                  <div class="page-header">
+                    <center><h1>Likert:</h1><center>
+                  </div>
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>
+                        <label>Likert 1 Cutoff</label>
+                      </td>
+                      <td>
+                        <input type="text" id="likert1" name="likert1" class="form-control" data-ng-model="likert.score1" placeholder="20 ">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Likert 2 Cutoff</label>
+                      </td>
+                      <td>
+                        <input type="text" id="likert2" name="likert2" class="form-control" data-ng-model="likert.score2" placeholder="40 ">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Likert 3 Cutoff</label>
+                      </td>
+                      <td>
+                        <input type="text" id="likert3" name="likert3" class="form-control" data-ng-model="likert.score3" placeholder="60 ">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Likert 4 Cutoff</label>
+                      </td>
+                      <td>
+                        <input type="text" id="likert4" name="likert4" class="form-control" data-ng-model="likert.score4" placeholder="80 ">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Likert 5 Cutoff</label>
+                      </td>
+                      <td>
+                        <input type="text" id="likert5" name="likert5" class="form-control" data-ng-model="likert.score5" placeholder="100 ">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
+                      <div class="text-center form-group">
+                    <button type="submit" class="btn btn-large btn-primary" style="width:50%">Submit</button>
+                  </div>
+                  <div data-ng-show="success" class="text-center text-success">
+                    <strong>Likert Submitted</strong>
+                  </div>
+                  <div data-ng-show="error" class="text-center text-danger">
+                    <strong data-ng-bind="error"></strong>
+                  </div>
+                </td>
+                    </tr>
+                  </table>
+
+                  
+                </fieldset>
+              </form>
+            </div>
+          </section>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

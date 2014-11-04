@@ -15,12 +15,12 @@
 			</accordion-heading>
 			<h4>Course Outcomes:</h4>
 			<div class="list-group">
-				<a data-ng-repeat="outcome in course.outcomes" class="list-group-item">
+				<a href="/#!/courseOutcomeAssessmentForm" data-ng-repeat="outcome in course.outcomes" class="list-group-item">
 					<h4>Outcome {{outcome.outcomeID}}:</h4>
 					<h5>{{outcome.outcomeName}}</h5>
 				</a>
 			</div>	
-			<button type="button" class="btn btn-sml btn-primary" onclick="location.href='#!/outcomes-eval-form'">
+			<button type="button" class="btn btn-sml btn-primary" onclick="location.href='#!/courseCommitteeEvalForm'">
      			Outcomes Evaluation Assessment Form
      		</button>
 		</accordion-group>

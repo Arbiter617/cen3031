@@ -9,7 +9,11 @@
 			<button type="button" class="btn btn-large btn-primary" ng-click="removeCourse(course)">Remove</button>
 		</a>
 	</div>
-	<form name="courseForm" class="form-horizontal" style="padding:10%" data-ng-submit="addCourse(userCourse)">
+	
+	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
+	<modal-dialog show='showCourseModal' width='400px' height='60%'>
+      <h1 class="text-center">Add New Course</h1>
+      <form name="courseForm" class="form-horizontal" style="padding:10%" data-ng-submit="addCourse(userCourse)">
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
 					<span  class="nullable">
@@ -30,9 +34,5 @@
 				</div>
 			</fieldset>
 		</form>
-	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
-	<modal-dialog show='showCourseModal' width='400px' height='60%'>
-      <h1 class="text-center">Add New Course</h1>
-      
     </modal-dialog>
 </section>
