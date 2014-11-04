@@ -29,8 +29,6 @@ exports.update = function(req, res) {
 
 		user.save(function(err) {
 			if (err) {
-				console.log('Error saving');
-				console.log(user);
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
@@ -63,6 +61,7 @@ exports.getCourses = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(res.jsonp);
 			res.jsonp(courses);
 		}
 	});

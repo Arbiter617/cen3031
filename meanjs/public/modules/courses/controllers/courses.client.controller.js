@@ -25,6 +25,12 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.removeCourse = function(course) {
 			$http.delete('users/courses/' + course._id, course).success(function(response) {
 				Authentication.user = response;
+
+				for (var i in $scope.userCourses) {
+					if ($scope.userCourses[i] === course) {
+						$scope.userCourses.splice(i, 1);
+					}
+				}
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
@@ -59,7 +65,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				outcomes: outcomes
 			});
 			course.$save(function(response) {
-				$scope.initAdminManageCourses();
+				$scope.getCourses();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -72,6 +78,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			var course = $scope.course;
 			course.courseID = this.courseID;
 			course.courseName = this.courseName;
+			course.outcomes = this.selectedOutcomes;
 
 			course.$update(function() {
 				//$location.path('articles/' + article._id);
@@ -97,13 +104,13 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		//populate $scope.userCourses
 		$scope.getUserCourses = function() {
 			var d = $q.defer();
-			 	$http.get('users/courses').success(function(response) {
-						$scope.userCourses = response;
-						d.resolve();
-					}).error(function(response) {
-						$scope.error = response.message;
-					});
-					return d.promise;
+		 	$http.get('users/courses').success(function(response) {
+				$scope.userCourses = response;
+				d.resolve();
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+			return d.promise;
 		};
 
 		//populate $scope.courses
@@ -115,7 +122,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			return d.promise;
 		};
 
-		function getOutcomes() {
+		//populate $scope.outcomes
+		$scope.getOutcomes = function() {
 			var d = $q.defer();
 			$scope.outcomes = Outcomes.query(function() {
 				d.resolve();
@@ -141,19 +149,15 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		//init data needed for admin manage-courses
 		$scope.initAdminManageCourses = function() {
 			$scope.getCourses();
-			$scope.outcomes = Outcomes.query();
+			$scope.getOutcomes();
 		}
 
 		$scope.initListCourses = function() {
 			$q.all([
-				getOutcomes(),
+				$scope.getOutcomes(),
 				$scope.getUserCourses()
 			]).then(function(data) {
-				for(var i = 0; i < $scope.userCourses.length; i++) {
-					for(var j = 0; j < $scope.userCourses[i].outcomes.length; j++) {
-						$scope.userCourses[i].outcomes[j] = outcomeById($scope.userCourses[i].outcomes[j]);
-					}
-				}
+				resolveOutcomes($scope.userCourses);
 			})
 		}
 
@@ -187,6 +191,17 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			for(var i = 0; i < $scope.outcomes.length; i++) {
 				if($scope.outcomes[i]._id === id)
 					return $scope.outcomes[i];
+			}
+		}
+
+		//take list of courses with list of outcome _id's
+		//and replace with actual outcome objects from
+		//$scope.outcomes
+		function resolveOutcomes(courses) {
+			for(var i = 0; i < courses.length; i++) {
+				for(var j = 0; j < courses[i].outcomes.length; j++) {
+					courses[i].outcomes[j] = outcomeById(courses[i].outcomes[j]);
+				}
 			}
 		}
 
