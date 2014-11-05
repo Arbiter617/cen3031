@@ -61,7 +61,6 @@ exports.getCourses = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(res.jsonp);
 			res.jsonp(courses);
 		}
 	});

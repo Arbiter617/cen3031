@@ -12,7 +12,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user, user2, course;
+var user, user2, course, course2;
 
 /**
  * Unit tests
@@ -24,9 +24,13 @@ describe('User Controller Unit Tests:', function() {
 			courseName: 'cmon',
 			outcomes: []
 		});
-
+		course2 = new Course({
+			courseID: 'getit',
+			courseName: 'boi',
+			outcomes: []
+		});
 		course.save();
-
+		course2.save();
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
@@ -42,6 +46,7 @@ describe('User Controller Unit Tests:', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
+			courses: [course, course2],
 			username: 'username',
 			password: 'password',
 			provider: 'local'
@@ -69,7 +74,43 @@ describe('User Controller Unit Tests:', function() {
 			
 		});
 	});
+	describe('User update ', function() {
+		it('Courses added ', function(done) {
+			var req= {};
+			req.user= user;
+			req.body={};
+			req.body.courses= [course,course2];
+			req.login = function(){return true;}
+			var res = {
+	            jsonp: function(object) {
+	            	object[0].courseID.should.equal(course.courseID);
+	            	object[0].courseName.should.equal(course.courseName);
+	            	object[0].outcomes.length.should.equal(0);
+	            	object[1].courseID.should.equal(course2.courseID);
+	            	object[1].courseName.should.equal(course2.courseName);
+	            	object[1].outcomes.length.should.equal(0);
+	            }
+            };
 
+			users.update(req,res);
+			done();
+			
+		});
+		it('Courses Removed', function(done){
+			var req= {};
+			req.user= user;
+			req.course = course2;
+			var res = {
+	            jsonp: function(object) {
+
+	            }
+            };
+
+			users.removeCourse(req,res);
+			done();
+			
+		});
+	});
 	after(function(done) {
 		User.remove().exec();
 		done();

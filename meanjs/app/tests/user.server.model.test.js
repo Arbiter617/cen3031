@@ -66,6 +66,34 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+		it('should be able to show an error when try to save without last name', function(done) {
+			user.lastName = '';
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+		it('should be able to show an error when try to save without passwor name', function(done) {
+			user.password = '';
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+		it('should be able to show an error when try to save with short password', function(done) {
+			user.password = 'a';
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+		it('should be able to show an error when try to save with short password', function(done) {
+			user.username = '';
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	after(function(done) {
