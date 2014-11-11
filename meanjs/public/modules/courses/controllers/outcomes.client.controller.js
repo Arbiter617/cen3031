@@ -2,10 +2,12 @@
 
 'use strict';
 
-angular.module('courses').controller('OutcomesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Courses', 'Outcomes', 
-	function($scope, $stateParams, $location, Authentication, Courses, Outcomes) {
+angular.module('courses').controller('OutcomesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', 'Courses', 'Outcomes', 
+	function($scope, $stateParams, $location, $modal, Authentication, Courses, Outcomes) {
 		$scope.Authentication = Authentication;
 		$scope.outcomeIndex = 0;
+
+		var submitModal = '';
 		//$scope.information = "";
 
 		$scope.getOutcomeIndex = function(index) {
@@ -19,66 +21,48 @@ angular.module('courses').controller('OutcomesController', ['$scope', '$statePar
 		};
 
 		// creates outcomes via ID and name and saves
-		$scope.create = function() {
+		$scope.create = function(outcomeData) {
 			var outcome = new Outcomes({
-				outcomeID: this.outcomeID,
-				outcomeName: this.outcomeName
+				outcomeID: outcomeData.outcomeID,
+				outcomeName: outcomeData.outcomeName
 			});
 
 			outcome.$save(function(response) {
-				$scope.outcomes = Outcomes.query();
-				$scope.outcomeID = '';
-				$scope.outcomeName = '';
-
+				$scope.outcomes.push(outcome);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-
-			$scope.toggleOutcomeModal();
 		};
 
 		// updates the outcome description
-		$scope.update = function() {
+		$scope.update = function(outcomeData) {
 			var outcome = $scope.outcome;
-			outcome.outcomeID = this.outcomeID;
-			outcome.outcomeName = this.outcomeName;
+			outcome.outcomeID = outcomeData.outcomeID;
+			outcome.outcomeName = outcomeData.outcomeName;
 			outcome.$update(function() {
-
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
-				$scope.outcome = '';
 			});
-
-			$scope.toggleOutcomeModal();
+			$scope.outcome = '';
 		};
 
 		// calls update and sets edited outcome
 		$scope.edit = function(outcome) {
-			$scope.submitModal = $scope.update;
+			submitModal = $scope.update;
 			$scope.outcome = outcome;
-			$scope.toggleOutcomeModal();
-			$scope.information = "Edit Outcome";
-			$scope.namePlaceholder = outcome.outcomeName;
-			$scope.IDPlaceholder = outcome.outcomeID;
+
+			var params = {
+				outcomeID: outcome.outcomeID,
+				outcomeName: outcome.outcomeName,
+				header: 'Edit Outcome'
+			};
+			openModal(params);
 		};
 
 		// calls create
 		$scope.addOutcome = function() {
-			$scope.submitModal = $scope.create;
-			$scope.toggleOutcomeModal();
-			$scope.information = "Add Outcome";
-			$scope.namePlaceholder = "";
-			$scope.IDPlaceholder = "";
-		};
-
-
-		// boolean 
-		$scope.toggleShowDiv = function() {
-			$scope.clicked = !$scope.clicked;
-		};
-
-		$scope.toggleOutcomeModal = function() {
-			$scope.showOutcomeModal = !$scope.showOutcomeModal;
+			submitModal = $scope.create;
+			openModal({ header: 'Add Outcome' });
 		};
 
 		//removes outcome from db
@@ -93,6 +77,39 @@ angular.module('courses').controller('OutcomesController', ['$scope', '$statePar
 				}
 			} 
 		};
+
+		function openModal(params) {
+			var modalInstance = $modal.open({
+				templateUrl: 'OutcomeModal.html',
+				controller: 'OutcomeModalController',
+				size: '',
+				resolve: {
+					params: function () {
+						return params;
+					}
+				}
+    		});
+
+			modalInstance.result.then(function (outcomeData) {
+				submitModal(outcomeData);
+			}); 
+		}
 	}
 
-]);
+])
+.controller('OutcomeModalController', function ($scope, $modalInstance, params) {
+	$scope.header = params.header;
+
+	$scope.outcome = {
+		outcomeID: params.outcomeID,
+		outcomeName: params.outcomeName
+	};
+
+	$scope.submit = function (outcome) {
+		$modalInstance.close(outcome);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});;
