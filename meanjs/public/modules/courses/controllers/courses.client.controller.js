@@ -7,7 +7,7 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.user = new Users(Authentication.user);
 		$scope.userCourseOptions = [];
 		$scope.selectedOutcomes = [];
-
+		$scope.outcomes = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
 		//add course to user's courses list
 		$scope.addCourse = function(course) {
 			$scope.user.courses.push(course._id);

@@ -25,15 +25,8 @@
 						<input name="courseName" type="text" data-ng-model="courseName" id="courseName" class="form-control" required>
 					</div>
 					<label class="control-label" for="outcomeSelector">Select Outcomes</label>
-					<span class="nullable">
-						<select class="form-control" id="outcomeSelector" ng-model="selectedOutcome" ng-options="outcome.outcomeID for outcome in outcomes" ng-change="outcomeSelect(selectedOutcome)">
-					    	<option value="">-- choose outcome --</option>
-						</select>
-					</span>
-					<div class="list-group">
-						<button ng-repeat="outcome in selectedOutcomes" type="button" class="btn btn-large btn-primary" ng-click="outcomeRemove(outcome)" title="outcome.outcomeName">
-							{{outcome.outcomeID}}
-						</button>
+					<div class="controls">
+						<div ng-dropdown-multiselect="outcomeSelector" options="outcomes" selected-model="selectedOutcomes"></div>
 					</div>
 				</div>
 				<div class="form-group">

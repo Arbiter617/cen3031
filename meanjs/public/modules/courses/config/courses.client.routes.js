@@ -34,7 +34,7 @@ angular.module('courses').config(['$stateProvider',
 			templateUrl: 'modules/courses/views/CourseCommitteeEvaluationForm.html'
 		}).
 		state('courseOutcomeAssessmentForm', {
-			url: '/courseOutcomeAssessmentForm',
+			url: '/{courseID}/{outcomeID}/outcomeAssessmentForm',
 			templateUrl: 'modules/courses/views/CourseOutcomeAssessmentForm.html'
 		});
 	}

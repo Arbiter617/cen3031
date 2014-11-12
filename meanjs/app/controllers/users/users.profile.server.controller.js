@@ -26,7 +26,6 @@ exports.update = function(req, res) {
 		user = _.extend(user, req.body);
 		user.updated = Date.now();
 		user.displayName = user.firstName + ' ' + user.lastName;
-
 		user.save(function(err) {
 			if (err) {
 				return res.status(400).send({
@@ -77,7 +76,6 @@ exports.removeCourse = function(req, res) {
 			user.courses.splice(courseIndex, 1);
 			user.save(function(err) {
 				if (err) {
-					console.log('Error saving');
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
