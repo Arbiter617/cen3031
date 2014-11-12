@@ -11,31 +11,36 @@
 		</a>
 	</div>
 	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
-	<modal-dialog show='showCourseModal' width='400px' height='80%'>
-      <h1 class="text-center">Add New Course</h1>
-      <form name="courseForm" class="form-horizontal" style="padding:5%" data-ng-submit="submitModal()">
+	</br></br></br>
+
+	<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Course</h3>
+        </div>
+        <div class="modal-body">
+            <form name="courseForm" class="form-horizontal" style="padding:5%">
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
 					<label class="control-label" for="courseID">Course ID</label>
 					<div class="controls">
-						<input type="text" data-ng-model="courseID" id="courseID" class="form-control" required>
+						<input type="text" data-ng-model="course.courseID" id="courseID" class="form-control" required>
 					</div>
 					<label class="control-label" for="courseName">Course Name</label>
 					<div class="controls">
-						<input name="courseName" type="text" data-ng-model="courseName" id="courseName" class="form-control" required>
+						<input name="courseName" type="text" data-ng-model="course.courseName" id="courseName" class="form-control" required>
 					</div>
-					<label class="control-label" for="outcomeSelector">Select Outcomes</label>
-					<div class="controls">
-						<div ng-dropdown-multiselect="outcomeSelector" options="outcomes" selected-model="selectedOutcomes"></div>
+					<label class="control-label" for="outcomes">Select Outcomes</label>
+					<div multi-select input-model="outcomes" button-label="outcomeID" item-label="outcomeName" tick-property="ticked">
 					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
 				</div>
 			</fieldset>
 		</form>
-    </modal-dialog>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submit(course)">Submit</button>
+            <div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+        </div>
+    </script>
 </section>

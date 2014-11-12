@@ -9,30 +9,18 @@
 			<button type="button" class="btn btn-large btn-primary" ng-click="removeCourse(course)">Remove</button>
 		</a>
 	</div>
-	
-	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
-	<modal-dialog show='showCourseModal' width='400px' height='60%'>
-      <h1 class="text-center">Add New Course</h1>
-      <form name="courseForm" class="form-horizontal" style="padding:10%" data-ng-submit="addCourse(userCourse)">
-			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
-					<span  class="nullable">
-						<select class="form-control" ng-model="userCourse" ng-options="course.courseID for course in userCourseOptions">
-					    	<option value="">-- choose course --</option>
-						</select>
-					</span>
-					<div ng-show="userCourse!=null" style="padding:5%">
-						</br><h5>{{userCourse.courseID}}</h5>
-						<h6>{{userCourse.courseName}}</h6>
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
-		</form>
-    </modal-dialog>
+
+	<div style="padding:25px 0px">
+	<div style="width:200px">
+		<h4>Add Course</h1>
+			<span  class="nullable">
+				<select class="form-control" ng-model="userCourse" ng-options="course.courseID for course in userCourseOptions">
+			    	<option value="">-- choose course --</option>
+				</select>
+			</span>
+		</br>
+		<button type="button" class="btn btn-large btn-primary" ng-click="addCourse(userCourse)">Add course</button>
+	</div>
+</div>
+
 </section>
