@@ -10,8 +10,6 @@ var mongoose = require('mongoose'),
 
 exports.create = function(req, res) {
 	var course = new Course(req.body);
-	console.log(course);
-
 	course.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -25,7 +23,6 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
 	var course = req.course;
-	console.log(req.body);
 	course = _.extend(course, req.body);
 
 	course.save(function(err) {

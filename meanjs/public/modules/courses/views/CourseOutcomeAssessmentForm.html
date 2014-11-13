@@ -79,8 +79,11 @@ p {
           </table>
         </td>
         <td>
-          <section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="find()">
-            <div >
+            <div>
+
+              <label>Upload csv containing likert scores:</label>
+              <input type="file" file-input="files"/>
+
               <form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" autocomplete="off">
 
                 <fieldset>
@@ -131,7 +134,7 @@ p {
                     <tr>
                       <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
                       <div class="text-center form-group">
-                    <button type="submit" class="btn btn-large btn-primary" style="width:50%">Submit</button>
+                    <button type="button" class="btn btn-large btn-primary" ng-click="submit()" style="width:50%">Submit</button>
                   </div>
                   <div data-ng-show="success" class="text-center text-success">
                     <strong>Likert Submitted</strong>
@@ -147,7 +150,6 @@ p {
                 </fieldset>
               </form>
             </div>
-          </section>
         </td>
       </tr>
     </table>

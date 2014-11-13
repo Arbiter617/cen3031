@@ -1,5 +1,4 @@
 'use strict';
-console.log("HELLO");
 angular.module('courses').controller('outcomeAssessmentController', ['$scope', '$http','$stateParams','$q', 'Authentication','Courses', 'Users', 'Outcomes',
 	function($scope, $http, $stateParams,$q, Authentication,Courses,Users,Outcomes) {
 		$scope.authentication = Authentication;
@@ -13,6 +12,19 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.courseTitle;
 		$scope.instructor = user.firstName +" " +user.lastName;
 		$scope.date = new Date();
+
+		$scope.submit = function() {
+			var reader = new FileReader();
+            reader.addEventListener("loadend", function(evt) {
+            	$http.post('courses/', { 
+            		name: $scope.files[0].name, 
+            		data: reader.result 
+            	});
+            });
+            
+            reader.readAsText($scope.files[0]);
+			
+		}
 
 		$scope.getUserCourses = function() {
 			var d = $q.defer();
@@ -65,4 +77,16 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		};
 
 	
+}])
+.directive('fileInput', ['$parse', function($parse) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attributes) {
+			element.bind('change', function() {
+				$parse(attributes.fileInput)
+				.assign(scope, element[0].files);
+				scope.$apply();
+			})
+		}
+	}
 }]);

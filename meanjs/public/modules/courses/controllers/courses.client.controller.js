@@ -159,7 +159,6 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				$scope.getOutcomes()
 			]).then(function(data) {
 				resolveOutcomes($scope.courses);
-				resetModal();
 			});
 			
 		}
