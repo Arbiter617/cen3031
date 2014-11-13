@@ -2,7 +2,6 @@
 angular.module('courses').controller('outcomeAssessmentController', ['$scope', '$http','$stateParams','$q', 'Authentication','Courses', 'Users', 'Outcomes',
 	function($scope, $http, $stateParams,$q, Authentication,Courses,Users,Outcomes) {
 		$scope.authentication = Authentication;
-		console.log($stateParams);
 		$scope.user = new Users(Authentication.user);
 		$scope.userCourses;
 		$scope.outcomes;
@@ -57,15 +56,12 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 				}
 				for(var j = 0; j < courses[i].outcomes.length; j++) {
 					courses[i].outcomes[j] = outcomeById(courses[i].outcomes[j]);
-					console.log(courses[i].outcomes[j].outcomeID)
-					console.log($stateParams.outcomeID);
 					if(courses[i].outcomes[j].outcomeID==$stateParams.outcomeID){
 						$scope.description =courses[i].outcomes[j].outcomeName;
 					}
 
 				}
 			}
-			console.log(courses);
 		}
 		$scope.init = function() {
 			$q.all([
