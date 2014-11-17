@@ -15,7 +15,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.submit = function() {
 			var reader = new FileReader();
             reader.addEventListener("loadend", function(evt) {
-            	$http.post('courses/', { 
+            	$http.post('csv_parsing/', { 
             		name: $scope.files[0].name, 
             		data: reader.result 
             	});
