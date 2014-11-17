@@ -101,10 +101,12 @@ td
 </style>
 </head>
 
+<section ng-app="courses" data-ng-controller="committeeEvalController" data-ng-init="init()">
 <body>
 
 	<div class="section group">
 		<div class="col span_1_of_1">
+		</br></br>
 			<h2 class="centered">
 				Computer Engineering Program
 			</h2>
@@ -116,314 +118,342 @@ td
 	</div>
 			<br>
 			<br>
-	<div class="section group">		
-		<div class="col span_1_of_1">
-			<ul>
-				<li>Course Number and Title: {{ courseOutcomeAssessmentForm.courseNumber }} , {{ courseOutcomeAssessmentForm.courseTitle}} </li>
-				<li>Term and Year: {{ courseOutcomeAssessmentForm.term }}</li>
-				<li>Instructor: {{ courseOutcomeAssessmentForm.instructor }}</li>
-				<li>Course Committee Participants: {{ courseCommitteeParticipants }}</li>
-				<br>
-				<li>Date: {{ date }}</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="section group">		
-		<div class="col span_1_of_1">
-			<br>
-			<h3>I. Course Issues:</h3>
-			<br>
-		</div>
-	</div>
-			<ul>
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Syllabus: Does the syllabus reflect current content? </li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if syllabusReflectCurrentContent }} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless syllabusReflectCurrentContent }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-						
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Are there topics that should be dropped from the course? </li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if droppedTopics}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless droppedTopics }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Are there topics that should be added to the course? </li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if addedTopics}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless addedTopics }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Textbook: Is the textbook working well?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if textbookWorkingWell}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless textbookWorkingWell }} checked {{/unless}} ><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Should changes be considered for the next academic year?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if changesRequiredForNextAcademicYear}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless changesRequiredForNextAcademicYear }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Are there new books available that should be evaluated?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if newBooksToBeEvaluated}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless newBooksToBeEvaluated }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Does the book map well onto the syllabus?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if bookMapWellToSyllabus}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless bookMapWellToSyllabus }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Do other assessments (performance/exit surveys,student feedback) indicate issues that need to be addressed?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if otherEvaluationsIndicateIssues}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless otherEvaluationsIndicateIssues }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						<li>Student Performance: Did students master the material?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if didStudentsMasterMaterial}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless didStudentsMasterMaterial }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-				<div class="section group">	
-					<div class="col span_1_of_2">
-						
-					<li>Are there problems in the their knowledge of key concepts?</li>
-					</div>
-					<div class="col span_2_of_2">
-						<input type="checkbox" {{#if problemsWithKnowledgeInKeyConcepts}} checked {{/if}}><label>YES</label>
-						<input type="checkbox" {{#unless problemsWithKnowledgeInKeyConcepts }} checked {{/unless}}><label>NO</label>
-					</div>
-				</div>
-			</ul>
-
-
-				
-	<div class="section group">			
-		<div class="col span_1_of_1">
-			<h4>ACTIONS/RECOMMENDATIONS:</h4>
-	
-				<textarea name="" id="" cols="95" rows="10"> {{sectionIActionsRecommendations}}</textarea> 
-		</div>
-	</div>
-			
-	<div class="section group">			
-		<div class="col span_1_of_1">
-			<br>
-			<h3>II. Program Issues:</h3>
-			<br>
-		</div>
-	</div>
-		
-		<ul>
-			<div class="section group">	
-				<div class="col span_1_of_2">
-					<li>Are the pre-requisites still appropriate for this course?</li>
-				</div>
-				<div class="col span_2_of_2">
-					<input type="checkbox" {{#if prereqsStillAppropriate}} checked {{/if}}><label>YES</label>
-					<input type="checkbox" {{#unless prereqsStillAppropriate}} checked {{/unless}}><label>NO</label>
-				</div>
+	<form name="CommitteeEvalForm">
+		<div class="section group">		
+			<div class="col span_1_of_1">
+				<ul>
+					<li>Course Number and Title: {{form.courseNumber}}, {{form.courseTitle}}
+					</li>
+					<li>Term and Year: {{ form.term }}</li>
+					<li>Instructor: {{ form.instructor }}</li>
+					<li>Course Committee Participants: {{ form.courseCommitteeParticipants }}</li>
+					<br>
+					<li>Date: {{ form.date }}</li>
+				</ul>
 			</div>
-
-			<div class="section group">	
-				<div class="col span_1_of_2">
-					<li>Does the course content satisfy the needs of follow-on courses?</li>
-				</div>
-				<div class="col span_2_of_2">
-					<input type="checkbox" {{#if satisfyNeedsOfFollowupCourses}} checked {{/if}}><label>YES</label>
-					<input type="checkbox" {{#unless satisfyNeedsOfFollowupCourses }} checked {{/unless}}><label>NO</label>
-				</div>
-			</div>		
-		</ul>
-
-			<br>
-			<br>
-	<div class="section group">			
-		<div class="col span_1_of_1">
-			<h4>ACTIONS/RECOMMENDATIONS:</h4>
-			<textarea name="" id="" cols="95" rows="10"> {{ sectionIIActionsRecommendations }}</textarea>
 		</div>
-	</div>
 
-	<div class="section group">			
-		<div class="col span_1_of_1">
-			<br>
-			<br>
-			<h3>III. Evaluation of Outcomes Assessments: </h3>
-			<br>
-			<br>
-		</div>
-	</div>
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<h3>Recommendations for course improvement:</h3>
-				<textarea name="" id="" cols="95" rows="10"> {{recommendationsForCourseImprovement }}</textarea>
-				<br><br>
-		</div>
-	</div>
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<h3>Recommendations to CEN program governance (e.g. curriculum committee):</h3>
-				<textarea name="" id="" cols="95" rows="10"> {{ recommendationsToCENProgramGovernance }}</textarea>
-				<br><br>
-		</div>
-	</div>
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<h3>Comments/Recommendations on this process:</h3>
-				<textarea name="" id="" cols="95" rows="10"> {{sectionIIIRecommendationsComments}}</textarea>
-		</div>
-	</div>
-			<br/><br/><br/>
-
-
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<h3 class="">
-				COMPUTER ENGINEERING PROGRAM
-			</h3>
-			<h3 class="">
-				SUMMARY OF COURSE COMMITTEE ANALYSIS
-			</h3>
-		</div> 
-	</div>
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<ul>
-				<li>Course Number and Title: {{ courseOutcomeAssessmentForm.courseNumber }}, {{ courseOutcomeAssessmentForm.courseTitle }}</li>
-				<li>Term and Year: {{ courseOutcomeAssessmentForm.term }}</li>
-				<li>Instructor: {{ courseOutcomeAssessmentForm.instructor }}</li>
-				<li>Course Committee Participants: {{ courseCommitteeParticipants }}</li>
+		<div class="section group">		
+			<div class="col span_1_of_1">
 				<br>
-				<li>Date: {{ date }}</li>
+				<h3>I. Course Issues:</h3>
+				<br>
+			</div>
+		</div>
+				<ul>
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Syllabus: Does the syllabus reflect current content? </li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="">
+							<label>NO</label>
+						</div>
+					</div>
+							
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Are there topics that should be dropped from the course? </li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.droppedTopics" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.droppedTopics" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Are there topics that should be added to the course? </li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.addedTopics" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.addedTopics" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Textbook: Is the textbook working well?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.textbookWorkingWell" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.textbookWorkingWell" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Should changes be considered for the next academic year?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Are there new books available that should be evaluated?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Does the book map well onto the syllabus?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="">
+							<label>NO</label>
+						</div>
+					</div>
+
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Do other assessments (performance/exit surveys,student feedback) indicate issues that need to be addressed?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="">
+							<label>NO</label>
+						</div>
+					</div>
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							<li>Student Performance: Did students master the material?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="">
+							<label>NO</label>
+						</div>
+					</div>
+					<div class="section group">	
+						<div class="col span_1_of_2">
+							
+						<li>Are there problems in the their knowledge of key concepts?</li>
+						</div>
+						<div class="col span_2_of_2">
+							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="">
+							<label>NO</label>
+						</div>
+					</div>
+				</ul>
+
+
+					
+		<div class="section group">			
+			<div class="col span_1_of_1">
+				<h4>ACTIONS/RECOMMENDATIONS:</h4>
+					<textarea ng-model="sectionIActionsRecommendations" cols="95" rows="10"></textarea> 
+			</div>
+		</div>
+				
+		<div class="section group">			
+			<div class="col span_1_of_1">
+				<br>
+				<h3>II. Program Issues:</h3>
+				<br>
+			</div>
+		</div>
+			
+			<ul>
+				<div class="section group">	
+					<div class="col span_1_of_2">
+						<li>Are the pre-requisites still appropriate for this course?</li>
+					</div>
+					<div class="col span_2_of_2">
+						<input type="radio" ng-model="form.prereqsStillAppropriate" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.prereqsStillAppropriate" value="">
+							<label>NO</label>
+					</div>
+				</div>
+
+				<div class="section group">	
+					<div class="col span_1_of_2">
+						<li>Does the course content satisfy the needs of follow-on courses?</li>
+					</div>
+					<div class="col span_2_of_2">
+						<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="checked">
+							<label>YES</label>
+							<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="">
+							<label>NO</label>
+					</div>
+				</div>		
 			</ul>
+
+				<br>
+				<br>
+		<div class="section group">			
+			<div class="col span_1_of_1">
+				<h4>ACTIONS/RECOMMENDATIONS:</h4>
+				<textarea ng-model="sectionIIActionsRecommendations" cols="95" rows="10"></textarea>
+			</div>
 		</div>
-	</div>
 
-	<div class="section group">	
-		<div class="col span_1_of_1">
-			<table id="outcome" class="centered" >
-				<tr>
-				    <td>
-				    	<h4>Outcome: </h4>
-				    	<br/>
-				    	<p>Apply Knowledge</p>
-				    	<br/>
-				    	<h5> Number of students: </h5>
-				    </td>
-				    <td>
-				    	<h4>Evaluation: <br/><br/></h4>
-				    	<p>(satisfactory, unsatisfactory, weaknesses, identified, suggestedimprovements, remarks) </p>
-				    </td>
-				  </tr>
-				  
-				  <tr>
-				    <td class="bold">1. Instruments Chosen</td>
-				    <td>
-				    	<textarea name="" id="instruments" cols="80" rows="5">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">2. Likert Scale Threshold(s)</td>
-				    <td>
-				    	<textarea name="" id="thresholds" cols="80" rows="5">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">3. Sample Graded Student Work</td>
-				    <td>
-				    	<textarea name="" id="gradedWork" cols="80" rows="5">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">4. Percentage of Students Achieving Outcome</td>
-				    <td>
-				    	<textarea name="" id="percentAchieved" cols="80" rows="2">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">5. Average Likert Value</td>
-				    <td>
-				    	<textarea name="" id="likert" cols="80" rows="1">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">Achievement of Outcome</td>
-				    <td>
-				    	<textarea name="" id="achievement" cols="80" rows="5">
-				    	</textarea>
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td class="bold">Suggested Improvements on Achieving Outcome</td>
-				    <td>
-				    	<textarea name="" id="improvements" cols="80" rows="5">
-				    	</textarea>
-				    </td>
-
-				  </tr>
-
-			</table> 
-			
+		<div class="section group">			
+			<div class="col span_1_of_1">
+				<br>
+				<br>
+				<h3>III. Evaluation of Outcomes Assessments: </h3>
+				<br>
+				<br>
+			</div>
 		</div>
-	</div>
-	
-			
+		<div class="section group">	
+			<div class="col span_1_of_1">
+				<h3>Recommendations for course improvement:</h3>
+					<textarea ng-model="recommendationsForCourseImprovement" cols="95" rows="10"></textarea>
+					<br><br>
+			</div>
+		</div>
+		<div class="section group">	
+			<div class="col span_1_of_1">
+				<h3>Recommendations to CEN program governance (e.g. curriculum committee):</h3>
+					<textarea ng-model="recommendationsToCENProgramGovernance" cols="95" rows="10"></textarea>
+					<br><br>
+			</div>
+		</div>
+		<div class="section group">	
+			<div class="col span_1_of_1">
+				<h3>Comments/Recommendations on this process:</h3>
+					<textarea ng-model="sectionIIIRecommendationsComments" cols="95" rows="10"></textarea>
+			</div>
+		</div>
+				<br/><br/><br/>
 
-			<br/><br/><br/><br/><br/>
-			
+
+		<div class="section group">	
+			<div class="col span_1_of_1">
+				<h3 class="">
+					COMPUTER ENGINEERING PROGRAM
+				</h3>
+				<h3 class="">
+					SUMMARY OF COURSE COMMITTEE ANALYSIS
+				</h3>
+			</div> 
+		</div>
+		<div class="section group">	
+			<div class="col span_1_of_1">
+				<ul>
+					<li>Course Number and Title: {{ form.courseNumber }}, {{ form.courseTitle }}</li>
+					<li>Term and Year: {{ form.term }}</li>
+					<li>Instructor: {{ form.instructor }}</li>
+					<li>Course Committee Participants: {{ form.courseCommitteeParticipants }}</li>
+					<br>
+					<li>Date: {{ form.date }}</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="section group" data-ng-repeat="outcome in form.outcomes">	
+		</br>
+			<div class="col span_1_of_1">
+				<table id="outcome" class="centered" >
+					<tr>
+					    <td>
+					    	<h4>Outcome: </h4>
+					    	<br/>
+					    	<p>{{ outcome.outcomeName }}</p>
+					    	<br/>
+					    	<h5> Number of students: </h5>
+					    </td>
+					    <td>
+					    	<h4>Evaluation: <br/><br/></h4>
+					    	<p>(satisfactory, unsatisfactory, weaknesses, identified, suggestedimprovements, remarks) </p>
+					    </td>
+					  </tr>
+					  
+					  <tr>
+					    <td class="bold">1. Instruments Chosen</td>
+					    <td>
+					    	<textarea ng-model="outcome.instruments" cols="80" rows="5">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">2. Likert Scale Threshold(s)</td>
+					    <td>
+					    	<textarea ng-model="outcome.thresholds" cols="80" rows="5">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">3. Sample Graded Student Work</td>
+					    <td>
+					    	<textarea ng-model="outcome.gradedWork" cols="80" rows="5">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">4. Percentage of Students Achieving Outcome</td>
+					    <td>
+					    	<textarea name="" id="percentAchieved" cols="80" rows="2">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">5. Average Likert Value</td>
+					    <td>
+					    	<textarea name="" id="likert" cols="80" rows="1">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">Achievement of Outcome</td>
+					    <td>
+					    	<textarea name="" id="achievement" cols="80" rows="5">
+					    	</textarea>
+					    </td>
+					  </tr>
+
+					  <tr>
+					    <td class="bold">Suggested Improvements on Achieving Outcome</td>
+					    <td>
+					    	<textarea name="" id="improvements" cols="80" rows="5">
+					    	</textarea>
+					    </td>
+
+					  </tr>
+
+				</table> 
+				
+			</div>
+		</div>
+	</br>
+		<button style="margin-left: 100px" class="btn btn-large btn-primary" ng-click="submit(form)">Submit</button>
+	</form>	
+				
+
+				<br/><br/><br/><br/><br/>
+				
 	<div class="section group">	
 		<div class="col span_1_of_1">
 		
@@ -489,4 +519,4 @@ td
 		</div>
 	</div>
 </body>
-
+</section>

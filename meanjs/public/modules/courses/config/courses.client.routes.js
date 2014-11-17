@@ -30,7 +30,7 @@ angular.module('courses').config(['$stateProvider',
 			templateUrl: 'modules/courses/views/manage-courses-admin.client.view.html'
 		}).
 		state('courseCommitteeEvalForm', {
-			url: '/courseCommitteeEvalForm',
+			url: '/{courseID}/courseCommitteeEvalForm',
 			templateUrl: 'modules/courses/views/CourseCommitteeEvaluationForm.html'
 		}).
 		state('courseOutcomeAssessmentForm', {
