@@ -11,6 +11,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 		$scope.submit = function(form) {
 			console.log(form);
+			$http.post('/courseCommitteeEvaluation', form);
 		}
 
 		function setFormFields(course) {
