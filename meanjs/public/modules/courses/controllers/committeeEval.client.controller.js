@@ -14,10 +14,8 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			course.form = $scope.form;
 			course.outcomes = $scope.outcomes;
 
-			course.$update(function() {
-				console.log("updaaet");
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+			$http.post('courses/' + course._id + '/evalForm', course).success(function(response) {
+				$scope.course = response;
 			});
 		}
 
