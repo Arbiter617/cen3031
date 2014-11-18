@@ -16,6 +16,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 			$http.post('courses/' + course._id + '/evalForm', course).success(function(response) {
 				$scope.course = response;
+				console.log(response);
 			});
 		}
 
