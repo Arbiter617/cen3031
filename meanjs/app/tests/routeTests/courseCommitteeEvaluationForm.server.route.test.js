@@ -6,6 +6,9 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	CourseModel= mongoose.model('CourseOutcomeAssessmentForm'),
+	Outcome = mongoose.model('Outcome'),
+	OutcomeEvaluation = mongoose.model('OutcomeEvaluation'),
+	User = mongoose.model('User'),
 	CourseCommittee = mongoose.model('CourseCommitteeEvaluationForm'),
 	request = require('supertest');
 
@@ -13,7 +16,8 @@ var should = require('should'),
  * Globals, id later becomes the mongodb id of a document so that it can
  * be used in id specific routes.
  */
-var courseModel1, courseEvaluation, id, id2;
+var courseModel1, courseEvaluation, id, id2, outcome1, outcome2, outcome3, outcomeArray,
+	outcomeEvals1, outcomeEvals2, outcomeEvals3, user;
 
 /**
  * Functional tests.
@@ -24,49 +28,29 @@ var courseModel1, courseEvaluation, id, id2;
 describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 
 	before(function(done) {
-		courseModel1 = new CourseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
-			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
-			instructor: 'Professor Dobra',
-			date: new Date(), // Is this proper syntax for
-			descriptionOfInstrument: 'String describing instrument..whatever this means',
-			numberOfStudents: 45,
-			gradingScale: '0-10',
-			averageScore: 82,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 95,
-			averageLikertScaleValue: 4,
-			instructorComments: 'Room for instructor comments.'
-		});
-
-		courseModel1.save(function() {
-			courseEvaluation = new CourseCommittee({
-				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-				description: 'This is a test',
-				syllabusReflectCurrentContent: false,
-				droppedTopics: true,
-				addedTopics: false,
-				textbookWorkingWell: false,
-				changesRequiredForNextAcademicYear: true,
-				newBooksToBeEvaluated: true,
-				bookMapWellToSyllabus: false,
-				otherEvaluationsIndicateIssues: true,
-				didStudentsMasterMaterial: false,
-				problemsWithKnowledgeInKeyConcepts: false,
-				prereqsStillAppropriate: true,
-				satisfyNeedsOfFollowupCourses: false,
-				sectionIActionsRecommendations: 'This is test for sectionI',
-				sectionIIActionsRecommendations: 'This is test for sectionII',
-				recommendationsForCourseImprovement: 'Drop the course',
-				recommendationsToCENProgramGovernance: 'Give me a raise',
-				sectionIIIRecommendationsComments: 'This is test for section III',
-				courseOutcomeAssessmentForm: courseModel1
+		courseEvaluation = new CourseCommittee({
+			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
+			description: 'This is a test',
+			syllabusReflectCurrentContent: false,
+			droppedTopics: true,
+			addedTopics: false,
+			textbookWorkingWell: false,
+			changesRequiredForNextAcademicYear: true,
+			newBooksToBeEvaluated: true,
+			bookMapWellToSyllabus: false,
+			otherEvaluationsIndicateIssues: true,
+			didStudentsMasterMaterial: false,
+			problemsWithKnowledgeInKeyConcepts: false,
+			prereqsStillAppropriate: true,
+			satisfyNeedsOfFollowupCourses: false,
+			sectionIActionsRecommendations: 'This is test for sectionI',
+			sectionIIActionsRecommendations: 'This is test for sectionII',
+			recommendationsForCourseImprovement: 'Drop the course',
+			recommendationsToCENProgramGovernance: 'Give me a raise',
+			sectionIIIRecommendationsComments: 'This is test for section III',
+			courseOutcomeAssessmentForm: courseModel1,
 			});
 			done();
-		});
-
 	});
 
 	describe('/courseCommitteeEvaluation tests', function() {
@@ -106,19 +90,6 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 	});
 
 	describe('/courseCommitteeEvaluation/:id tests', function() {
-
-		//This test is weird. Can't really verify the pdf is created. 
-		//Go to the /controllers/pdfs folder and verify that it has been created.
-		//Manually delete all the generated pdfs. 
-
-		it('should create a pdf form based on the courseEvaluation', function(done) {
-			request
-				.get('/courseCommitteeEvaluation/' + id2)
-				.end(function (err,res) {
-					res.status.should.equal(200);
-					done();
-				});
-		});
 		
 		//This test will need to be updated if we fix thte sorting of the get operation
 		it('should successfully update a form', function(done) {
@@ -156,9 +127,8 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 		});
 
 	});
-	
+
 	after(function(done) {
-		CourseModel.remove().exec();
 		CourseCommittee.remove().exec();
 		done();
 	});

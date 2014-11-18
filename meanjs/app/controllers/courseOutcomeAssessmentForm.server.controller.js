@@ -16,7 +16,39 @@ var mongoose = require('mongoose'),
  * Store the JSON objects for the CourseOutcomeAssessmentForm
  */
 exports.create = function(req, res, next) {
+	// WILL ULTIMATELY HAVE THE PARSING GET WHAT WE NEED AND SAVE IT INTO THE COURSE MODEL...
+
+	// var csv_file = req.body.data;
+	// var csv_file_str = csv_file.toString();
+	
+	// parse(csv_file_str, {delimiter: ','}, function(err, output){
+ // 		var outStr = '';
+ // 		var avgScore = 0;
+ // 		for (var  i =0; i < output.length; i++) {
+ // 			for (var j = 0; j < output[i].length; j++) {
+ // 				if (i == 0 ) {
+ // 					if (output[i][j] == 'Exam') {
+ 						
+ // 						i++;
+ // 						while (i < output.length) {
+ // 							avgScore+=parseInt(output[i][j]);
+ // 							i++;
+ // 						}
+ // 						break;
+ // 					}
+ // 				} 			
+ // 			}
+ // 		}
+ // 		avgScore /= (parseInt(output.length-1));
+
+ // 		// send back parsed data in the response
+ // 		res.status(200).json(avgScore);
+
 	var course = new Course(req.body);
+	// WILL EVENUTALLY LOOK LIKE: 
+	// 	var course = new Course();
+	//	course.averageScore = avgScore...
+	
 	course.save(function(err) {
 		if (err) {
 			res.status(400).send({
@@ -30,67 +62,12 @@ exports.create = function(req, res, next) {
 	
 };
 
-/**
- * Uses phantomjs to render the provided html into a pdf.
- * 'paperSize' sets the size of the pdf generated to be what is normal looking
- * res.download(..) returns the specified file to the front end for downloading
- * Might have to change it so that is returns the url instead of the actual file.
- */
-var generatePDF = function (html,id,req,res) {
-	/*
-	phantom.create(function (ph) {
-  		ph.createPage(function (page) {
-     		page.setContent(html);
-     		page.set('paperSize', { format: 'A4'});
-     		var path = __dirname + '/pdfs/' + id + '.pdf';
-      		page.render(path, function() {
-      			ph.exit();
-				res.download(path, 'report.pdf', function(err) {
-					if(err) {
-						res.status(400).send({
-							message: errorHandler.getErrorMessage(err)
-						});
-					}
-				});
-      		});  	
-    	});
-  	});
-*/
-
-  	var path = __dirname + '/pdfs/' + id + '.pdf';
-  	wkhtmltopdf(html, { pageSize: 'A4', output: path },  function() {
-  		res.download(path, 'report.pdf', function(err) {
-					if(err) {
-						throw err;
-					}
-		});
-  	});
-
-};
-
-/**
- * Uses Handlebarsjs to dynamically populate a html template with a json object.
- * TODO fix this so the date appears without the time in it.
- */ 
-var generateHTML = function(course,filename,req,res,next) {
-	fs.readFile(filename, function(err,data) {
-		var template = Handlebars.compile(data.toString());
-		var result = template(course);
-		//generate the pdf
-		if(next) {
-			next();
-		} else {
-			generatePDF(result, course._id,req,res);
-		}
-	});
-};
 
 /**
  * Creates a pdf form based of the specified courseOutcomeEvaluationForm
  */
 exports.read = function(req, res) {
-	var filename = __dirname + '/pdfModels/CourseOutcomeAssessmentForm.html';
-	generateHTML(req.course,filename,req,res);
+	res.json(req.course);
 };
 
 

@@ -24,7 +24,6 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 
 	before(function(done) {
 		course = new Course({
-			outcome: 3,
 			description: 'test course',
 			courseNumber: 3101,
 			term: 'FA2014',
@@ -41,7 +40,6 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 			instructorComments: 'this is test data comments.'
 		});
 		course2 = new Course({
-			outcome: 1,
 			description: 'test course2',
 			courseNumber: 4600,
 			term: 'SP2014',
@@ -59,20 +57,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 		});
 
 		course3 = new Course({
-			description: 'test course2',
-			courseNumber: 4600,
-			term: 'SP2014',
-			courseTitle: 'Operating Systems.',
-			instructor: 'Test Instructor',
-			date: new Date(),
-			descriptionOfInstrument: 'this is test data.',
-			numberOfStudents: 600,
-			gradingScale: '0-10',
-			averageScore: 55,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 10,
-			averageLikertScaleValue: 1.5,
-			instructorComments: 'this is test data comments.'
+			test: 'data'
 		});
 		done();
 
@@ -114,20 +99,18 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 				
 				});
       	});
-/*
-		it('should fail to save a form without an outcome', function(done) {
-			course2.term = ''
+
+		it('should fail to save a bad form', function(done) {
 			request
 				.post('/courseOutcomeAssessment')
-				.send(course2)
+				.send(course3)
       			.end(function (err,res) {
       				res.status.should.equal(400);
-      				should.exist(err);
       				done();
-				
 				});
       	});
-*/
+
+
 
 		it('should return both of the newly created CourseOutcomeAssessmentForms', function(done) {
 			request
@@ -147,29 +130,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 	});
 
 	describe('/courseOutcomeAssessment/:id tests', function() {
-
-		//This test is weird. Can't really verify the pdf is created. 
-		//Go to the /controllers/pdfs folder and verify that it has been created.
-		//Manually delete all the generated pdfs. 
-
-		it('should create a pdf form based on the first course', function(done) {
-			request
-				.get('/courseOutcomeAssessment/' + id2)
-				.end(function (err,res) {
-					res.status.should.equal(200);
-					done();
-				});
-		});
-		
-		it('should create a pdf form based on the second course', function(done) {
-			request
-				.get('/courseOutcomeAssessment/' + id)
-				.end(function (err,res) {
-					res.status.should.equal(200);
-					done();
-				});
-		});
-
+	
 		//This test will need to be updated if we fix thte sorting of the get operation
 		it('should successfully update a form', function(done) {
 			course2.description = 'I am newly updated.';
@@ -210,7 +171,6 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 	});
 	
 	after(function(done) {
-
 		Course.remove().exec();
 		done();
 	});
