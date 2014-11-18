@@ -11,8 +11,9 @@ Front-end Team:
 5. Manny Momot (emanmomot)
 
 Back-end Team:
-1. kkyrazis
-2. zachschultz
-3. brianroytman
-4. balindenberg
-5. abcronin
+
+1. (kkyrazis)
+2. (zachschultz)
+3. (brianroytman)
+4. (balindenberg)
+5. (abcronin)
