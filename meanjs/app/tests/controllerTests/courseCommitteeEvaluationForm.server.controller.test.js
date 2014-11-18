@@ -33,6 +33,7 @@ var courseModel1, courseEvaluation, req, req2, res, res2, res3;
 describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 
 	beforeEach(function(done) {
+		/*
 		courseModel1 = new CourseModel({
 			description: 'First string describing the class...software engineering',
 			courseNumber: 1234,
@@ -50,6 +51,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 			instructorComments: 'Room for instructor comments.'
 		});
 		courseModel1.save(function() {
+			*/
 			courseEvaluation = new CourseCommittee({
 				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
 				description: 'This is a test',
@@ -69,8 +71,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 				sectionIIActionsRecommendations: 'This is test for sectionII',
 				recommendationsForCourseImprovement: 'Drop the course',
 				recommendationsToCENProgramGovernance: 'Give me a raise',
-				sectionIIIRecommendationsComments: 'This is test for section III',
-				courseOutcomeAssessmentForm: courseModel1
+				sectionIIIRecommendationsComments: 'This is test for section III'
 			});
 
 			// console.log('util.inspect: '+util.inspect(courseEvaluation));
@@ -87,12 +88,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 
 			done();
 			
-		});
-
-		
-	
-		
-
+		//});
 	});
 
 	describe('CourseCommitteeEvaluationForm create Tests', function() {
@@ -103,11 +99,8 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 				var code = JSON.parse(res._getStatusCode());
 				var data = JSON.parse(res._getData());
 				data.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
-				CourseModel.findById(courseEvaluation.courseOutcomeAssessmentForm).exec(function(err, course) {
-					course.courseNumber.should.equal(courseModel1.courseNumber);
-					code.should.equal(200);
-					done();
-				});
+				code.should.equal(200);
+				done();
 			});
 		});
 
@@ -195,9 +188,6 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 				var data = JSON.parse(res._getData());
 				var id = data._id;
 				data.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
-				CourseModel.findById(courseEvaluation.courseOutcomeAssessmentForm).exec(function(err, course) {
-					course.courseNumber.should.equal(courseModel1.courseNumber);
-					code.should.equal(200);
 					CourseCommittee.findById(id).exec(function(err, courseComittee1) {
 	 					req.courseCommittee = courseComittee1;
 	 					req.body = {courseCommitteeParticipants : 'test course committee'};
@@ -209,7 +199,6 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 	 						done();
 	 					});
 	 				});
-				});
 			});
 		});
 /*

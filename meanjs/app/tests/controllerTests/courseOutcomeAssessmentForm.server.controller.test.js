@@ -100,10 +100,9 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 				done();
 			});
       	});
-     });
+    });
 
 	describe('CourseOutcomeAssessmentForm list Tests', function() {
-		//TODO fix this test.
 		it('should list 2 courseForms by date and courseNumber', function(done) {
 			controller.create(req,res, function() {
 				var code = JSON.parse(res._getStatusCode());
@@ -187,17 +186,6 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 			});
 
 		});
-		/*
-		 * For some reason, I can't get his to throw a error even though its not saved.
-		 		it('should fail to delete a form that is not there', function(done) {
-			req.course = new Course();
-			controller.delete(req,res, function() {
-				var code = res._getStatusCode();
-				code.should.equal(400);
-				done();
-			});
-		});
-		*/
 	});
 
 	describe('CourseOutcomeAssessmentForm Read Tests', function() {
@@ -210,24 +198,6 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 				done();
 			});
 		});	
-		/*
-		//TODO this test needs a better mocking library that includes a .download so that I can mimic 
-		//the generatePDF response. For now it will be verified by running the route tests.
-		it('should be able to generate a pdf file', function(done) {
-			var filename = __dirname + '/../../controllers/pdfModels/CourseOutcomeAssessmentForm.html';
-			fs.readFile(filename, function(err,data) {
-				should.not.exist(err);
-				var template = Handlebars.compile(data.toString());
-				var result = template(course);
-				controller.generatePDF(result,course._id,req,res, function() {
-					var code = res._getStatusCode();
-					code.should.equal(200);
-					done();
-				});
-				
-			});
-		});
-*/
 	});
 	
 	describe('CourseOutcomeAssessmentForm findById Tests', function() {
@@ -257,8 +227,8 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 
 
 	});
-	afterEach(function(done) {
 
+	afterEach(function(done) {
 		Course.remove().exec();
 		done();
 	});

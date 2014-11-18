@@ -26,50 +26,28 @@ var courseModel1, courseEvaluation, id;
 
 describe('Course Committee Evaluation Unit Tests:', function(){
 	beforeEach(function(done)	{
-		courseModel1 = new CourseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
-			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
-			instructor: 'Professor Dobra',
-			date: new Date(), // Is this proper syntax for
-			descriptionOfInstrument: 'String describing instrument..whatever this means',
-			numberOfStudents: 45,
-			gradingScale: '0-10',
-			averageScore: 82,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 95,
-			averageLikertScaleValue: 4,
-			instructorComments: 'Room for instructor comments.'
+		courseEvaluation = new CourseCommittee({
+			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
+			description: 'This is a test',
+			syllabusReflectCurrentContent: false,
+			droppedTopics: true,
+			addedTopics: false,
+			textbookWorkingWell: false,
+			changesRequiredForNextAcademicYear: true,
+			newBooksToBeEvaluated: true,
+			bookMapWellToSyllabus: false,
+			otherEvaluationsIndicateIssues: true,
+			didStudentsMasterMaterial: false,
+			problemsWithKnowledgeInKeyConcepts: false,
+			prereqsStillAppropriate: true,
+			satisfyNeedsOfFollowupCourses: false,
+			sectionIActionsRecommendations: 'This is test for sectionI',
+			sectionIIActionsRecommendations: 'This is test for sectionII',
+			recommendationsForCourseImprovement: 'Drop the course',
+			recommendationsToCENProgramGovernance: 'Give me a raise',
+			sectionIIIRecommendationsComments: 'This is test for section III',
 		});
-
-		courseModel1.save(function() {
-			courseEvaluation = new CourseCommittee({
-				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-				description: 'This is a test',
-				syllabusReflectCurrentContent: false,
-				droppedTopics: true,
-				addedTopics: false,
-				textbookWorkingWell: false,
-				changesRequiredForNextAcademicYear: true,
-				newBooksToBeEvaluated: true,
-				bookMapWellToSyllabus: false,
-				otherEvaluationsIndicateIssues: true,
-				didStudentsMasterMaterial: false,
-				problemsWithKnowledgeInKeyConcepts: false,
-				prereqsStillAppropriate: true,
-				satisfyNeedsOfFollowupCourses: false,
-				sectionIActionsRecommendations: 'This is test for sectionI',
-				sectionIIActionsRecommendations: 'This is test for sectionII',
-				recommendationsForCourseImprovement: 'Drop the course',
-				recommendationsToCENProgramGovernance: 'Give me a raise',
-				sectionIIIRecommendationsComments: 'This is test for section III',
-				courseOutcomeAssessmentForm: courseModel1
-			});
-			done();
-		});
-
-		
+		done();
 	});	
 
 	describe('Method Save', function() {
@@ -234,28 +212,8 @@ describe('Course Committee Evaluation Unit Tests:', function(){
 		});
 	});
 
-	describe('Retrieving data from nested Schema', function() {
-		it('should be able to return the outcome from the nested schema', function(done) {
-			courseEvaluation.save(function(err) {
-				should.not.exist(err);
-				CourseCommittee.find({})
-					.populate('courseOutcomeAssessmentForm')
-					.exec( function(err,courses) {
-						var util = require('util');
-						courses.should.have.length(1);
-						should.not.exist(err);
-						courses[0].courseOutcomeAssessmentForm.courseNumber.should.equal(1234);
-						courses[0].courseOutcomeAssessmentForm.averageScore.should.equal(82);
-						done();
-					});
-			});
-			
-		});
-	});
-
 	afterEach(function(done) {
 		CourseCommittee.remove().exec();
-		CourseModel.remove().exec();
 		done();
 	});
 });

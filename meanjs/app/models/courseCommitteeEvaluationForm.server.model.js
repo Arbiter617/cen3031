@@ -10,10 +10,6 @@ var mongoose = require('mongoose'),
 * CourseCommitteeEvaluationForm Schema
 */
 var CourseCommitteeEvaluationFormSchema = new Schema({
-	/*
-		For now I'll just have this as a string, but eventually might need 
-		to be a list of users or instructors or something.
-	*/
 	courseCommitteeParticipants: {
 		type: String,
 		trim: true,
@@ -142,16 +138,7 @@ var CourseCommitteeEvaluationFormSchema = new Schema({
 		trim: true,
 		default: '',
 		required: true
-	},
-	//Not sure how nesting objects works with handlebars but I think
-	//it could work like courseOutcomeAssessmentForm.courseTitle
-	//might refactor courseOutcomeAssessmentForm based off of front ends
-	//course schema. We'll see.
-	courseOutcomeAssessmentForm: { 
-		type: Schema.Types.ObjectId,
-		ref: 'CourseOutcomeAssessmentForm'
 	}
-	
 });
 
 mongoose.model('CourseCommitteeEvaluationForm', CourseCommitteeEvaluationFormSchema);

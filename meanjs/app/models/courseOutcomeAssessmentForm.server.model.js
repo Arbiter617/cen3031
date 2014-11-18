@@ -10,11 +10,6 @@ var mongoose = require('mongoose'),
 * CourseOutcomeAssessmentForm Schema
 */
 var CourseOutcomeAssessmentFormSchema = new Schema({
-	outcome: {
-		type: Number,
-		default: 0,
-		required: true
-	},
 	description: {
 		type: String,
 		trim: true,
