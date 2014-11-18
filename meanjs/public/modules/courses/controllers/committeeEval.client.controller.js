@@ -10,14 +10,22 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		$scope.form.date = new Date();
 
 		$scope.submit = function(form) {
-			console.log(form);
-			$http.post('/courseCommitteeEvaluation', form);
+			var course = $scope.course;
+			course.form = $scope.form;
+			course.outcomes = $scope.outcomes;
+
+			course.$update(function() {
+				console.log("updaaet");
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		}
 
 		function setFormFields(course) {
+			$scope.course = course;
 			$scope.form.courseNumber = course.courseID;
 			$scope.form.courseTitle = course.courseName;
-			$scope.form.outcomes = course.outcomes;
+			$scope.outcomes = course.outcomes;
 		}
 
 		$scope.getUserCourses = function() {

@@ -309,7 +309,7 @@ td
 		<div class="section group">			
 			<div class="col span_1_of_1">
 				<h4>ACTIONS/RECOMMENDATIONS:</h4>
-				<textarea ng-model="sectionIIActionsRecommendations" cols="95" rows="10"></textarea>
+				<textarea ng-model="form.sectionIIActionsRecommendations" cols="95" rows="10"></textarea>
 			</div>
 		</div>
 
@@ -325,21 +325,21 @@ td
 		<div class="section group">	
 			<div class="col span_1_of_1">
 				<h3>Recommendations for course improvement:</h3>
-					<textarea ng-model="recommendationsForCourseImprovement" cols="95" rows="10"></textarea>
+					<textarea ng-model="form.recommendationsForCourseImprovement" cols="95" rows="10"></textarea>
 					<br><br>
 			</div>
 		</div>
 		<div class="section group">	
 			<div class="col span_1_of_1">
 				<h3>Recommendations to CEN program governance (e.g. curriculum committee):</h3>
-					<textarea ng-model="recommendationsToCENProgramGovernance" cols="95" rows="10"></textarea>
+					<textarea ng-model="form.recommendationsToCENProgramGovernance" cols="95" rows="10"></textarea>
 					<br><br>
 			</div>
 		</div>
 		<div class="section group">	
 			<div class="col span_1_of_1">
 				<h3>Comments/Recommendations on this process:</h3>
-					<textarea ng-model="sectionIIIRecommendationsComments" cols="95" rows="10"></textarea>
+					<textarea ng-model="form.sectionIIIRecommendationsComments" cols="95" rows="10"></textarea>
 			</div>
 		</div>
 				<br/><br/><br/>
@@ -368,7 +368,7 @@ td
 			</div>
 		</div>
 
-		<div class="section group" data-ng-repeat="outcome in form.outcomes">	
+		<div class="section group" data-ng-repeat="outcome in outcomes">	
 		</br>
 			<div class="col span_1_of_1">
 				<table id="outcome" class="centered" >
