@@ -44,10 +44,17 @@
 		"grunt-cli": "~0.1.13",
 		"glob": "~4.0.5",
 		"async": "~0.9.0",
-		"nodemailer": "~1.1.1"
+		"handlebars": "~2.0.0",
+		"phantom": "~0.6.5",
+		"wkhtmltopdf": "~0.1.5",
+		"json2xls": "~0.0.5",
+		"nodemailer": "~1.1.1",
+		"csv-parse": "~0.0.6",
+		"csv": "~0.4.1"
 	},
 	"devDependencies": {
 		"supertest": "~0.13.0",
+		"node-mocks-http": "~1.2.0",
 		"should": "~4.0.4",
 		"grunt-env": "~0.4.1",
 		"grunt-node-inspector": "~0.1.3",

@@ -1,130 +1,255 @@
 'use strict';
 
-angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', 'Authentication', 'Courses', 'Users',
-	function($scope, $http, $stateParams, $location, Authentication, Courses, Users) {
+angular.module('courses').controller('CoursesController', ['$scope', '$http', '$stateParams', '$location', '$modal', '$q', 'Authentication', 'Courses', 'Users', 'Outcomes',
+	function($scope, $http, $stateParams, $location, $modal, $q, Authentication, Courses, Users, Outcomes) {
 		$scope.authentication = Authentication;
 		$scope.showCourseModal = false;
-		$scope.courseIndex = 0;
 		$scope.user = new Users(Authentication.user);
+		$scope.userCourseOptions = [];
+		$scope.selectedOutcomes = [];
+		$scope.outcomeCount = 0;
 
-		$scope.getCourseIndex = function(index) {
-			$scope.courseIndex = index;
-		};
+		var submitModal = '';
 
+		//add course to user's courses list
 		$scope.addCourse = function(course) {
 			$scope.user.courses.push(course._id);
 			$scope.user.$update(function(response) {
-				//Authentication.user = response;
-				//$location.path('articles/' + article._id);
+				Authentication.user = response;
+				$scope.user = new Users(Authentication.user);
+
+				$scope.userCourses.push(course);
+				$scope.userCourse = '';
+				removeArray($scope.userCourseOptions, course);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
+		//remove course from user's courses list
 		$scope.removeCourse = function(course) {
 			$http.delete('users/courses/' + course._id, course).success(function(response) {
+				Authentication.user = response;
+				$scope.user = new Users(Authentication.user);
 
+				removeArray($scope.userCourses, course);
+				$scope.userCourseOptions.push(course);
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
 		};
 
-		$scope.create = function() {
-			var course = new Courses({
-				courseID: this.courseID,
-				courseName: this.courseName
+		//open edit course modal
+		$scope.edit = function(course) {
+			submitModal = $scope.update;
+			$scope.course = course;
+
+			var outcomes = [];
+			for(var i = 0; i < $scope.outcomes.length; i++) {
+				outcomes[i] =  angular.copy($scope.outcomes[i]);
+				if(course.outcomes.indexOf($scope.outcomes[i]) != -1)
+					outcomes[i].ticked = true;
+			}
+
+			openModal({
+				courseID: course.courseID,
+				courseName: course.courseName,
+				outcomes: outcomes
 			});
+		};
+
+		//open create course modal
+		$scope.new = function() {
+			submitModal = $scope.create;
+			openModal({ outcomes:$scope.outcomes });
+		};
+
+		function buildCourse(course, courseData) {
+			course.courseID = courseData.courseID;
+			course.courseName = courseData.courseName;
+			course.outcomes = courseData.outcomes;
+		}
+
+		//create new course in db
+		$scope.create = function(courseData) {
+			var course = new Courses();
+			buildCourse(course, courseData);
+
 			course.$save(function(response) {
-				$scope.courses.push(response);
-				$scope.courseID = '';
-				$scope.courseName = '';
+				$scope.courses.push(course);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-
-			$scope.toggleCourseModal();
 		};
 
-		$scope.edit = function(course) {
-			$scope.submitModal = $scope.update;
-			$scope.course = course;
-			$scope.toggleCourseModal();
-		};
-
-		$scope.new = function() {
-			$scope.submitModal = $scope.create;
-			$scope.toggleCourseModal();
-		};
-
-		$scope.update = function() {
+		//update existing course in db
+		$scope.update = function(courseData) {
 			var course = $scope.course;
-			course.courseID = this.courseID;
+			buildCourse(course, courseData);
 
 			course.$update(function() {
-				//$location.path('articles/' + article._id);
+				resolveOutcomes([course]);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 				$scope.course = '';
 			});
-
-			$scope.toggleCourseModal();
 		};
 
+		//remove existing course from db
+		//	**should be updated to remove course
+		//	from users subscribed to it also**
 		$scope.remove = function(course) {
-			//Courses.delete({courseId:Id});
-			//$scope.courseId = course._id;
-			if (course) {
-				course.$delete();
+			course.$delete();
 
-				for (var i in $scope.courses) {
-					if ($scope.courses[i] === course) {
-						$scope.courses.splice(i, 1);
-					}
+			for (var i in $scope.courses) {
+				if ($scope.courses[i] === course) {
+					$scope.courses.splice(i, 1);
 				}
-			} else {
-				console.log('\n\n\n\n remove null course why \n\n\n\n');
-				//$scope.article.$remove(function() {
-				//	$location.path('articles');
-				//});
 			}
 		};
 
+		//populate $scope.userCourses
 		$scope.getUserCourses = function() {
-			$http.get('users/courses').success(function(response) {
+			var d = $q.defer();
+		 	$http.get('users/courses').success(function(response) {
 				$scope.userCourses = response;
+				d.resolve();
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
+			return d.promise;
 		};
 
+		//populate $scope.courses
 		$scope.getCourses = function() {
-			$scope.courses = Courses.query();
+			var d = $q.defer();
+			$scope.courses = Courses.query(function(data) {
+				d.resolve();
+			});
+			return d.promise;
+		};
+
+		//populate outcomes
+		$scope.getOutcomes = function() {
+			var d = $q.defer();
+			$scope.outcomes = Outcomes.query(function() {
+				d.resolve();
+			});
+			return d.promise;
 		}
 
-		$scope.toggleCourseModal = function() {
-			$scope.showCourseModal = !$scope.showCourseModal;
+		//init data needed for user manage-courses
+		$scope.initUserManageCourses = function() {
+			$q.all([
+				$scope.getCourses(),
+				$scope.getUserCourses()
+			]).then(function(data) {
+				//courses that user does not have yet
+				for(var i = 0; i < $scope.courses.length; i++) {
+					if(indexById($scope.userCourses, $scope.courses[i]) == -1) {
+						$scope.userCourseOptions.push($scope.courses[i]);
+					}
+				}
+			});
 		};
+
+		//init data needed for admin manage-courses
+		$scope.initAdminManageCourses = function() {
+			$q.all([
+				$scope.getCourses(),
+				$scope.getOutcomes()
+			]).then(function(data) {
+				resolveOutcomes($scope.courses);
+			});
+			
+		}
+
+		$scope.initListCourses = function() {
+			$q.all([
+				$scope.getOutcomes(),
+				$scope.getUserCourses()
+			]).then(function(data) {
+				resolveOutcomes($scope.userCourses);
+
+				if($scope.userCourses.length==0) {
+					$scope.dispMessage = "No courses available";
+				}
+			})
+		};
+
+		function openModal(params) {
+			var modalInstance = $modal.open({
+				templateUrl: 'myModalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: '',
+				resolve: {
+					params: function () {
+						return params;
+					}
+				}
+    		});
+
+			modalInstance.result.then(function (courseData) {
+				submitModal(courseData);
+			}); 
+		}
+
+		function outcomeById(id) {
+			for(var i = 0; i < $scope.outcomes.length; i++) {
+				if($scope.outcomes[i]._id === id)
+					return $scope.outcomes[i];
+			}
+		};
+
+		//take list of courses with list of outcome _id's
+		//and replace with actual outcome objects from
+		//$scope.outcomes
+		function resolveOutcomes(courses) {
+			for(var i = 0; i < courses.length; i++) {
+				for(var j = 0; j < courses[i].outcomes.length; j++) {
+					courses[i].outcomes[j] = outcomeById(courses[i].outcomes[j]);
+				}
+			}
+		}
+
+		function indexById(list, element) {
+			for(var i = 0; i < list.length; i++) {
+				if(list[i]._id == element._id)
+					return i;
+			}
+			return -1;
+		}
+
+		function removeArray(array, element) {
+			var i = array.indexOf(element);
+			if(i !== -1)
+				array.splice(i, 1);
+		}
 	
 }])
 
-.directive('modalDialog', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      show: '='
-    },
-    replace: true, // Replace with the template below
-    transclude: true, // we want to insert custom content inside the directive
-    link: function(scope, element, attrs) {
-      scope.dialogStyle = {};
-      if (attrs.width)
-        scope.dialogStyle.width = attrs.width;
-      if (attrs.height)
-        scope.dialogStyle.height = attrs.height;
-      scope.hideModal = function() {
-        scope.show = false;
-      };
-    },
-    template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
-  };
+.controller('ModalInstanceCtrl', function ($scope, $modalInstance, params) {
+
+	$scope.outcomes = params.outcomes;
+	$scope.course = {
+		courseID: params.courseID,
+		courseName: params.courseName
+	}
+
+
+	$scope.submit = function (course) {
+		var outcomes = [];
+
+		for(var i = 0; i < $scope.outcomes.length; i++)
+			if($scope.outcomes[i].ticked)
+				outcomes.push($scope.outcomes[i]._id);
+
+		course.outcomes = outcomes;
+
+		$modalInstance.close(course);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
 });

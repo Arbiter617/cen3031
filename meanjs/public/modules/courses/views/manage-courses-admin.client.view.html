@@ -1,7 +1,46 @@
-<section ng-app="courses" data-ng-controller="OutcomesController" data-ng-init="find()">
-
-	<div class="text-center">
-		<h1>Manage Courses (Admin)</h1>
+<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="initAdminManageCourses()">
+	<div class="page-header">
+		<h1>Courses:</h1>
 	</div>
+	<div class="list-group">
+		<a data-ng-repeat="course in courses" class="list-group-item">
+			<h4 class="list-group-item-heading" data-ng-bind="course.courseID"></h4>
+			<h5 class = "list-group-item-heading" data-ng-bind = "course.courseName"></h5>
+			<button type="button" class="btn btn-large btn-primary" ng-click="edit(course)">Edit</button>
+			<button type="button" class="btn btn-large btn-primary" ng-click="remove(course)">Remove</button>
+		</a>
+	</div>
+	<button type="button" class="btn btn-large btn-primary" ng-click="new()">Add new course</button>
+	</br></br></br>
 
+	<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Course</h3>
+        </div>
+        <div class="modal-body">
+            <form name="courseForm" class="form-horizontal" style="padding:5%">
+			<fieldset>
+				<div class="form-group" ng-class="{ 'has-error': courseForm.courseID.$dirty && courseForm.courseID.$invalid }">
+					<label class="control-label" for="courseID">Course ID</label>
+					<div class="controls">
+						<input type="text" data-ng-model="course.courseID" id="courseID" class="form-control" required>
+					</div>
+					<label class="control-label" for="courseName">Course Name</label>
+					<div class="controls">
+						<input name="courseName" type="text" data-ng-model="course.courseName" id="courseName" class="form-control" required>
+					</div>
+					<label class="control-label" for="outcomes">Select Outcomes</label>
+					<div multi-select input-model="outcomes" button-label="outcomeID" item-label="outcomeName" tick-property="ticked">
+					</div>
+				</div>
+			</fieldset>
+		</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submit(course)">Submit</button>
+            <div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+        </div>
+    </script>
 </section>

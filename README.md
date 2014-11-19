@@ -1,9 +1,8 @@
-cen3031
-=======
+CEN 3031 Fall 2014
+==================
+ABET Certification
 
-CEN3031 fall 2014 project.
-
-Team Composition:
+Front-end Team:
 
 1. Raymond Clark (raymondwclark)
 2. Angel Lee (alee2011)
@@ -11,4 +10,10 @@ Team Composition:
 4. David Califf (dcaliff)
 5. Manny Momot (emanmomot)
 
-ABET Frontend UI
+Back-end Team:
+
+1. (kkyrazis)
+2. (zachschultz)
+3. (brianroytman)
+4. (balindenberg)
+5. (abcronin)

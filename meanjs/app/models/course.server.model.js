@@ -25,7 +25,11 @@ var CourseSchema = new Schema({
 	outcomes: [{
 		type: Schema.ObjectId,
 		ref: 'Outcome'
-	}]
+	}],
+	courseCommitteeEvaluationForm: {
+		type: Schema.ObjectId,
+		ref: 'CourseCommitteeEvaluationForm'
+	}
 });
 
 mongoose.model('Course', CourseSchema);

@@ -1,27 +1,31 @@
-<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="getUserCourses()">
+<section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="initListCourses()">
 	<div class = "jumbotron text-center">
 		<div class = "row">
 			<h1> My Courses </h1>
 		</div>
 	</div>
 	<div class = "text-left">
-		<h3 class = "lead">Select a course to get started:</h3>
+		<h3 class = "lead">Select a course to get started:  <b><i>{{dispMessage}}</b></i></h3>
 	</div>
 	<accordion close-others="true">
 		<accordion-group data-ng-repeat="course in userCourses">
 			<accordion-heading>
+			<div class="text-right">
+				<h5>{{outcomeCount}} of {{course.outcomes.length + 1}} items complete</h5>
+			</div>
 			<h3>{{course.courseID}}:</h3>
 			{{course.courseName}}
 			</accordion-heading>
 			<h4>Course Outcomes:</h4>
 			<div class="list-group">
-				<a data-ng-repeat="outcome in course.outcomes">
-					{{outcome}}
-				</a>
+				<a href={{"/#!/"+course.courseID+"/"+outcome.outcomeID+"/outcomeAssessmentForm"}} data-ng-repeat="outcome in course.outcomes" class="list-group-item">
+					<h4>Outcome {{outcome.outcomeID}}:</h4>
+					<h5>{{outcome.outcomeName}}</h5>
+				</a> 
 			</div>	
-			<button type="button" class="btn btn-sml btn-primary" onclick="location.href='#!/outcomes-eval-form'">
-     			Outcomes Evaluation Assessment Form
-     		</button>
+			<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} >
+				Outcomes Evaluation Assessment Form
+			</a>
 		</accordion-group>
 	</accordion>
 </section>

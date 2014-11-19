@@ -26,7 +26,6 @@ exports.update = function(req, res) {
 		user = _.extend(user, req.body);
 		user.updated = Date.now();
 		user.displayName = user.firstName + ' ' + user.lastName;
-
 		user.save(function(err) {
 			if (err) {
 				return res.status(400).send({
@@ -92,12 +91,14 @@ exports.removeCourse = function(req, res) {
 				}
 			});
 		} else {
+			console.log('User does not have this course');
 			res.status(400).send({
 				message: 'User does not have this course'
 			});
 		}
 
 	} else {
+		console.log('User is not signed in');
 		res.status(400).send({
 			message: 'User is not signed in'
 		});
