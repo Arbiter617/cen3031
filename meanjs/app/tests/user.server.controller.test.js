@@ -115,6 +115,7 @@ describe('User Controller Unit Tests:', function() {
 	});
 	after(function(done) {
 		User.remove().exec();
+		Course.remove().exec();
 		done();
 	});
 });

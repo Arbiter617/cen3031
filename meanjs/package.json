@@ -50,7 +50,8 @@
 		"json2xls": "~0.0.5",
 		"nodemailer": "~1.1.1",
 		"csv-parse": "~0.0.6",
-		"csv": "~0.4.1"
+		"csv": "~0.4.1",
+		"xls": "~0.7.12"
 	},
 	"devDependencies": {
 		"supertest": "~0.13.0",

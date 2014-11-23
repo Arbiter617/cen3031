@@ -67,6 +67,7 @@ describe('Course Model Unit Tests:', function() {
 
 	afterEach(function(done) {
 		Course.remove().exec();
+		Outcome.remove().exec();
 		User.remove().exec();
 		done();
 	});
