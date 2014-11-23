@@ -13,6 +13,7 @@ module.exports = function(app) {
 		.get(pdfGenerator.generatePDF);
 
 	app.route('/committeePDF/:courseId')
+		.post(pdfGenerator.generateHTML)
 		.get(pdfGenerator.getFile);
 
 	app.param('courseId', pdfGenerator.courseByID);

@@ -16,7 +16,8 @@ var mongoose = require('mongoose'),
 /**
  * Store the JSON objects for the CourseCommitteeEvaluationForm
  */
-exports.create = function(req, res, next) {
+exports.create = function(req, res) {
+	console.log("\n\nin committee create\n\n");
 	var courseCommittee = new CourseCommittee(req.body);
 	courseCommittee.save(function(err) {
 		if (err) {
@@ -26,7 +27,6 @@ exports.create = function(req, res, next) {
 		} else {
 			res.status(200).json(courseCommittee);
 		}
-		next();
 	});
 	
 };

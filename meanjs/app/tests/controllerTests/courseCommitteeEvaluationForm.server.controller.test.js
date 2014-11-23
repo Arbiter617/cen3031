@@ -54,7 +54,6 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 			*/
 			courseEvaluation = new CourseCommittee({
 				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-				description: 'This is a test',
 				syllabusReflectCurrentContent: false,
 				droppedTopics: true,
 				addedTopics: false,

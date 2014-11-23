@@ -51,7 +51,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		}
 		function resolveOutcomes(courses) {
 			for(var i = 0; i < courses.length; i++) {
-				if($stateParams.courseID==courses[i].courseID){
+				if($stateParams.courseID == courses[i].courseID){
 					$scope.courseTitle = courses[i].courseName;
 				}
 				for(var j = 0; j < courses[i].outcomes.length; j++) {

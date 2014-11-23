@@ -22,17 +22,6 @@ var CourseCommitteeEvaluationFormSchema = new Schema({
 		default: Date.now,
 		required: true
 	},
-	outcome: {
-		type: Number,
-		default: 0,
-		required: true
-	},
-	description: {
-		type: String,
-		trim: true,
-		default: '',
-		required: true
-	},
 	/*
 		Start of the yes or no questions
 	*/

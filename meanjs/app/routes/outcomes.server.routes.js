@@ -16,7 +16,7 @@ module.exports = function(app) {
 
 	app.route('/outcomes/:outcomeId')
 		.get(users.requiresLogin, outcomes.hasAuthorization, outcomes.read)
-		.put(users.requiresLogin, outcomes.hasAuthorization, outcomes.update)
+		.put(users.requiresLogin, outcomes.update)
 		.delete(users.requiresLogin, outcomes.hasAuthorization, outcomes.remove);
 
 	// Finish by binding the outcome middleware

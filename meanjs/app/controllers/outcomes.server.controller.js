@@ -39,6 +39,7 @@ exports.update = function(req, res) {
 
 	outcome.save(function(err) {
 		if (err) {
+			console.log(errorHandler.getErrorMessage(err));
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -78,6 +79,7 @@ exports.list = function(req, res) {
 };
 
 exports.outcomeByID = function(req, res, next, id) {
+	console.log("\n\noutcomebyid\n\n");
 	Outcome.findById(id).populate('user', 'displayName').exec(function(err, outcome) {
 		if (err) return next(err);
 		if (!outcome) return next(new Error('Failed to load outcome ' + id));

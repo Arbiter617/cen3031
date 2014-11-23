@@ -6,7 +6,11 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Course = mongoose.model('Course'),
-	_ = require('lodash');
+	Outcome = mongoose.model('Outcome'),
+	CourseCommitteeEvaluationForm = mongoose.model('CourseCommitteeEvaluationForm'),
+	OutcomeEvaluation = mongoose.model('OutcomeEvaluation'),
+	_ = require('lodash'),
+	q = require('q');
 
 exports.create = function(req, res) {
 	var course = new Course(req.body);
@@ -37,19 +41,81 @@ exports.update = function(req, res) {
 };
 
 exports.submitForm = function(req, res) {
-	var course = req.course;
+	var course = req.body;
+	var evalForm = new CourseCommitteeEvaluationForm(course.courseCommitteeEvaluationForm);
 
-	//... create and update course object
+	var deffereds = [];
+	deffereds.push(saveToDB(evalForm, res));
 
-	course.save(function(err) {
+	for(var i = 0; i < course.outcomes.length; i++) {
+		var outcomeEval = new OutcomeEvaluation(course.outcomes[i].outcomeEvaluation);
+		deffereds.push(saveToDB(outcomeEval, res));
+
+		course.outcomes[i].outcomeEvaluation = outcomeEval;
+	}
+
+	console.log(course);
+	console.log(deffereds);
+
+	q.all(deffereds).then(function(data) {
+		console.log("in q");
+		console.log(req.course);
+		
+		course.courseCommitteeEvaluationForm = evalForm._id;
+		for(var i = 0; i < course.outcomes.length; i++) {
+			console.log("loop)");
+			course.outcomes[i].outcomeEvaluation = course.outcomes[i].outcomeEvaluation._id;
+			console.log(course.outcomes[i]);
+			course.outcomes[i].save(function(err) {
+				if(err) {
+
+					console.log(errorHandler.getErrorMessage(err));
+					return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});	
+				} else {
+					console.log("saved outcome");
+
+//Hi beauty babe, I love u so so so 
+					course.outcomes[i] = course.outcomes[i]._id;
+					console.log("aftersave");
+					console.log(req.course);
+					console.log(course);
+					course = _.extend(req.course, course);
+					console.log("extended course");
+
+					course.save(function(err) {
+						if(err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});		
+						} else {
+							res.jsonp(course);
+						}
+					});
+				}
+			});
+			
+		}
+		
+	});
+}
+
+function saveToDB(item, res) {
+	var d = q.defer();
+	item.save(function(err) {
 		if(err) {
+			d.reject();
 			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err);
+				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(course);
+			console.log("resolved");
+			d.resolve();
 		}
-	})
+	});
+	console.log(d.promise);
+	return d.promise;
 }
 
 exports.remove = function(req, res) {
