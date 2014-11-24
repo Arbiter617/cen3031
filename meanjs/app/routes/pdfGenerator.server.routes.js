@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 	app.route('/committeePDF/:courseId')
 		//.post(pdfGenerator.generateHTML)
-		.post(pdfGenerator.getFile);
+		.get(pdfGenerator.getFile);
 
 	app.param('courseId', pdfGenerator.courseByID);
 };

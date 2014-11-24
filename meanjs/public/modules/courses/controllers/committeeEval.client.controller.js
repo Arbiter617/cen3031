@@ -23,7 +23,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			//outcome _id's
 			for(var i = 0; i < $scope.outcomes.length; i++) {
 				var outcome = $scope.outcomes[i];
-				promises.push(saveToDB('outcomeEval', outcome.outcomeEvaluation));
+				promises.push(saveToDB('outcomeEval/' + outcome.outcomeEvaluation._id, outcome.outcomeEvaluation));
 				course.outcomes[i] = outcome._id;
 			}
 
@@ -39,7 +39,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 			//save courseCommitteeEval form and update course
 			//when done
-			saveToDB('courseCommitteeEvaluation', $scope.form).then(function(data) {
+			saveToDB('courseCommitteeEvaluation/' + $scope.form._id, $scope.form).then(function(data) {
 				course.courseCommitteeEvaluationForm = data._id;
 
 				//generate pdf when course saves
@@ -100,7 +100,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 					//a form has already been submitted, 
 					//so push id to formsInDB
 					if(outcome.outcomeEvaluation) {
-						formsInDB.push(outcome._id);
+						formsInDB.push(outcome.outcomeEvaluation._id);
 					}
 				}
 			}

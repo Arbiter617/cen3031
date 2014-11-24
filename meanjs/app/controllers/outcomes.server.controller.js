@@ -34,7 +34,6 @@ exports.read = function(req, res) {
 
 exports.update = function(req, res) {
 	var outcome = req.outcome;
-	console.log(req.body);
 	outcome = _.extend(outcome, req.body);
 
 	outcome.save(function(err) {

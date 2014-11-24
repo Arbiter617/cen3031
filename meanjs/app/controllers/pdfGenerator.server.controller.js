@@ -12,11 +12,13 @@ var mongoose = require('mongoose'),
 	fs = require('fs'),
 	_ = require('lodash');
 
-exports.generatePDF = function (req,res) {
+exports.generatePDF = function (req, res) {
   	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
+  	console.log(path);
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
   		res.download(path, 'report.pdf', function(err) {
 			if(err) {
+				console.log('error');
 				throw err;
 			}
 		});
@@ -39,6 +41,7 @@ exports.generateHTML = function(req,res,next) {
 };
 
 exports.getFile = function(req,res) {
+	console.log("get file");
 	var fileName = __dirname + '/pdfModels/CourseCommitteeEvaluationForm.html';
 /*
 	console.log("\n\n"+req.body);
@@ -55,6 +58,7 @@ exports.getFile = function(req,res) {
 };
 
 exports.courseByID = function(req, res, next, id) { 
+	console.log("course by id");
 	Course.findById(id)
 		.populate('courseCommitteeEvaluationForm')
 		.populate('outcomes')

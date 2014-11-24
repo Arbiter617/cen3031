@@ -8,7 +8,8 @@ module.exports = function(app) {
 		.post(outcomeEval.create);
 
 	app.route('/outcomeEval/:outcomeEvalId')
-		.get(outcomeEval.read);
+		.get(outcomeEval.read)
+		.put(outcomeEval.update);
 
 	app.param('outcomeEvalId', outcomeEval.outcomeEvalByID);
 };

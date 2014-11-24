@@ -54,7 +54,6 @@ exports.update = function(req, res, next) {
 		} else {
 			res.json(courseCommittee);
 		}
-		next();
 	});
 };
 
