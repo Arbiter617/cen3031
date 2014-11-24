@@ -40,23 +40,6 @@ exports.update = function(req, res) {
 	});
 };
 
-function saveToDB(item, res) {
-	var d = q.defer();
-	item.save(function(err) {
-		if(err) {
-			d.reject();
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			console.log("resolved");
-			d.resolve();
-		}
-	});
-	console.log(d.promise);
-	return d.promise;
-}
-
 exports.remove = function(req, res) {
 
 	var course = req.course;
