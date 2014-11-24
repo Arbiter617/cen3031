@@ -38,6 +38,10 @@ exports.generateHTML = function(req,res,next) {
 
 exports.getFile = function(req,res) {
 	var fileName = __dirname + '/pdfModels/CourseCommitteeEvaluationForm.html';
+/*
+	console.log("\n\n"+req.body);
+	console.log("\n\ndir:\n"+__dirname +"\n\n");
+	*/
 	fs.readFile(fileName, function(err,data) {
 		req.body.data = data;
 		controller.generateHTML(req,res);

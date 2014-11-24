@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	CourseCommittee = mongoose.model('CourseCommitteeEvaluationForm'),
 	Handlebars = require('handlebars'),
-	phantom = require('phantom'),
 	wkhtmltopdf = require('wkhtmltopdf'),
 
 	fs = require('fs'),
@@ -16,7 +15,7 @@ var mongoose = require('mongoose'),
 /**
  * Store the JSON objects for the CourseCommitteeEvaluationForm
  */
-exports.create = function(req, res, next) {
+exports.create = function(req, res,next) {
 	var courseCommittee = new CourseCommittee(req.body);
 	courseCommittee.save(function(err) {
 		if (err) {

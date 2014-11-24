@@ -23,7 +23,7 @@ var courseModel1, courseModel2, courseModel3fail, id;
 */
 
 
-describe('Course Model Unit Tests:', function(){
+describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 	beforeEach(function(done)	{
 		courseModel1 = new courseModel({
 			description: 'First string describing the class...software engineering',
@@ -190,6 +190,7 @@ describe('Course Model Unit Tests:', function(){
 			courseModel1.scoreForAdequateOutcomeAchievement = null;
 
 			return courseModel1.save(function(err) {
+				console.log('there should be an error here' + err);
 				should.exist(err);
 				done();
 			});

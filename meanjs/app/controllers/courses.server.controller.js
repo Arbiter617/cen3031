@@ -6,7 +6,11 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Course = mongoose.model('Course'),
-	_ = require('lodash');
+	Outcome = mongoose.model('Outcome'),
+	CourseCommitteeEvaluationForm = mongoose.model('CourseCommitteeEvaluationForm'),
+	OutcomeEvaluation = mongoose.model('OutcomeEvaluation'),
+	_ = require('lodash'),
+	q = require('q');
 
 exports.create = function(req, res) {
 	var course = new Course(req.body);
@@ -36,21 +40,24 @@ exports.update = function(req, res) {
 	});
 };
 
-exports.submitForm = function(req, res) {
-	var course = req.course;
+exports.submitForm = function(req, res, next) {
+	var course = req.body;
+	console.log('\n\nIn submitForm\n\n');
 
 	//... create and update course object
 
 	course.save(function(err) {
 		if(err) {
-			return res.status(400).send({
+			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			res.jsonp(course);
 		}
+		next();
 	})
 }
+
 
 exports.remove = function(req, res) {
 

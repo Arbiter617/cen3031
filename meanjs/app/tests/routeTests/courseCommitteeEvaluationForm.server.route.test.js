@@ -30,7 +30,6 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 	before(function(done) {
 		courseEvaluation = new CourseCommittee({
 			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-			description: 'This is a test',
 			syllabusReflectCurrentContent: false,
 			droppedTopics: true,
 			addedTopics: false,
@@ -68,7 +67,7 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
       				var courseEvaluationResponse = res.body;
       				CourseCommittee.findOne({courseCommitteeParticipants : 'Kyle Adam Zach Brian Brett'}, function (err, courses) {
 						id2 = courses._id;
-						courses.description.should.equal(courseEvaluation.description);
+						courses.courseCommitteeParticipants.should.equal(courseEvaluation.courseCommitteeParticipants);
 						done();
 					});
 			});
@@ -93,7 +92,7 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 		
 		//This test will need to be updated if we fix thte sorting of the get operation
 		it('should successfully update a form', function(done) {
-			courseEvaluation.description = 'I am newly updated.';
+			courseEvaluation.courseCommitteeParticipants = 'I am newly updated.';
 			request
 				.put('/courseCommitteeEvaluation/' + id2)
 				.send(courseEvaluation)
@@ -104,7 +103,7 @@ describe('CourseCommitteeEvaluationForm Route Functional Tests:', function() {
 						.end(function(err2,res2) {
 							var body = res2.body;
 							body.length.should.equal(1);
-							body[0].description.should.equal('I am newly updated.');
+							body[0].courseCommitteeParticipants.should.equal('I am newly updated.');
 							done();
 						});
 				});

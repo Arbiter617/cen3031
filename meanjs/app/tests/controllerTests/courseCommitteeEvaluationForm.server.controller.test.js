@@ -33,46 +33,26 @@ var courseModel1, courseEvaluation, req, req2, res, res2, res3;
 describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 
 	beforeEach(function(done) {
-		/*
-		courseModel1 = new CourseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
-			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
-			instructor: 'Professor Dobra',
-			date: new Date(), // Is this proper syntax for
-			descriptionOfInstrument: 'String describing instrument..whatever this means',
-			numberOfStudents: 45,
-			gradingScale: '0-10',
-			averageScore: 82,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 95,
-			averageLikertScaleValue: 4,
-			instructorComments: 'Room for instructor comments.'
+		courseEvaluation = new CourseCommittee({
+			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
+			syllabusReflectCurrentContent: false,
+			droppedTopics: true,
+			addedTopics: false,
+			textbookWorkingWell: false,
+			changesRequiredForNextAcademicYear: true,
+			newBooksToBeEvaluated: true,
+			bookMapWellToSyllabus: false,
+			otherEvaluationsIndicateIssues: true,
+			didStudentsMasterMaterial: false,
+			problemsWithKnowledgeInKeyConcepts: false,
+			prereqsStillAppropriate: true,
+			satisfyNeedsOfFollowupCourses: false,
+			sectionIActionsRecommendations: 'This is test for sectionI',
+			sectionIIActionsRecommendations: 'This is test for sectionII',
+			recommendationsForCourseImprovement: 'Drop the course',
+			recommendationsToCENProgramGovernance: 'Give me a raise',
+			sectionIIIRecommendationsComments: 'This is test for section III'
 		});
-		courseModel1.save(function() {
-			*/
-			courseEvaluation = new CourseCommittee({
-				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-				description: 'This is a test',
-				syllabusReflectCurrentContent: false,
-				droppedTopics: true,
-				addedTopics: false,
-				textbookWorkingWell: false,
-				changesRequiredForNextAcademicYear: true,
-				newBooksToBeEvaluated: true,
-				bookMapWellToSyllabus: false,
-				otherEvaluationsIndicateIssues: true,
-				didStudentsMasterMaterial: false,
-				problemsWithKnowledgeInKeyConcepts: false,
-				prereqsStillAppropriate: true,
-				satisfyNeedsOfFollowupCourses: false,
-				sectionIActionsRecommendations: 'This is test for sectionI',
-				sectionIIActionsRecommendations: 'This is test for sectionII',
-				recommendationsForCourseImprovement: 'Drop the course',
-				recommendationsToCENProgramGovernance: 'Give me a raise',
-				sectionIIIRecommendationsComments: 'This is test for section III'
-			});
 
 			// console.log('util.inspect: '+util.inspect(courseEvaluation));
 
@@ -85,10 +65,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 			res  = httpMocks.createResponse();
 			res2 = httpMocks.createResponse();
 			res3 = httpMocks.createResponse();
-
 			done();
-			
-		//});
 	});
 
 	describe('CourseCommitteeEvaluationForm create Tests', function() {
@@ -96,6 +73,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 
 		it('should create a new CourseCommitteeEvaluationForm', function(done) {
 			controller.create(req,res, function() {
+				console.log('inside the return function')
 				var code = JSON.parse(res._getStatusCode());
 				var data = JSON.parse(res._getData());
 				data.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
@@ -104,15 +82,6 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 			});
 		});
 
-		it('should fail to create a new form without a course description.', function(done) {
-			courseEvaluation.description = '';
-		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
-       	});
        	it('should fail to create a new form without courseCommitteeParticipants.', function(done) {
 			courseEvaluation.courseCommitteeParticipants = '';
 		 	req.body = courseEvaluation;

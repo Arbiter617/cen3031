@@ -126,7 +126,9 @@ td
 					</li>
 					<li>Term and Year: {{ form.term }}</li>
 					<li>Instructor: {{ form.instructor }}</li>
-					<li>Course Committee Participants: {{ form.courseCommitteeParticipants }}</li>
+					<li>Course Committee Participants: 
+						<input type="text" ng-model="form.courseCommitteeParticipants">
+					</li>
 					<br>
 					<li>Date: {{ form.date }}</li>
 				</ul>
@@ -146,9 +148,9 @@ td
 							<li>Syllabus: Does the syllabus reflect current content? </li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="checked">
+							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="">
+							<input type="radio" ng-model="form.syllabusReflectCurrentContent" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -158,9 +160,9 @@ td
 							<li>Are there topics that should be dropped from the course? </li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.droppedTopics" value="checked">
+							<input type="radio" ng-model="form.droppedTopics" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.droppedTopics" value="">
+							<input type="radio" ng-model="form.droppedTopics" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -170,9 +172,9 @@ td
 							<li>Are there topics that should be added to the course? </li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.addedTopics" value="checked">
+							<input type="radio" ng-model="form.addedTopics" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.addedTopics" value="">
+							<input type="radio" ng-model="form.addedTopics" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -182,9 +184,9 @@ td
 							<li>Textbook: Is the textbook working well?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.textbookWorkingWell" value="checked">
+							<input type="radio" ng-model="form.textbookWorkingWell" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.textbookWorkingWell" value="">
+							<input type="radio" ng-model="form.textbookWorkingWell" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -194,9 +196,9 @@ td
 							<li>Should changes be considered for the next academic year?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="checked">
+							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="">
+							<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -206,9 +208,9 @@ td
 							<li>Are there new books available that should be evaluated?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="checked">
+							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="">
+							<input type="radio" ng-model="form.newBooksToBeEvaluated" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -218,9 +220,9 @@ td
 							<li>Does the book map well onto the syllabus?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="checked">
+							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="">
+							<input type="radio" ng-model="form.bookMapWellToSyllabus" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -230,9 +232,9 @@ td
 							<li>Do other assessments (performance/exit surveys,student feedback) indicate issues that need to be addressed?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="checked">
+							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="">
+							<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -241,9 +243,9 @@ td
 							<li>Student Performance: Did students master the material?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="checked">
+							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="">
+							<input type="radio" ng-model="form.didStudentsMasterMaterial" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -253,9 +255,9 @@ td
 						<li>Are there problems in the their knowledge of key concepts?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="checked">
+							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="">
+							<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" value="false">
 							<label>NO</label>
 						</div>
 					</div>
@@ -266,7 +268,7 @@ td
 		<div class="section group">			
 			<div class="col span_1_of_1">
 				<h4>ACTIONS/RECOMMENDATIONS:</h4>
-					<textarea ng-model="sectionIActionsRecommendations" cols="95" rows="10"></textarea> 
+					<textarea ng-model="form.sectionIActionsRecommendations" cols="95" rows="10"></textarea> 
 			</div>
 		</div>
 				
@@ -284,9 +286,9 @@ td
 						<li>Are the pre-requisites still appropriate for this course?</li>
 					</div>
 					<div class="col span_2_of_2">
-						<input type="radio" ng-model="form.prereqsStillAppropriate" value="checked">
+						<input type="radio" ng-model="form.prereqsStillAppropriate" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.prereqsStillAppropriate" value="">
+							<input type="radio" ng-model="form.prereqsStillAppropriate" value="false">
 							<label>NO</label>
 					</div>
 				</div>
@@ -296,9 +298,9 @@ td
 						<li>Does the course content satisfy the needs of follow-on courses?</li>
 					</div>
 					<div class="col span_2_of_2">
-						<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="checked">
+						<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="true">
 							<label>YES</label>
-							<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="">
+							<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" value="false">
 							<label>NO</label>
 					</div>
 				</div>		
@@ -389,7 +391,7 @@ td
 					  <tr>
 					    <td class="bold">1. Instruments Chosen</td>
 					    <td>
-					    	<textarea ng-model="outcome.instruments" cols="80" rows="5">
+					    	<textarea ng-model="outcome.outcomeEvaluation.instrumentsChosen" cols="80" rows="5">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -397,7 +399,7 @@ td
 					  <tr>
 					    <td class="bold">2. Likert Scale Threshold(s)</td>
 					    <td>
-					    	<textarea ng-model="outcome.thresholds" cols="80" rows="5">
+					    	<textarea ng-model="outcome.outcomeEvaluation.likertScaleThresholds" cols="80" rows="5">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -405,7 +407,7 @@ td
 					  <tr>
 					    <td class="bold">3. Sample Graded Student Work</td>
 					    <td>
-					    	<textarea ng-model="outcome.gradedWork" cols="80" rows="5">
+					    	<textarea ng-model="outcome.outcomeEvaluation.sampleGradedStudentWork" cols="80" rows="5">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -413,7 +415,7 @@ td
 					  <tr>
 					    <td class="bold">4. Percentage of Students Achieving Outcome</td>
 					    <td>
-					    	<textarea name="" id="percentAchieved" cols="80" rows="2">
+					    	<textarea ng-model="outcome.outcomeEvaluation.percentageOfStudentsAchievingOutcome" cols="80" rows="2">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -421,7 +423,7 @@ td
 					  <tr>
 					    <td class="bold">5. Average Likert Value</td>
 					    <td>
-					    	<textarea name="" id="likert" cols="80" rows="1">
+					    	<textarea ng-model="outcome.outcomeEvaluation.averageLikertValue" cols="80" rows="1">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -429,7 +431,7 @@ td
 					  <tr>
 					    <td class="bold">Achievement of Outcome</td>
 					    <td>
-					    	<textarea name="" id="achievement" cols="80" rows="5">
+					    	<textarea ng-model="outcome.outcomeEvaluation.achievementOfOutcome" cols="80" rows="5">
 					    	</textarea>
 					    </td>
 					  </tr>
@@ -437,7 +439,7 @@ td
 					  <tr>
 					    <td class="bold">Suggested Improvements on Achieving Outcome</td>
 					    <td>
-					    	<textarea name="" id="improvements" cols="80" rows="5">
+					    	<textarea ng-model="outcome.outcomeEvaluation.suggestedImprovements" cols="80" rows="5">
 					    	</textarea>
 					    </td>
 

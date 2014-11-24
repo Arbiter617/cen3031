@@ -299,7 +299,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 						totalArray.push(semiArray);
 					}
 
-					console.log(require('util').inspect(totalArray));
+					//console.log(require('util').inspect(totalArray));
 		
 
 					var json2xls = require('json2xls');

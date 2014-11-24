@@ -11,12 +11,44 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 		$scope.submit = function(form) {
 			var course = $scope.course;
-			course.form = $scope.form;
-			course.outcomes = $scope.outcomes;
+			course.outcomes = [];
 
-			$http.post('courses/' + course._id + '/evalForm', course).success(function(response) {
-				$scope.course = response;
-				console.log(response);
+			//promises for saving outcome evals
+			var promises = [];
+
+			//save outcome evals and populate course.outcomes with 
+			//outcome _id's
+			for(var i = 0; i < $scope.outcomes.length; i++) {
+				var outcome = $scope.outcomes[i];
+				promises.push(defferedPost('outcomeEval', outcome.outcomeEvaluation));
+				course.outcomes[i] = outcome._id;
+			}
+
+			//update outcomes when outcome evals are
+			//done saving
+			$q.all(promises).then(function(data) {
+				for(var i = 0; i < $scope.outcomes.length; i++) {
+					var outcome = $scope.outcomes[i];
+					outcome.outcomeEvaluation = data[i]._id;
+					outcome.$update();
+				}
+			});
+
+			//save courseCommitteeEval form and update course
+			//when done
+			defferedPost('courseCommitteeEvaluation', $scope.form).then(function(data) {
+				course.courseCommitteeEvaluationForm = data._id;
+
+				//generate pdf when course saves
+				$http.put('courses/' + course._id, course).success(function(response) {
+					getPDF(course._id);
+				});
+			});
+		}
+
+		function getPDF(course_id) {
+			$http.get('committeePDF/' + course_id).success(function(response) {
+				$scope.committeePDF = response;
 			});
 		}
 
@@ -24,7 +56,11 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			$scope.course = course;
 			$scope.form.courseNumber = course.courseID;
 			$scope.form.courseTitle = course.courseName;
+			$scope.form.courseCommitteeParticipants = $scope.form.instructor;
 			$scope.outcomes = course.outcomes;
+			for(var i = 0; i < course.outcomes.length; i++) {
+				course.outcomes[i].outcomeEvaluation = {};
+			}
 		}
 
 		$scope.getUserCourses = function() {
@@ -66,6 +102,15 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 				if($scope.userCourses[i].courseID == courseNum)
 					return $scope.userCourses[i];
 			}
+		}
+
+		//post body to route and return promise
+		function defferedPost(route, body) {
+			var d = $q.defer();
+			$http.post(route, body).success(function(response) {
+				d.resolve(response);
+			});
+			return d.promise;
 		}
 
 		$scope.init = function() {
