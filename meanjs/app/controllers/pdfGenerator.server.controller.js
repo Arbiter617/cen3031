@@ -24,6 +24,7 @@ exports.generatePDF = function (req,res) {
 };
 
 exports.generateHTML = function(req,res,next) {
+	console.log("begin gen html");
 	var template = Handlebars.compile(req.body.data.toString());
 	var result = template(req.courseCommittee);
 	//generate the pdf
@@ -34,6 +35,7 @@ exports.generateHTML = function(req,res,next) {
 		req.body._id = req.courseCommittee._id;
 		controller.generatePDF(req,res);
 	}
+	console.log("end gen html");
 };
 
 exports.getFile = function(req,res) {
@@ -43,8 +45,12 @@ exports.getFile = function(req,res) {
 	console.log("\n\ndir:\n"+__dirname +"\n\n");
 	*/
 	fs.readFile(fileName, function(err,data) {
+		if(err) {
+			console.log("ERROR:  " + errorHandler.getMessage(err));
+		}
 		req.body.data = data;
 		controller.generateHTML(req,res);
+		console.log("done getfiel");
 	});
 };
 

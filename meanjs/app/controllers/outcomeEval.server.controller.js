@@ -20,3 +20,16 @@ exports.create = function(req, res) {
 		}
 	});
 };
+
+exports.read = function(req, res) {
+	res.jsonp(req.outcomeEval);
+};
+
+exports.outcomeEvalByID = function(req, res, next, id) {
+	OutcomeEvaluation.findById(id).exec(function(err, outcomeEval) {
+		if (err) return next(err);
+		if (!outcomeEval) return next(new Error('Failed to load outcomeEval ' + id));
+		req.outcomeEval = outcomeEval;
+		next();
+	});
+};

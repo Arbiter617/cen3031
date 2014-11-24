@@ -67,7 +67,7 @@ exports.remove = function(req, res) {
 
 
 exports.list = function(req, res) {
-	Outcome.find().sort('-created').populate('user', 'displayName').exec(function(err, outcomes) {
+	Outcome.find().sort('-created').populate('outcomeEvaluation').exec(function(err, outcomes) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -79,7 +79,6 @@ exports.list = function(req, res) {
 };
 
 exports.outcomeByID = function(req, res, next, id) {
-	console.log("\n\noutcomebyid\n\n");
 	Outcome.findById(id).populate('user', 'displayName').exec(function(err, outcome) {
 		if (err) return next(err);
 		if (!outcome) return next(new Error('Failed to load outcome ' + id));
