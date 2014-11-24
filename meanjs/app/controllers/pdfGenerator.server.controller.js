@@ -20,12 +20,11 @@ exports.generatePDF = function (req, res) {
 };
 exports.returnPDF = function(req,res) {
 	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
-	console.log(path);
 	res.download(path, req.courseCommittee._id + '.pdf', function(err) {
 		if(err) {
 			throw err;
 		}
-	})
+	});
 }
 
 exports.generateHTML = function(req,res,next) {
