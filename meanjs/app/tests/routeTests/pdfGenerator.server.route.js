@@ -183,6 +183,7 @@ describe('PDFGenerator Route Functional Tests:', function() {
 			request
 				.post('/committeePDF/' + id)
 				.end(function (err,res) {
+					res.body.should.equal(id.toString());
 					res.status.should.equal(200);
 					done();
 				});
@@ -199,8 +200,9 @@ describe('PDFGenerator Route Functional Tests:', function() {
 				var result = template(courseModel1);
 				request
 					.post('/outcomePDF')
-					.send({data: result, _id:1234123412341235})
+					.send({data: result, _id:'1234123412341235'})
 					.end(function (err,res) {
+						res.body.should.equal('1234123412341235');
 						res.status.should.equal(200);
 						done();
 				});

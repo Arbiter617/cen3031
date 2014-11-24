@@ -16,14 +16,17 @@ exports.generatePDF = function (req, res) {
   	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
   	console.log(path);
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
-  		res.download(path, 'report.pdf', function(err) {
-			if(err) {
-				console.log('error');
-				throw err;
-			}
-		});
+  		res.json(req.body._id);
   	});
 };
+exports.returnPDF = function(req,res) {
+	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
+	res.download(path, req.body._id + '.pdf', function(err) {
+		if(err) {
+			throw err;
+		}
+	})
+}
 
 exports.generateHTML = function(req,res,next) {
 	console.log("begin gen html");
