@@ -13,15 +13,15 @@ var mongoose = require('mongoose'),
 	_ = require('lodash');
 
 exports.generatePDF = function (req, res) {
-  	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
-  	console.log(path);
+  	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
-  		res.json(req.body._id);
+  		res.json(req.courseCommittee._id);
   	});
 };
 exports.returnPDF = function(req,res) {
-	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
-	res.download(path, req.body._id + '.pdf', function(err) {
+	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
+	console.log(path);
+	res.download(path, req.courseCommittee._id + '.pdf', function(err) {
 		if(err) {
 			throw err;
 		}
@@ -29,7 +29,6 @@ exports.returnPDF = function(req,res) {
 }
 
 exports.generateHTML = function(req,res,next) {
-	console.log("begin gen html");
 	var template = Handlebars.compile(req.body.data.toString());
 	var result = template(req.courseCommittee);
 	//generate the pdf
@@ -44,7 +43,6 @@ exports.generateHTML = function(req,res,next) {
 };
 
 exports.getFile = function(req,res) {
-	console.log("get file");
 	var fileName = __dirname + '/pdfModels/CourseCommitteeEvaluationForm.html';
 /*
 	console.log("\n\n"+req.body);
@@ -61,7 +59,6 @@ exports.getFile = function(req,res) {
 };
 
 exports.courseByID = function(req, res, next, id) { 
-	console.log("course by id");
 	Course.findById(id)
 		.populate('courseCommitteeEvaluationForm')
 		.populate('outcomes')

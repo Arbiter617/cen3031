@@ -23,7 +23,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			//outcome _id's
 			for(var i = 0; i < $scope.outcomes.length; i++) {
 				var outcome = $scope.outcomes[i];
-				promises.push(saveToDB('outcomeEval/' + outcome.outcomeEvaluation._id, outcome.outcomeEvaluation));
+				promises.push(saveToDB('outcomeEval', outcome.outcomeEvaluation));
 				course.outcomes[i] = outcome._id;
 			}
 
@@ -39,20 +39,18 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 			//save courseCommitteeEval form and update course
 			//when done
-			saveToDB('courseCommitteeEvaluation/' + $scope.form._id, $scope.form).then(function(data) {
+			saveToDB('courseCommitteeEvaluation', $scope.form).then(function(data) {
 				course.courseCommitteeEvaluationForm = data._id;
 
 				//generate pdf when course saves
 				$http.put('courses/' + course._id, course).success(function(response) {
-					getPDF(course._id);
+					generatePDF(course._id);
 				});
 			});
 		}
 
-		function getPDF(course_id) {
-			$http.get('committeePDF/' + course_id).success(function(response) {
-				$scope.committeePDF = response;
-			});
+		function generatePDF(course_id) {
+			$http.post('committeePDF/' + course_id);
 		}
 
 		function setFormFields(course) {
@@ -127,6 +125,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		function saveToDB(route, body) {
 			var d = $q.defer();
 			if(formsInDB.indexOf(body._id) != -1) {
+				route += '/' + body._id;
 				$http.put(route, body).success(function(response) {
 					d.resolve(response);
 				});

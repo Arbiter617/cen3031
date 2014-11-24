@@ -107,6 +107,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			}
 		};
 
+		$scope.downloadPDF = function(course_id) {
+			console.log("Downloading");
+			$http.get('committeePDF/' + course_id);
+		}
+
 		//populate $scope.userCourses
 		$scope.getUserCourses = function() {
 			var d = $q.defer();

@@ -23,6 +23,7 @@
 			<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} >
 				Outcomes Evaluation Assessment Form
 			</a>
+			<button ng-show="course.courseCommitteeEvaluationForm" class="btn btn-primary" ng-click="downloadPDF(course._id)">Download PDF</button>
 		</accordion-group>
 	</accordion>
 </section>

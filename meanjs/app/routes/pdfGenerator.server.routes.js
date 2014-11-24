@@ -13,8 +13,8 @@ module.exports = function(app) {
 		.post(pdfGenerator.generatePDF);
 
 	app.route('/committeePDF/:courseId')
-		//.post(pdfGenerator.generateHTML)
-		.get(pdfGenerator.getFile);
+		.post(pdfGenerator.getFile)
+		.get(pdfGenerator.returnPDF);
 
 	app.param('courseId', pdfGenerator.courseByID);
 };
