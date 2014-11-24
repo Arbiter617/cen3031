@@ -58,7 +58,7 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 				droppedTopics: true,
 				addedTopics: false,
 				textbookWorkingWell: false,
-				changesRequiredForNextAcademicYear: true,
+				changesRequiredForNextAcademicYear: tru9e,
 				newBooksToBeEvaluated: true,
 				bookMapWellToSyllabus: false,
 				otherEvaluationsIndicateIssues: true,
