@@ -9,6 +9,9 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		$scope.form.instructor = user.firstName + " " +user.lastName;
 		$scope.form.date = new Date();
 
+		//id's of forms already existing in db to be updated
+		var formsInDB = [];
+
 		$scope.submit = function(form) {
 			var course = $scope.course;
 			course.outcomes = [];
@@ -20,7 +23,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			//outcome _id's
 			for(var i = 0; i < $scope.outcomes.length; i++) {
 				var outcome = $scope.outcomes[i];
-				promises.push(defferedPost('outcomeEval', outcome.outcomeEvaluation));
+				promises.push(saveToDB('outcomeEval', outcome.outcomeEvaluation));
 				course.outcomes[i] = outcome._id;
 			}
 
@@ -36,7 +39,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 			//save courseCommitteeEval form and update course
 			//when done
-			defferedPost('courseCommitteeEvaluation', $scope.form).then(function(data) {
+			saveToDB('courseCommitteeEvaluation', $scope.form).then(function(data) {
 				course.courseCommitteeEvaluationForm = data._id;
 
 				//generate pdf when course saves
@@ -54,13 +57,11 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 
 		function setFormFields(course) {
 			$scope.course = course;
+
 			$scope.form.courseNumber = course.courseID;
 			$scope.form.courseTitle = course.courseName;
 			$scope.form.courseCommitteeParticipants = $scope.form.instructor;
 			$scope.outcomes = course.outcomes;
-			for(var i = 0; i < course.outcomes.length; i++) {
-				course.outcomes[i].outcomeEvaluation = {};
-			}
 		}
 
 		$scope.getUserCourses = function() {
@@ -70,6 +71,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 				d.resolve();
 			}).error(function(response) {
 				$scope.error = response.message;
+				console.log(response.message);
 			});
 			return d.promise;
 		};
@@ -92,24 +94,48 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		function resolveOutcomes(courses) {
 			for(var i = 0; i < courses.length; i++) {
 				for(var j = 0; j < courses[i].outcomes.length; j++) {
-					courses[i].outcomes[j] = outcomeById(courses[i].outcomes[j]);
+					var outcome = outcomeById(courses[i].outcomes[j]);
+					courses[i].outcomes[j] = outcome;
+
+					//a form has already been submitted, 
+					//so push id to formsInDB
+					if(outcome.outcomeEvaluation) {
+						formsInDB.push(outcome._id);
+					}
 				}
 			}
 		}
 
 		function courseByNumber(courseNum) {
 			for(var i = 0; i < $scope.userCourses.length; i++) {
-				if($scope.userCourses[i].courseID == courseNum)
-					return $scope.userCourses[i];
+				if($scope.userCourses[i].courseID == courseNum) {
+					var course = $scope.userCourses[i];
+					if(course.courseCommitteeEvaluationForm) {
+						formsInDB.push(course.courseCommitteeEvaluationForm);
+						course.courseCommitteeEvaluationForm = 
+							$http.get('courseCommitteeEvaluation/' + course.courseCommitteeEvaluationForm)
+							.success(function(response) {
+								$scope.form = response;
+							});
+					}
+
+					return course;
+				}
 			}
 		}
 
-		//post body to route and return promise
-		function defferedPost(route, body) {
+		function saveToDB(route, body) {
 			var d = $q.defer();
-			$http.post(route, body).success(function(response) {
-				d.resolve(response);
-			});
+			if(formsInDB.indexOf(body._id) != -1) {
+				$http.put(route, body).success(function(response) {
+					d.resolve(response);
+				});
+			} else {
+				$http.post(route, body).success(function(response) {
+					d.resolve(response);
+				});
+			}
+
 			return d.promise;
 		}
 
