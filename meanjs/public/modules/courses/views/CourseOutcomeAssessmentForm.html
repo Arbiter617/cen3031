@@ -50,7 +50,7 @@ p {
               <th colspan="1" style="width:180px"> Value </th>
             </tr>
             <tr>
-              <td colspan="2" ><li style="list-style-type:disc"> Number of Students: </li> </td>
+              <td colspan="2" ><li> Number of Students: </li> </td>
               <td colspan="1"> {{numberOfStudents}} </td>
             </tr>
             <tr>
@@ -93,10 +93,34 @@ p {
                   <table class="table table-bordered">
                     <tr>
                       <td>
+                        <label>Maximum Score</label>
+                      </td>
+                      <td>
+                        <input type="text" id="maximum" name="maximum" class="form-control" data-ng-model="likert.maximum" placeholder="e.g. 100">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Columns To Parse</label>
+                      </td>
+                      <td>
+                        <input type="text" id="columns" name="columns" class="form-control" data-ng-model="likert.columns" placeholder="e.g. 1,2,3,4,5">
+                      </td>
+                    </tr>
+                     <tr>
+                      <td>
+                        <label>Minimum Acceptable Passing Value</label>
+                      </td>
+                      <td>
+                        <input type="text" id="columns" name="columns" class="form-control" data-ng-model="likert.minValue" placeholder="e.g. 2">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
                         <label>Likert 1 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert1" name="likert1" class="form-control" data-ng-model="likert.score1" placeholder="20 ">
+                        <input type="text" id="likert1" name="likert1" class="form-control" data-ng-model="likert.score1" placeholder="e.g. 20"> 
                       </td>
                     </tr>
                     <tr>
@@ -104,7 +128,7 @@ p {
                         <label>Likert 2 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert2" name="likert2" class="form-control" data-ng-model="likert.score2" placeholder="40 ">
+                        <input type="text" id="likert2" name="likert2" class="form-control" data-ng-model="likert.score2" placeholder="e.g. 40">
                       </td>
                     </tr>
                     <tr>
@@ -112,7 +136,7 @@ p {
                         <label>Likert 3 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert3" name="likert3" class="form-control" data-ng-model="likert.score3" placeholder="60 ">
+                        <input type="text" id="likert3" name="likert3" class="form-control" data-ng-model="likert.score3" placeholder="e.g. 60">
                       </td>
                     </tr>
                     <tr>
@@ -120,7 +144,7 @@ p {
                         <label>Likert 4 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert4" name="likert4" class="form-control" data-ng-model="likert.score4" placeholder="80 ">
+                        <input type="text" id="likert4" name="likert4" class="form-control" data-ng-model="likert.score4" placeholder="e.g. 80">
                       </td>
                     </tr>
                     <tr>
@@ -128,7 +152,7 @@ p {
                         <label>Likert 5 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert5" name="likert5" class="form-control" data-ng-model="likert.score5" placeholder="100 ">
+                        <input type="text" id="likert5" name="likert5" class="form-control" data-ng-model="likert.score5" placeholder="e.g. 100">
                       </td>
                     </tr>
                     <tr>

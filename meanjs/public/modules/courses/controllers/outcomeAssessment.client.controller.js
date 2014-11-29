@@ -13,16 +13,17 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.date = new Date();
 
 		$scope.submit = function() {
+			var scales = [];
+			
 			var reader = new FileReader();
             reader.addEventListener("loadend", function(evt) {
-            	$http.post('courses/', { 
+            	$http.post('csv_parsing/', { 
             		name: $scope.files[0].name, 
-            		data: reader.result 
+            		data: reader.result,
+            		likert: $scope.likert
             	});
             });
-            
             reader.readAsText($scope.files[0]);
-			
 		}
 
 		$scope.getUserCourses = function() {
