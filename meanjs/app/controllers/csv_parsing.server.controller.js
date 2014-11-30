@@ -68,10 +68,9 @@ exports.create = function(req, res, next) {
  			averageScore: averageScore,
  			averageLikertScore: averageLikertScore,
  			percentageAchievingOutcome: percentageAchievingOutcome,
- 			gradingScale: gradingScale
+ 			gradingScale: gradingScale,
+ 			minimumAcceptableLikertValue: likert.minValue
  		};
- 		console.log(likertScores);
- 		console.log(courseOutcome);
 
  		res.status(200).json(courseOutcome);
 

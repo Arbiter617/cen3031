@@ -15,51 +15,19 @@ var mongoose = require('mongoose'),
 /**
  * Store the JSON objects for the CourseOutcomeAssessmentForm
  */
-exports.create = function(req, res, next) {
-	// WILL ULTIMATELY HAVE THE PARSING GET WHAT WE NEED AND SAVE IT INTO THE COURSE MODEL...
-
-	// var csv_file = req.body.data;
-	// var csv_file_str = csv_file.toString();
-	
-	// parse(csv_file_str, {delimiter: ','}, function(err, output){
- // 		var outStr = '';
- // 		var avgScore = 0;
- // 		for (var  i =0; i < output.length; i++) {
- // 			for (var j = 0; j < output[i].length; j++) {
- // 				if (i == 0 ) {
- // 					if (output[i][j] == 'Exam') {
- 						
- // 						i++;
- // 						while (i < output.length) {
- // 							avgScore+=parseInt(output[i][j]);
- // 							i++;
- // 						}
- // 						break;
- // 					}
- // 				} 			
- // 			}
- // 		}
- // 		avgScore /= (parseInt(output.length-1));
-
- // 		// send back parsed data in the response
- // 		res.status(200).json(avgScore);
-
+exports.create = function(req, res) {
 	var course = new Course(req.body);
-	// WILL EVENUTALLY LOOK LIKE: 
-	// 	var course = new Course();
-	//	course.averageScore = avgScore...
-	
+
 	course.save(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.status(200).json(course);
+			res.jsonp(course);
 		}
-		next();
-	});
-	
+	});	
 };
 
 
@@ -67,7 +35,7 @@ exports.create = function(req, res, next) {
  * Creates a pdf form based of the specified courseOutcomeEvaluationForm
  */
 exports.read = function(req, res) {
-	res.json(req.course);
+	res.jsonp(req.course);
 };
 
 
@@ -75,35 +43,35 @@ exports.read = function(req, res) {
 /**
  * Update a courseOutcomeAssessmentForm
  */
-exports.update = function(req, res, next) {
+exports.update = function(req, res) {
 	var course = req.course;
 	course = _.extend(course, req.body);
 	course.save(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(course);
+			res.jsonp(course);
 		}
-		next();
 	});
 };
 
 /**
  * Delete a courseOutcomeAssessmentForm
  */
-exports.delete = function(req, res, next) {
+exports.delete = function(req, res) {
 	var course = req.course;
 	course.remove(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(course);
+			res.jsonp(course);
 		}
-		next();
 	});
 };
 
@@ -113,15 +81,14 @@ exports.delete = function(req, res, next) {
 exports.list = function(req, res, next) {
 	Course.find().sort({date: -1, courseNumber: -1}).exec(function(err, courses) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(courses);
+			res.jsonp(courses);
 		}
-		next();
 	});
-
 };
 
 /**

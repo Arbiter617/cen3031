@@ -68,99 +68,147 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 			body: course
 		});
 
-		res = httpMocks.createResponse();
-		res2 = httpMocks.createResponse();
-		res3 = httpMocks.createResponse();
-
-
-		
 		done();
-
 	});
 
 	describe('CourseOutcomeAssessmentForm create Tests', function() {
 
 
 		it('should create a new CourseOutcomeAssessmentForm', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				var data = JSON.parse(res._getData());
-				data.courseNumber.should.equal(course.courseNumber);
-				code.should.equal(200);
-				done();
-			});
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+					object.courseNumber.should.equal(course.courseNumber);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+			controller.create(req,res);
 		});
 
 		it('should fail to create a new form without a course title.', function(done) {
 			course.courseTitle = '';
 			req.body = course;
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(400);
-				done();
-			});
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+
+		 	controller.create(req,res);
       	});
     });
 
 	describe('CourseOutcomeAssessmentForm list Tests', function() {
 		it('should list 2 courseForms by date and courseNumber', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(200);
-				req.body = course2;
-				controller.create(req,res2, function() {
-					code = JSON.parse(res2._getStatusCode());
-					code.should.equal(200);
-					controller.list(req,res3, function() {
-						var data = JSON.parse(res3._getData());
-						code = JSON.parse(res3._getStatusCode());
-						data[0].courseNumber.should.equal(course2.courseNumber);
-						data[1].courseNumber.should.equal(course.courseNumber);
-						code.should.equal(200);
-						done();
-					});
-				});
-			});
+			var res3 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+					object[0].courseNumber.should.equal(course2.courseNumber);
+					object[1].courseNumber.should.equal(course.courseNumber);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+			var res2 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	controller.list(req,res3);
+				},
+				statusCode: 200
+			};
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+					req.body = course2;
+					controller.create(req,res2);
+				},
+				statusCode: 200
+			};
+			controller.create(req,res);
 		});
 	});
 			
 	describe('CourseOutcomeAssessmentForm update Tests', function() {
 		it('should successfully update a already created form', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(200);
-				var data = JSON.parse(res._getData());
-				var id = data._id;
-				Course.findById(id).exec(function(err, course) {
-					req.course = course;
-					req.body = {courseNumber : 1004};
-					controller.update(req,res2, function() {
-						data = JSON.parse(res2._getData());
-						code = res2._getStatusCode();
-						code.should.equal(200);
-						data.courseNumber.should.equal(1004);
-						done();
+			var res2 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	object.courseNumber.should.equal(1004);
+	            	this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	var id = object._id;
+	            	Course.findById(id).exec(function(err, course) {
+						req.course = course;
+						req.body = {courseNumber : 1004};
+						controller.update(req,res2);
 					});
-				});
-			});
+				},
+				statusCode: 200
+			};
+			controller.create(req,res);
 		});
 
 		it('should fail to update without correct data', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(200);
-				var data = JSON.parse(res._getData());
-				var id = data._id;
-				Course.findById(id).exec(function(err, courses) {
-					req.course = courses;
-					req.body = {courseNumber : 'Random data'};
-					controller.update(req,res2, function() {
-						code = res2._getStatusCode();
-						code.should.equal(400);
-						done();
+			var res2 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	var id = object._id;
+	            	Course.findById(id).exec(function(err, course) {
+						req.course = course;
+						req.body = {courseNumber : 'Random data'};
+						controller.update(req,res2);
 					});
-				});
-			});
+				},
+				statusCode: 200
+			};
+			controller.create(req,res); 
 		});
 
 
@@ -168,23 +216,33 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 	
 	describe('CourseOutcomeAssessmentForm delete Tests', function() {
 		it('should be able to delete a form that is already there', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(200);
-				var data = JSON.parse(res._getData());
-				var id = data._id;
-				Course.findById(id).exec(function(err, courses) {
-					req.course = courses;
-					controller.delete(req,res2, function() {
-						code = res2._getStatusCode();
-						var data2 = JSON.parse(res2._getData());
-						data2.courseNumber.should.equal(data.courseNumber);
-						code.should.equal(200);
-						done();
+			var res2 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+					this.statusCode.should.equal(200);
+					object.courseNumber.should.equal(3101);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	var id = object._id;
+	            	Course.findById(id).exec(function(err, course) {
+						req.course = course;
+						controller.delete(req,res2);
 					});
-				});
-			});
-
+				},
+				statusCode: 200
+			};
+			controller.create(req,res);
 		});
 	});
 
@@ -202,17 +260,23 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 	
 	describe('CourseOutcomeAssessmentForm findById Tests', function() {
 		it('should be able to find the correct object for the given id', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				code.should.equal(200);
-				var data = JSON.parse(res._getData());
-				var id = data._id;
-
-				controller.courseOutcomeAssessmentByID(req, res2, function(err) {
-					should.not.exist(err);
-					done();
-				}, id);
-			});
+			
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+	            	var id = object._id;
+	            	controller.courseOutcomeAssessmentByID(req,res2,function(err) {
+	            		should.not.exist(err);
+	            		done();
+	            	}, id);
+				},
+				statusCode: 200,
+				done: done
+			};
+			controller.create(req,res); 
 		});
 
 		it('should fail to find an object thats not created', function(done) {

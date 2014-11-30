@@ -12,12 +12,20 @@ var mongoose = require('mongoose'),
 	fs = require('fs'),
 	_ = require('lodash');
 
-exports.generatePDF = function (req, res) {
+exports.generateCommitteePDF = function (req, res) {
   	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
   		res.json(req.courseCommittee._id);
   	});
 };
+
+exports.generateOutcomePDF = function (req, res) {
+  	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
+  	wkhtmltopdf(req.body.data, { pageSize: 'A4', output: path },  function() {
+  		res.status(200).json(req.body._id);
+  	});
+};
+
 exports.returnPDF = function(req,res) {
 	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
 	res.download(path, req.courseCommittee._id + '.pdf', function(err) {
@@ -36,7 +44,7 @@ exports.generateHTML = function(req,res,next) {
 	} else {
 		req.body.data = result;
 		req.body._id = req.courseCommittee._id;
-		controller.generatePDF(req,res);
+		controller.generateCommitteePDF(req,res);
 	}
 	console.log("end gen html");
 };
