@@ -72,7 +72,7 @@ describe('CSV Parsing Route Functional Tests:', function() {
        				// Contains parsed csv file
        				var csv_data_response = res.body;
        				csv_data_response.numberOfStudents.should.equal(18);
-       				csv_data_response.averageScore.should.equal(14.277777777777779);
+       				csv_data_response.averageScore.should.equal('14.28');
        				csv_data_response.averageLikertScore.should.equal(3);
        				csv_data_response.gradingScale.should.equal('0-30');
        				done();
@@ -100,9 +100,9 @@ describe('CSV Parsing Route Functional Tests:', function() {
        				var csv_data_response = res.body;
 
        				csv_data_response.numberOfStudents.should.equal(18);
-       				csv_data_response.averageScore.should.equal(14.88888888888889);
+       				csv_data_response.averageScore.should.equal('14.89');
        				csv_data_response.averageLikertScore.should.equal(3);
-       				csv_data_response.percentageAchievingOutcome.should.equal(88.88888888888889);
+       				csv_data_response.percentageAchievingOutcome.should.equal('88.89');
        				csv_data_response.gradingScale.should.equal('0-30');
        				
        				done();

@@ -11,19 +11,29 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.courseTitle;
 		$scope.instructor = user.firstName +" " +user.lastName;
 		$scope.date = new Date();
+		$scope.parsedCSV;
 
-		$scope.submit = function() {
-			var scales = [];
-			
+		$scope.submit = function() {			
 			var reader = new FileReader();
+			var d = $q.defer();
             reader.addEventListener("loadend", function(evt) {
-            	$http.post('csv_parsing/', { 
-            		name: $scope.files[0].name, 
-            		data: reader.result,
-            		likert: $scope.likert
-            	});
+            	parseCSV(d,reader);
             });
             reader.readAsText($scope.files[0]);
+		}
+
+		function parseCSV(d,reader) {
+			$http.post('csv_parsing/', { 
+            	name: $scope.files[0].name, 
+            	data: reader.result,
+            	likert: $scope.likert
+            }).success(function(res) {
+            	$scope.parsedCSV = res;
+            	d.resolve();
+            }).err(function(res) {
+            	$scope.error = res.message;
+            });
+            return d.promise;
 		}
 
 		$scope.getUserCourses = function() {

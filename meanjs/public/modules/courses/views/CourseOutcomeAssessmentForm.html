@@ -43,7 +43,8 @@ p {
               <th colspan="3">Assessment Instrument</th>
             </tr>
             <tr>
-              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: {{descriptionOfInstrument}} </td>
+              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="descriptionOfInstrument" cols="60" rows="5"></textarea>  
+              </td>
             </tr>
             <tr>
               <th colspan="2"> Assessment Item </th>
@@ -51,31 +52,41 @@ p {
             </tr>
             <tr>
               <td colspan="2" ><li> Number of Students: </li> </td>
-              <td colspan="1"> {{numberOfStudents}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.numberOfStudents}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Grading Scale (e.g. 0-10) </li></td>
-              <td colspan="1"> {{gradingScale}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.gradingScale}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Score: </li></td>
-              <td colspan="1"> {{averageScore}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.averageScore}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Score for Adequate Outcome Achievement (2 or better on the Likert 1-5 Scale):</li></td>
-              <td colspan="1"> {{scoreForAdequateOutcomeAchievement}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.minimumAcceptableLikertValue}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> % of Students Achieving Outcome Adequately: </li></td>
-              <td colspan="1"> {{percentOfStudentsAchievingOutcomeAdequately}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.percentageAchievingOutcome}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Likert-scale value: </li></td>
-              <td colspan="1"> {{averageLikertScaleValue}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.averageLikertScore}} </td>
             </tr>
             <tr>
-              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: {{instructorComments}} </td>
+              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="instructorComments" cols="60" rows="5"></textarea>
+              </td>
             </tr>
+            <!--
+            <tr>
+              <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;"> 
+                 <div class="text-center form-group">
+                    <button ng-show='parsedCSV.averageLikertScore' type="button" class="btn btn-large btn-primary" ng-click="download()" style="width:50%">Download</button>
+                 </div>
+              </td>
+            </tr>
+            -->
           </table>
         </td>
         <td>

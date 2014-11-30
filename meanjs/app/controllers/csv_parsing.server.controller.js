@@ -65,14 +65,13 @@ exports.create = function(req, res, next) {
 
  		var courseOutcome = {
  			numberOfStudents: numberOfStudents,
- 			averageScore: averageScore,
+ 			averageScore: averageScore.toFixed(2),
  			averageLikertScore: averageLikertScore,
- 			percentageAchievingOutcome: percentageAchievingOutcome,
+ 			percentageAchievingOutcome: percentageAchievingOutcome.toFixed(2),
  			gradingScale: gradingScale,
  			minimumAcceptableLikertValue: likert.minValue
  		};
-
- 		res.status(200).json(courseOutcome);
+ 		res.jsonp(courseOutcome);
 
 	});	
 	
