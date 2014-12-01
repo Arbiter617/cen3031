@@ -7,26 +7,24 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	CourseCommittee = mongoose.model('CourseCommitteeEvaluationForm'),
 	Handlebars = require('handlebars'),
-	phantom = require('phantom'),
 	wkhtmltopdf = require('wkhtmltopdf'),
-
 	fs = require('fs'),
 	_ = require('lodash');
 
 /**
  * Store the JSON objects for the CourseCommitteeEvaluationForm
  */
-exports.create = function(req, res, next) {
+exports.create = function(req, res,next) {
 	var courseCommittee = new CourseCommittee(req.body);
 	courseCommittee.save(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.status(200).json(courseCommittee);
+			res.jsonp(courseCommittee);
 		}
-		next();
 	});
 	
 };
@@ -36,7 +34,7 @@ exports.create = function(req, res, next) {
  * Creates a pdf form based of the specified courseCommitteeEvaluationForm
  */
 exports.read = function(req, res) {
-	res.json(req.courseCommittee);
+	res.jsonp(req.courseCommittee);
 };
 
 
@@ -49,13 +47,13 @@ exports.update = function(req, res, next) {
 	courseCommittee = _.extend(courseCommittee, req.body);
 	courseCommittee.save(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(courseCommittee);
+			res.jsonp(courseCommittee);
 		}
-		next();
 	});
 };
 
@@ -67,11 +65,12 @@ exports.delete = function(req, res, next) {
 
 	courseCommittee.remove(function(err) {
 		if (err) {
-			res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(courseCommittee);
+			res.jsonp(courseCommittee);
 		}
 		next();
 	});
@@ -86,11 +85,12 @@ exports.list = function(req, res) {
 	//so I couldn't reasonably predict the behavior of the response.
 	CourseCommittee.find().sort('courseCommitteeParticipants').exec(function(err, courses) {
 		if (err) {
-			return res.status(400).send({
+			res.status(400);
+			res.send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(courses);
+			res.jsonp(courses);
 		}
 	});
 

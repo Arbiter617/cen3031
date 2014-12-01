@@ -44,39 +44,50 @@ p {
               <th colspan="3">Assessment Instrument</th>
             </tr>
             <tr>
-              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: {{descriptionOfInstrument}} </td>
+              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="descriptionOfInstrument" cols="60" rows="5"></textarea>  
+              </td>
             </tr>
             <tr>
               <th colspan="2"> Assessment Item </th>
               <th colspan="1" style="width:180px"> Value </th>
             </tr>
             <tr>
-              <td colspan="2" ><li style="list-style-type:disc"> Number of Students: </li> </td>
-              <td colspan="1"> {{numberOfStudents}} </td>
+              <td colspan="2" ><li> Number of Students: </li> </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.numberOfStudents}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Grading Scale (e.g. 0-10) </li></td>
-              <td colspan="1"> {{gradingScale}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.gradingScale}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Score: </li></td>
-              <td colspan="1"> {{averageScore}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.averageScore}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Score for Adequate Outcome Achievement (2 or better on the Likert 1-5 Scale):</li></td>
-              <td colspan="1"> {{scoreForAdequateOutcomeAchievement}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.minimumAcceptableLikertValue}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> % of Students Achieving Outcome Adequately: </li></td>
-              <td colspan="1"> {{percentOfStudentsAchievingOutcomeAdequately}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.percentageAchievingOutcome}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Likert-scale value: </li></td>
-              <td colspan="1"> {{averageLikertScaleValue}} </td>
+              <td colspan="1" style="text-align:center"> {{parsedCSV.averageLikertScore}} </td>
             </tr>
             <tr>
-              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: {{instructorComments}} </td>
+              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="instructorComments" cols="60" rows="5"></textarea>
+              </td>
             </tr>
+            <!--
+            <tr>
+              <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;"> 
+                 <div class="text-center form-group">
+                    <button ng-show='parsedCSV.averageLikertScore' type="button" class="btn btn-large btn-primary" ng-click="download()" style="width:50%">Download</button>
+                 </div>
+              </td>
+            </tr>
+            -->
           </table>
         </td>
         <td>
@@ -95,10 +106,34 @@ p {
                   <table class="table table-bordered">
                     <tr>
                       <td>
+                        <label>Maximum Score</label>
+                      </td>
+                      <td>
+                        <input type="text" id="maximum" name="maximum" class="form-control" data-ng-model="likert.maximum" placeholder="e.g. 100">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Columns To Parse</label>
+                      </td>
+                      <td>
+                        <input type="text" id="columns" name="columns" class="form-control" data-ng-model="likert.columns" placeholder="e.g. 1,2,3,4,5">
+                      </td>
+                    </tr>
+                     <tr>
+                      <td>
+                        <label>Minimum Acceptable Passing Value</label>
+                      </td>
+                      <td>
+                        <input type="text" id="columns" name="columns" class="form-control" data-ng-model="likert.minValue" placeholder="e.g. 2">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
                         <label>Likert 1 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert1" name="likert1" class="form-control" data-ng-model="likert.score1" placeholder="20 ">
+                        <input type="text" id="likert1" name="likert1" class="form-control" data-ng-model="likert.score1" placeholder="e.g. 20"> 
                       </td>
                     </tr>
                     <tr>
@@ -106,7 +141,7 @@ p {
                         <label>Likert 2 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert2" name="likert2" class="form-control" data-ng-model="likert.score2" placeholder="40 ">
+                        <input type="text" id="likert2" name="likert2" class="form-control" data-ng-model="likert.score2" placeholder="e.g. 40">
                       </td>
                     </tr>
                     <tr>
@@ -114,7 +149,7 @@ p {
                         <label>Likert 3 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert3" name="likert3" class="form-control" data-ng-model="likert.score3" placeholder="60 ">
+                        <input type="text" id="likert3" name="likert3" class="form-control" data-ng-model="likert.score3" placeholder="e.g. 60">
                       </td>
                     </tr>
                     <tr>
@@ -122,7 +157,7 @@ p {
                         <label>Likert 4 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert4" name="likert4" class="form-control" data-ng-model="likert.score4" placeholder="80 ">
+                        <input type="text" id="likert4" name="likert4" class="form-control" data-ng-model="likert.score4" placeholder="e.g. 80">
                       </td>
                     </tr>
                     <tr>
@@ -130,7 +165,7 @@ p {
                         <label>Likert 5 Cutoff</label>
                       </td>
                       <td>
-                        <input type="text" id="likert5" name="likert5" class="form-control" data-ng-model="likert.score5" placeholder="100 ">
+                        <input type="text" id="likert5" name="likert5" class="form-control" data-ng-model="likert.score5" placeholder="e.g. 100">
                       </td>
                     </tr>
                     <tr>

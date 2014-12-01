@@ -17,7 +17,7 @@ var should = require('should'),
  * Globals, id later becomes the mongodb id of a document so that it can
  * be used in id specific routes.
  */
-var courseModel1, courseEvaluation, req, req2, res, res2, res3;
+var courseModel1, courseEvaluation, req, req2, res2, res3;
 
 /**
  * Functional tests.
@@ -33,46 +33,26 @@ var courseModel1, courseEvaluation, req, req2, res, res2, res3;
 describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 
 	beforeEach(function(done) {
-		/*
-		courseModel1 = new CourseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
-			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
-			instructor: 'Professor Dobra',
-			date: new Date(), // Is this proper syntax for
-			descriptionOfInstrument: 'String describing instrument..whatever this means',
-			numberOfStudents: 45,
-			gradingScale: '0-10',
-			averageScore: 82,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 95,
-			averageLikertScaleValue: 4,
-			instructorComments: 'Room for instructor comments.'
+		courseEvaluation = new CourseCommittee({
+			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
+			syllabusReflectCurrentContent: false,
+			droppedTopics: true,
+			addedTopics: false,
+			textbookWorkingWell: false,
+			changesRequiredForNextAcademicYear: true,
+			newBooksToBeEvaluated: true,
+			bookMapWellToSyllabus: false,
+			otherEvaluationsIndicateIssues: true,
+			didStudentsMasterMaterial: false,
+			problemsWithKnowledgeInKeyConcepts: false,
+			prereqsStillAppropriate: true,
+			satisfyNeedsOfFollowupCourses: false,
+			sectionIActionsRecommendations: 'This is test for sectionI',
+			sectionIIActionsRecommendations: 'This is test for sectionII',
+			recommendationsForCourseImprovement: 'Drop the course',
+			recommendationsToCENProgramGovernance: 'Give me a raise',
+			sectionIIIRecommendationsComments: 'This is test for section III'
 		});
-		courseModel1.save(function() {
-			*/
-			courseEvaluation = new CourseCommittee({
-				courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-				description: 'This is a test',
-				syllabusReflectCurrentContent: false,
-				droppedTopics: true,
-				addedTopics: false,
-				textbookWorkingWell: false,
-				changesRequiredForNextAcademicYear: true,
-				newBooksToBeEvaluated: true,
-				bookMapWellToSyllabus: false,
-				otherEvaluationsIndicateIssues: true,
-				didStudentsMasterMaterial: false,
-				problemsWithKnowledgeInKeyConcepts: false,
-				prereqsStillAppropriate: true,
-				satisfyNeedsOfFollowupCourses: false,
-				sectionIActionsRecommendations: 'This is test for sectionI',
-				sectionIIActionsRecommendations: 'This is test for sectionII',
-				recommendationsForCourseImprovement: 'Drop the course',
-				recommendationsToCENProgramGovernance: 'Give me a raise',
-				sectionIIIRecommendationsComments: 'This is test for section III'
-			});
 
 			// console.log('util.inspect: '+util.inspect(courseEvaluation));
 
@@ -82,124 +62,179 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 				body: courseEvaluation
 			});
 
-			res  = httpMocks.createResponse();
-			res2 = httpMocks.createResponse();
-			res3 = httpMocks.createResponse();
-
 			done();
-			
-		//});
 	});
 
 	describe('CourseCommitteeEvaluationForm create Tests', function() {
 
 
 		it('should create a new CourseCommitteeEvaluationForm', function(done) {
-			controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				var data = JSON.parse(res._getData());
-				data.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
-				code.should.equal(200);
-				done();
-			});
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+					object.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+           
+			controller.create(req,res);
 		});
 
-		it('should fail to create a new form without a course description.', function(done) {
-			courseEvaluation.description = '';
-		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
-       	});
        	it('should fail to create a new form without courseCommitteeParticipants.', function(done) {
 			courseEvaluation.courseCommitteeParticipants = '';
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+
+		 	controller.create(req,res);
        	});
+       	
        	it('should fail to create a new form without droppedTopics.', function(done) {
 			courseEvaluation.droppedTopics = null,
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
        	it('should fail to create a new form without addedTopics.', function(done) {
 			courseEvaluation.addedTopics = null,
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
        	it('should fail to create a new form without textbookWorkingWell.', function(done) {
 			courseEvaluation.textbookWorkingWell = null,
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
        	it('should fail to create a new form without otherEvaluationsIndicateIssues.', function(done) {
 			courseEvaluation.otherEvaluationsIndicateIssues = null,
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
 
        	it('should fail to create a new form without sectionIActionsRecommendations.', function(done) {
 			courseEvaluation.sectionIActionsRecommendations = '',
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
 
        	it('should fail to create a new form without sectionIIActionsRecommendations.', function(done) {
 			courseEvaluation.sectionIIActionsRecommendations = '',
 		 	req.body = courseEvaluation;
-		 	controller.create(req,res, function() {
-		 		var code = JSON.parse(res._getStatusCode());
-		 		code.should.equal(400);
-		 		done();
-		 	});
+		 	var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				send: function(object) {
+					this.statusCode.should.equal(400);
+					this.done();
+				},
+				statusCode: 200,
+				done: done
+			};
+		 	controller.create(req,res);
        	});
-
      });
 
 	describe('CourseCommitteeEvaluationForm update Tests', function() {
 		it('should successfully update a already created form', function(done) {
-	 		controller.create(req,res, function() {
-				var code = JSON.parse(res._getStatusCode());
-				var data = JSON.parse(res._getData());
-				var id = data._id;
-				data.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
+			var res2 = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				statusCode: 200,
+				done: done,
+				jsonp: function(object) {
+					this.statusCode.should.equal(200);
+					object.courseCommitteeParticipants.should.equal('test course committee');
+					this.done();
+				}
+			}
+			var res = {
+				status: function(value) {
+					this.statusCode = value;
+				},
+				jsonp: function(object) {
+	            	this.statusCode.should.equal(200);
+					object.prereqsStillAppropriate.should.equal(courseEvaluation.prereqsStillAppropriate);
+					var id = object._id;
 					CourseCommittee.findById(id).exec(function(err, courseComittee1) {
 	 					req.courseCommittee = courseComittee1;
 	 					req.body = {courseCommitteeParticipants : 'test course committee'};
-	 					controller.update(req,res2, function() {
-							data = JSON.parse(res2._getData());
-	 						code = res2._getStatusCode();
-	 						code.should.equal(200);
-	 						data.courseCommitteeParticipants.should.equal('test course committee');
-	 						done();
-	 					});
+	 					controller.update(req,res2);
 	 				});
-			});
+				},
+				statusCode: 200,
+				done: done
+			};
+	 		controller.create(req,res);
 		});
 /*
 		it('should fail to update a already created form', function(done) {

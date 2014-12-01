@@ -59,14 +59,6 @@ describe('Course Committee Evaluation Unit Tests:', function(){
 			});
 		});
 		
-		it('should be able to show an error when try to save without description', function(done){
-			courseEvaluation.description = '';
-			return courseEvaluation.save(function(err){
-				should.exist(err);
-				done();
-			});
-		});
-
 		it('should be able to show an error when try to save without committee participants', function(done){
 			courseEvaluation.courseCommitteeParticipants = '';
 			return courseEvaluation.save(function(err) {

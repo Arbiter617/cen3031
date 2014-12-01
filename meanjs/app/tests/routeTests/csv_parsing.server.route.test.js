@@ -11,7 +11,7 @@ var should = require('should'),
  * Globals, id later becomes the mongodb id of a document so that it can
  * be used in id specific routes.
  */
-var csv_file = fs.readFileSync(__dirname + '/../../../csv_files/data.csv', "utf8"), csv_data_response;
+var csv_file = fs.readFileSync(__dirname + '/../../../csv_files/grades.csv', "utf8"), csv_data_response;
 
 /**
  * Load the CSV file
@@ -34,28 +34,79 @@ describe('CSV Parsing Route Functional Tests:', function() {
 		it('should send a csv file', function(done) {
 		 	request
 				.post('/csv_parsing')
-		 		.send({data: csv_file})
-   			.end(function (err,res) {
-       			res.status.should.equal(200);
-       			// Contains parsed csv file
-       			var csv_data_response = res.body;
-       			// console.log('got response back!' +csv_data_response);
-
-       			done();
-		 	});
+		 		.send({data: csv_file,
+		 			likert: {
+		 				maximum: 30,
+		 				minValue: 2,
+		 				columns: '2,3,4,5',
+		 				score1: 10,
+		 				score2: 15,
+		 				score3: 20,
+		 				score4: 25,
+		 				score5: 30,
+		 			}
+		 		})
+   				.end(function (err,res) {
+       				res.status.should.equal(200);
+       				var csv_data_response = res.body;
+       				done();
+		 		});
 		});
-		it('should receive an average exam score of 59', function(done) {
+		it('CSV parsing with all columns counted.', function(done) {
 			request
 				.post('/csv_parsing')
-		 		.send({data: csv_file})
-   			.end(function (err,res) {
-       			res.status.should.equal(200);
-       			// Contains parsed csv file
-       			var csv_data_response = res.body;
-       			// console.log('got response back!' +csv_data_response);
-       			csv_data_response.should.equal(59);
-       			done();
-		 	});
+		 		.send({data: csv_file,
+		 			likert: {
+		 				maximum: 30,
+		 				minValue: 2,
+		 				columns: '2,3,4,5',
+		 				score1: 10,
+		 				score2: 15,
+		 				score3: 20,
+		 				score4: 25,
+		 				score5: 30,
+		 			}
+		 		})
+   				.end(function (err,res) {
+       				res.status.should.equal(200);
+       				// Contains parsed csv file
+       				var csv_data_response = res.body;
+       				csv_data_response.numberOfStudents.should.equal(18);
+       				csv_data_response.averageScore.should.equal('14.28');
+       				csv_data_response.averageLikertScore.should.equal(3);
+       				csv_data_response.gradingScale.should.equal('0-30');
+       				done();
+		 		});
+		});
+
+		it('CSV parsing with all only the first column counted.', function(done) {
+			request
+				.post('/csv_parsing')
+		 		.send({data: csv_file,
+		 			likert: {
+		 				maximum: 30,
+		 				minValue: 2,
+		 				columns: '2',
+		 				score1: 10,
+		 				score2: 15,
+		 				score3: 20,
+		 				score4: 25,
+		 				score5: 30,
+		 			}
+		 		})
+   				.end(function (err,res) {
+       				res.status.should.equal(200);
+       				// Contains parsed csv file
+       				var csv_data_response = res.body;
+
+       				csv_data_response.numberOfStudents.should.equal(18);
+       				csv_data_response.averageScore.should.equal('14.89');
+       				csv_data_response.averageLikertScore.should.equal(3);
+       				csv_data_response.percentageAchievingOutcome.should.equal('88.89');
+       				csv_data_response.gradingScale.should.equal('0-30');
+       				
+       				done();
+		 		});
 		});
 
 	});

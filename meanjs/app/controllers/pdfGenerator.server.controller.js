@@ -12,34 +12,45 @@ var mongoose = require('mongoose'),
 	fs = require('fs'),
 	_ = require('lodash');
 
-exports.generatePDF = function (req,res) {
-  	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
+exports.generateCommitteePDF = function (req, res) {
+  	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
-  		console.log(path);
-  		res.download(path, 'report.pdf', function(err) {
-			if(err) {
-				throw err;
-			}
-		});
+  		res.json(req.courseCommittee._id);
   	});
 };
 
-exports.generateHTML = function(req,res,next) {
+exports.generateOutcomePDF = function (req, res) {
+  	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
+  	wkhtmltopdf(req.body.data, { pageSize: 'A4', output: path },  function() {
+  		res.json(req.body._id);
+  	});
+};
+
+exports.returnPDF = function(req,res) {
+	var path = __dirname + '/pdfs/' + req.courseCommittee._id + '.pdf';
+	res.download(path, req.courseCommittee._id + '.pdf', function(err) {
+		if(err) {
+			throw err;
+		}
+	});
+}
+
+exports.generateHTML = function(req,res) {
 	var template = Handlebars.compile(req.body.data.toString());
 	var result = template(req.courseCommittee);
-	//generate the pdf
-	if(next) {
-		next();
-	} else {
-		req.body.data = result;
-		req.body._id = req.courseCommittee._id;
-		controller.generatePDF(req,res);
-	}
+
+	req.body.data = result;
+	req.body._id = req.courseCommittee._id;
+	controller.generateCommitteePDF(req,res);
 };
 
 exports.getFile = function(req,res) {
 	var fileName = __dirname + '/pdfModels/CourseCommitteeEvaluationForm.html';
+
 	fs.readFile(fileName, function(err,data) {
+		if(err) {
+			console.log("ERROR:  " + errorHandler.getMessage(err));
+		}
 		req.body.data = data;
 		controller.generateHTML(req,res);
 	});

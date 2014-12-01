@@ -61,7 +61,6 @@ describe('PDFGenerator Route Functional Tests:', function() {
 		
 		courseEvaluation = new CourseCommittee({
 			courseCommitteeParticipants: 'Kyle Adam Zach Brian Brett',
-			description: 'This is a test',
 			syllabusReflectCurrentContent: false,
 			droppedTopics: true,
 			addedTopics: false,
@@ -182,8 +181,9 @@ describe('PDFGenerator Route Functional Tests:', function() {
 		//Manually delete all the generated pdfs. 
 		it('should create a pdf form based on the courseEvaluation', function(done) {
 			request
-				.get('/committeePDF/' + id)
+				.post('/committeePDF/' + id)
 				.end(function (err,res) {
+					res.body.should.equal(id.toString());
 					res.status.should.equal(200);
 					done();
 				});
@@ -199,11 +199,12 @@ describe('PDFGenerator Route Functional Tests:', function() {
 				var template = Handlebars.compile(data.toString());
 				var result = template(courseModel1);
 				request
-				.get('/outcomePDF')
-				.send({data: result, _id:1234123412341235})
-				.end(function (err,res) {
-					res.status.should.equal(200);
-					done();
+					.post('/outcomePDF')
+					.send({data: result, _id:'1234123412341235'})
+					.end(function (err,res) {
+						res.body.should.equal('1234123412341235');
+						res.status.should.equal(200);
+						done();
 				});
 			});
 			
@@ -217,7 +218,12 @@ describe('PDFGenerator Route Functional Tests:', function() {
 
 	
 	after(function(done) {
+		CourseModel.remove().exec();
+		OutcomeEvaluation.remove().exec(); 
+		User.remove().exec();
+		Outcome.remove().exec(); 
 		CourseCommittee.remove().exec();
+		Course.remove().exec();
 		done();
 	});
 

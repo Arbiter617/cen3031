@@ -23,7 +23,7 @@ var courseModel1, courseModel2, courseModel3fail, id;
 */
 
 
-describe('Course Model Unit Tests:', function(){
+describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 	beforeEach(function(done)	{
 		courseModel1 = new courseModel({
 			description: 'First string describing the class...software engineering',

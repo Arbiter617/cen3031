@@ -39,4 +39,12 @@ var OutcomeSchema = new Schema({
 	}
 });
 
+var OutcomePrototypesSchema = new Schema({
+	elements: [{
+		type: Schema.ObjectId,
+		ref: 'Outcome'
+	}]
+});
+
 mongoose.model('Outcome', OutcomeSchema);
+mongoose.model('OutcomePrototypes', OutcomePrototypesSchema);

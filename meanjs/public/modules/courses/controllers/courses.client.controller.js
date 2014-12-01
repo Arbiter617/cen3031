@@ -84,14 +84,28 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		//update existing course in db
 		$scope.update = function(courseData) {
 			var course = $scope.course;
-			buildCourse(course, courseData);
 
-			course.$update(function() {
-				resolveOutcomes([course]);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-				$scope.course = '';
-			});
+			var newOutcomes = [];
+			for(var i = 0; i < courseData.outcomes.length; i++) {
+				var outcome = outcomeById(courseData.outcomes[i]);
+				if(course.outcomes.indexOf(outcome) == -1) {
+					newOutcomes.push(outcome);
+				}
+			}
+
+			$http.post('courses/' + course._id + '/outcomes', newOutcomes)
+				.success(function(response) {
+					courseData = response;
+					buildCourse(course, courseData);
+					course.$update(function() {
+						resolveOutcomes([course]);
+					}, function(errorResponse) {
+						$scope.error = errorResponse.data.message;
+						$scope.course = '';
+					});
+				}).error(function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
 		};
 
 		//remove existing course from db
@@ -106,6 +120,15 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				}
 			}
 		};
+
+		$scope.downloadPDF = function(course_id) {
+			console.log("Downloading");
+			$http.get('committeePDF/' + course_id);
+
+			$.download('/export.php','filename=mySpreadsheet&format=xls&content=' + spreadsheetData );
+			$('<form action="'+ url +'" method="'+ ('post') +'">'+inputs+'</form>')
+               .appendTo('body').submit().remove();
+		}
 
 		//populate $scope.userCourses
 		$scope.getUserCourses = function() {
@@ -248,3 +271,4 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$modalInstance.dismiss('cancel');
 	};
 });
+
