@@ -1,16 +1,12 @@
 'use strict';
-angular.module('courses').controller('committeeEvalController', ['$scope', '$http','$stateParams','$q', 'Authentication','Courses', 'Users', 'Outcomes',
-	function($scope, $http, $stateParams,$q, Authentication,Courses,Users,Outcomes) {
+angular.module('courses').controller('committeeEvalController', ['$scope', '$http','$stateParams','$q', '$location', '$modal','Authentication','Courses', 'Users', 'Outcomes',
+	function($scope, $http, $stateParams,$q, $location, $modal, Authentication,Courses,Users,Outcomes) {
 
 		$scope.authentication = Authentication;
 		$scope.user = new Users(Authentication.user);
-		$scope.form = {};
-
-		$scope.form.instructor = user.firstName + " " +user.lastName;
-		$scope.form.date = new Date();
 
 		//id's of forms already existing in db to be updated
-		var formsInDB = [];
+		var formsInDB;
 
 		$scope.submit = function(form) {
 			var course = $scope.course;
@@ -45,6 +41,7 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 				//generate pdf when course saves
 				$http.put('courses/' + course._id, course).success(function(response) {
 					generatePDF(course._id);
+					$location.path('/list-courses');
 				});
 			});
 		}
@@ -54,12 +51,11 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		}
 
 		function setFormFields(course) {
-			$scope.course = course;
-
+			$scope.form.instructor = user.firstName + " " +user.lastName;
+			$scope.form.date = new Date();
 			$scope.form.courseNumber = course.courseID;
 			$scope.form.courseTitle = course.courseName;
 			$scope.form.courseCommitteeParticipants = $scope.form.instructor;
-			$scope.outcomes = course.outcomes;
 		}
 
 		$scope.getUserCourses = function() {
@@ -108,15 +104,14 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			for(var i = 0; i < $scope.userCourses.length; i++) {
 				if($scope.userCourses[i].courseID == courseNum) {
 					var course = $scope.userCourses[i];
-					if(course.courseCommitteeEvaluationForm) {
-						formsInDB.push(course.courseCommitteeEvaluationForm);
-						course.courseCommitteeEvaluationForm = 
-							$http.get('courseCommitteeEvaluation/' + course.courseCommitteeEvaluationForm)
-							.success(function(response) {
-								$scope.form = response;
-							});
-					}
 
+					//if course already has a form 
+					//push it to formsInDB
+					if(course.courseCommitteeEvaluationForm) {
+						formsInDB.push(course.courseCommitteeEvaluationForm._id);
+						$scope.form = course.courseCommitteeEvaluationForm;
+					}
+					
 					return course;
 				}
 			}
@@ -139,15 +134,68 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 		}
 
 		$scope.init = function() {
+
+			initState();
+
+			//need to reevaluate if forms are in db
+			formsInDB = [];
+			$scope.form = {};
+
 			$q.all([
 				$scope.getOutcomes(),
 				$scope.getUserCourses()
 			]).then(function(data) {
 				var course = courseByNumber($stateParams.courseID);
 				resolveOutcomes([course]);
+
+				$scope.course = course;
+				$scope.outcomes = course.outcomes;
 				setFormFields(course);
 			})
 		};
 
+		$scope.showInstructions = function() {
+			var modalInstance = $modal.open({
+				templateUrl: 'instructions.html',
+				size: 'lg'
+    		});
+		}
+
+
+		//state management functions for 
+		//multi-page form
+
+		var outcomeNum = -1;
+		function initState() {
+			//start at first page
+			$scope.state = 'committeeEval';
+		}
+
+		$scope.nextState = function() {
+			$scope.state = 'outcome' + ++outcomeNum;
+		}
+
+		$scope.previousState = function() {
+			$scope.state = 'outcome' + --outcomeNum;
+			if(outcomeNum == -1)
+				$scope.state = 'committeeEval';
+		}
+
+		$scope.hasNextState = function() {
+			return outcomeNum < $scope.outcomes.length-1;
+		}
+
+		$scope.hasPreviousState = function() {
+			return outcomeNum >= 0;
+		}
+
+		$scope.stateIsOutcome = function(outcome) {
+			var is = $scope.outcomes.indexOf(outcome) == outcomeNum;
+			return is;
+		}
+
+		$scope.stateInOutcomeEvals = function() {
+			return $scope.state.substring(0,7) == 'outcome';
+		}
 	
 }]);
