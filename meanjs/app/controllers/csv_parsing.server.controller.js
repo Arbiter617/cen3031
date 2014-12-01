@@ -49,6 +49,7 @@ exports.create = function(req, res, next) {
  				}
  			}
  		}
+
  		var numberOfStudents = output.length - 1;
  		averageScore /= totalGradeCount;
  		var tempSum = 0;
@@ -63,14 +64,25 @@ exports.create = function(req, res, next) {
  		var percentageAchievingOutcome = (tempSum/ numberOfStudents) * 100;
  		var gradingScale = '0-' + likert.maximum;
 
- 		var courseOutcome = {
+ 		var instructor = req.user === undefined ? req.body.instructor : req.user.displayName;
+
+ 		var courseOutcome = new Course({
  			numberOfStudents: numberOfStudents,
  			averageScore: averageScore.toFixed(2),
- 			averageLikertScore: averageLikertScore,
- 			percentageAchievingOutcome: percentageAchievingOutcome.toFixed(2),
+ 			averageLikertScaleValue: averageLikertScore,
+ 			percentOfStudentsAchievingOutcomeAdequately: percentageAchievingOutcome.toFixed(2),
  			gradingScale: gradingScale,
- 			minimumAcceptableLikertValue: likert.minValue
- 		};
+ 			instructor: instructor,
+ 			date: new Date(),
+ 			courseTitle: req.body.courseTitle,
+ 			courseNumber: req.body.courseNumber,
+ 			scoreForAdequateOutcomeAchievement: likert.minValue,
+ 			score1: parseInt(likert.score1),
+ 			score2: parseInt(likert.score2),
+ 			score3: parseInt(likert.score3),
+ 			score4: parseInt(likert.score4),
+ 			score5: parseInt(likert.score5)
+ 		});
  		res.jsonp(courseOutcome);
 
 	});	

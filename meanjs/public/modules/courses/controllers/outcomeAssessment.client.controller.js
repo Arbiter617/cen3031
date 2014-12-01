@@ -26,7 +26,9 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 			$http.post('csv_parsing/', { 
             	name: $scope.files[0].name, 
             	data: reader.result,
-            	likert: $scope.likert
+            	likert: $scope.likert,
+            	courseNumber: $scope.courseNumber,
+            	courseTitle: $scope.courseTitle
             }).success(function(res) {
             	$scope.parsedCSV = res;
             	d.resolve();

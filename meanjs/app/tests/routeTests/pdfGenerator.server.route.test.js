@@ -43,20 +43,25 @@ describe('PDFGenerator Route Functional Tests:', function() {
 
 		outcomeArray = [];
 		courseModel1 = new CourseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
+			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'COP3503',
 			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
-			instructor: 'Professor Dobra',
-			date: new Date(), // Is this proper syntax for
-			descriptionOfInstrument: 'String describing instrument..whatever this means',
-			numberOfStudents: 45,
+			courseTitle: 'Programming Two',
+			instructor: 'Professor Roytman',
+			date: new Date(), //Same date concern as above
+			descriptionOfInstrument: 'Second time describing instrument',
+			numberOfStudents: 52,
 			gradingScale: '0-10',
-			averageScore: 82,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 95,
-			averageLikertScaleValue: 4,
-			instructorComments: 'Room for instructor comments.'
+			averageScore: 75,
+			scoreForAdequateOutcomeAchievement: 75,
+			percentOfStudentsAchievingOutcomeAdequately: 87,
+			averageLikertScaleValue: 3,
+			columns: '2,3,4,5',
+			instructorComments: 'No comments'
 		});
 		
 		courseEvaluation = new CourseCommittee({
@@ -112,6 +117,7 @@ describe('PDFGenerator Route Functional Tests:', function() {
 		user.save(function() {
 
 			courseModel1.save(function() {
+				id2 = courseModel1._id;
 				outcomeEvals1.save(function() {
 					outcome1 = new Outcome({
 						outcomeID: 'a',
@@ -156,7 +162,7 @@ describe('PDFGenerator Route Functional Tests:', function() {
 									});
 								});
 							});
-					});
+						});
 					});
 				});
 			});
@@ -191,26 +197,16 @@ describe('PDFGenerator Route Functional Tests:', function() {
 		});
 	});
 
-	describe('/outcomePDF tests', function() {
-
+	describe('/outcomePDF/:id tests', function() {
 		it('should create a pdf form based on the courseOutcomeAssessmentForm', function(done) {
-			var fileName = __dirname + '/../../controllers/pdfModels/CourseOutcomeAssessmentForm.html';
-			fs.readFile(fileName, function(err,data) {
-				var template = Handlebars.compile(data.toString());
-				var result = template(courseModel1);
-				request
-					.post('/outcomePDF')
-					.send({data: result, _id:'1234123412341235'})
-					.end(function (err,res) {
-						res.body.should.equal('1234123412341235');
-						res.status.should.equal(200);
-						done();
-				});
-			});
-			
+			request
+				.post('/outcomePDF/' + id2)
+				.end(function (err,res) {
+					res.body.should.equal(id2.toString());
+					res.status.should.equal(200);
+					done();
+				});	
 		});
-
-
 	});
 
 	
