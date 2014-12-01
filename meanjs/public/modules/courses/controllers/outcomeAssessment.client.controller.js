@@ -11,7 +11,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.courseTitle;
 		$scope.instructor = user.firstName +" " +user.lastName;
 		$scope.date = new Date();
-		$scope.parsedCSV;
+		$scope.outcomeAssessmentForm;
 
 		$scope.submit = function() {			
 			var reader = new FileReader();
@@ -30,7 +30,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             	courseNumber: $scope.courseNumber,
             	courseTitle: $scope.courseTitle
             }).success(function(res) {
-            	$scope.parsedCSV = res;
+            	$scope.outcomeAssessmentForm = res;
             	d.resolve();
             }).err(function(res) {
             	$scope.error = res.message;

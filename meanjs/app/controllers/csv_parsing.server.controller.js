@@ -84,9 +84,6 @@ exports.create = function(req, res, next) {
  			score5: parseInt(likert.score5)
  		});
  		res.jsonp(courseOutcome);
-
 	});	
-	
-
 };
 
