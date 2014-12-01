@@ -11,7 +11,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.courseTitle;
 		$scope.instructor = user.firstName +" " +user.lastName;
 		$scope.date = new Date();
-
+		console.log(document);
 		$scope.submit = function() {
 			var reader = new FileReader();
             reader.addEventListener("loadend", function(evt) {
@@ -24,6 +24,21 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             reader.readAsText($scope.files[0]);
 			
 		}
+
+		$scope.generate = function(){
+			var body = {};
+			body._id = "test";
+			body.data = "doo"
+			var htlm  = document.getElementById("form");
+			body.data = htlm.innerHTML;
+			console.log(body.data);
+			$http.post('/outcomePDF', body).success(function(response) {
+				
+
+			}).error(function(response) {
+				console.log(response);
+			});
+		} 
 
 		$scope.getUserCourses = function() {
 			var d = $q.defer();

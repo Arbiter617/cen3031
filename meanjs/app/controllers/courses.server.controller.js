@@ -44,7 +44,7 @@ exports.submitForm = function(req, res) {
 	course.save(function(err) {
 		if(err) {
 			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err);
+				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			res.jsonp(course);

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <section ng-app="courses" data-ng-controller="outcomeAssessmentController" data-ng-init="init()">
-<head>
-</head>
+<div id="form">
   <body>
+
     <table style="width:100%; padding:0px; border:hidden">
       <tr>
         <td style="padding:0px; text-align:left">
@@ -25,6 +25,7 @@ p {
 }
 }
 </style>
+
           <p> 
           <br><br><br>
           Computer Information Science and Engineering Department <br>
@@ -79,6 +80,7 @@ p {
           </table>
         </td>
         <td>
+        </div>
             <div>
 
               <label>Upload csv containing likert scores:</label>
@@ -135,6 +137,7 @@ p {
                       <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
                       <div class="text-center form-group">
                     <button type="button" class="btn btn-large btn-primary" ng-click="submit()" style="width:50%">Submit</button>
+                    <button type="button" class="btn btn-large btn-primary" ng-click="generate()" style="width:50%">Generate</button>
                   </div>
                   <div data-ng-show="success" class="text-center text-success">
                     <strong>Likert Submitted</strong>

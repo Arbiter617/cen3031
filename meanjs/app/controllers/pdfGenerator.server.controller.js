@@ -15,6 +15,7 @@ var mongoose = require('mongoose'),
 exports.generatePDF = function (req,res) {
   	var path = __dirname + '/pdfs/' + req.body._id + '.pdf';
   	wkhtmltopdf(req.body.data, { pageSize: 'A3', output: path },  function() {
+  		console.log(path);
   		res.download(path, 'report.pdf', function(err) {
 			if(err) {
 				throw err;
