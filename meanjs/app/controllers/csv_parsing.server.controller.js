@@ -5,10 +5,9 @@
  */
 var parse = require('csv-parse'),
 	mongoose = require('mongoose'),
+	Course = mongoose.model('CourseOutcomeAssessmentForm'),
 	errorHandler = require('./errors'),
-	fs = require('fs'),
 	_ = require('lodash');
-	require('should');
 
 /**
  * Store the CSV file in a variable and proceed to parse it
@@ -18,54 +17,61 @@ var parse = require('csv-parse'),
  		 * avg score
  		 * % students achieving adequate score
  		 */
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
 	var csv_file = req.body.data;
 	var csv_file_str = csv_file.toString();
-	
+	var likert = req.body.likert;
+	var cols = likert.columns.split(',');
+	cols.forEach(function(element, index, array) {
+		array[index] = parseInt(element);
+	});
+
 	parse(csv_file_str, {delimiter: ','}, function(err, output){
-
- 		var outStr = '';
- 		var avgScore = 0;
-
- 		for (var  i =0; i < output.length; i++) {
- 			
- 			// if (i == 0) {
- 			// 		outStr += output[i][3]+' ';
- 			// 	}
- 			// 	else {
- 			// 	outStr += output[i][3]+'\t';
- 			// 	avgScore += parseInt(output[i][3]);
- 			// }
- 			for (var j = 0; j < output[i].length; j++) {
- 				if (i == 0 ) {
- 					if (output[i][j] == 'Exam') {
- 						// console.log('Exam data is in column '+j+'!');
- 						i++;
- 						while (i < output.length) {
- 							// console.log('adding ' +output[i][j]+' to average score ');
- 							avgScore+=parseInt(output[i][j]);
- 							i++;
- 						}
- 						break;
- 					}
+ 		var averageScore, totalGradeCount, avgScore;
+ 		averageScore = totalGradeCount = avgScore = 0;
+ 		var likertScores = [0,0,0,0,0]; 
+ 		//For each column in the specified parsed columns
+ 		for (var  i =0; i < cols.length; i++) {
+ 			for (var j = 1; j < output.length; j++) {
+ 				var value = parseInt(output[j][cols[i]-1]);
+ 				averageScore += value;
+ 				totalGradeCount++;
+ 				if(value < likert.score1) {
+ 					likertScores[0]++;
+ 				} else if(value < likert.score2) {
+ 					likertScores[1]++;
+ 				} else if(value < likert.score3) {
+ 					likertScores[2]++;
+ 				} else if(value < likert.score4) {
+ 					likertScores[3]++;
+ 				} else {
+ 					likertScores[4]++;
  				}
- 				// if (i == 0) {
- 				// 	outStr += output[i][j]+' ';
- 				// }
- 				// else {
- 				// outStr += output[i][j]+'\t';
- 			
  			}
- 			// outStr+='\n';
-
  		}
+ 		var numberOfStudents = output.length - 1;
+ 		averageScore /= totalGradeCount;
+ 		var tempSum = 0;
+ 		for(var i = 1; i <= likertScores.length; i++) {
+ 			tempSum += likertScores[i-1]*i;
+ 		}
+ 		var averageLikertScore = Math.round(tempSum / totalGradeCount);
+ 		tempSum = 0;
+ 		for(var i = likert.minValue - 1; i < likertScores.length; i++) {
+ 			tempSum += likertScores[i]/cols.length;
+ 		}
+ 		var percentageAchievingOutcome = (tempSum/ numberOfStudents) * 100;
+ 		var gradingScale = '0-' + likert.maximum;
 
- 		avgScore /= (parseInt(output.length-1));
- 		// console.log(outStr);
- 		// console.log('average score is' +avgScore);
-
- 		// send back parsed data in the response
- 		res.status(200).json(avgScore);
+ 		var courseOutcome = {
+ 			numberOfStudents: numberOfStudents,
+ 			averageScore: averageScore.toFixed(2),
+ 			averageLikertScore: averageLikertScore,
+ 			percentageAchievingOutcome: percentageAchievingOutcome.toFixed(2),
+ 			gradingScale: gradingScale,
+ 			minimumAcceptableLikertValue: likert.minValue
+ 		};
+ 		res.jsonp(courseOutcome);
 
 	});	
 	

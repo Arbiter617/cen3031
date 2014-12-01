@@ -23,8 +23,11 @@
 			<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} >
 				Outcomes Evaluation Assessment Form
 			</a>
-			<button ng-show="course.courseCommitteeEvaluationForm" class="btn btn-primary" ng-click="downloadPDF(course._id)">Download PDF</button>
-			<a ng-href="{{'/#!/committeePDF/' + course._id}}" target="_self">DOWNLOOOOAD</a>
+			<a href={{"/committeePDF/"+course._id}} download>
+				<button ng-show="course.courseCommitteeEvaluationForm" class="btn btn-primary" >Download PDF</button>
+			</a>
 		</accordion-group>
 	</accordion>
 </section>
+
+<!--ng-click="downloadPDF(course._id)"-->

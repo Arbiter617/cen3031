@@ -10,7 +10,7 @@ var pdfGenerator = require('../../app/controllers/pdfGenerator');
 module.exports = function(app) {
 	// Article Routes
 	app.route('/outcomePDF')
-		.post(pdfGenerator.generatePDF);
+		.post(pdfGenerator.generateOutcomePDF);
 
 	app.route('/committeePDF/:courseId')
 		.post(pdfGenerator.getFile)
