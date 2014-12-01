@@ -21,6 +21,22 @@ exports.create = function(req, res) {
 
 	outcome.save(function(err) {
 		if (err) {
+			console.log(err);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(outcome);
+		}
+	});
+};
+
+exports.createPrototype = function(req, res) {
+	var outcome = new Outcome(req.body);
+	outcome.user = req.user;
+
+	outcome.save(function(err) {
+		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
