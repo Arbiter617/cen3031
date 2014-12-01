@@ -75,18 +75,20 @@ p {
               <td colspan="1" style="text-align:center"> {{parsedCSV.averageLikertScore}} </td>
             </tr>
             <tr>
-              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="instructorComments" cols="60" rows="5"></textarea>
+              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="instructorComments" cols="60" rows="5"></textarea> 
               </td>
             </tr>
-            <!--
             <tr>
-              <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;"> 
+            <td style="border-top-style: hidden;border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;"></td>
+            </tr>
+            <tr>
+              
+              <td rowspan="2" colspan="3"style=" clear:both; border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
                  <div class="text-center form-group">
-                    <button ng-show='parsedCSV.averageLikertScore' type="button" class="btn btn-large btn-primary" ng-click="download()" style="width:50%">Download</button>
+                    <button ng-show='parsedCSV.averageLikertScore' type="button" class="btn btn-large btn-primary" ng-click="download()">Download</button>
                  </div>
               </td>
             </tr>
-            -->
           </table>
         </td>
         <td>
