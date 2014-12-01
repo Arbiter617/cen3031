@@ -14,6 +14,9 @@ module.exports = function(app) {
 		.post(users.requiresLogin, outcomes.create)
 		.get(outcomes.list);
 
+	app.route('/outcomes/prototypes')
+		.get(outcomes.listPrototypes);
+
 	app.route('/outcomes/:outcomeId')
 		.get(users.requiresLogin, outcomes.hasAuthorization, outcomes.read)
 		.put(users.requiresLogin, outcomes.update)
