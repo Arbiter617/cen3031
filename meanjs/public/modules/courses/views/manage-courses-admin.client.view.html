@@ -29,6 +29,14 @@
 					<div class="controls">
 						<input name="courseName" type="text" data-ng-model="course.courseName" id="courseName" class="form-control" required>
 					</div>
+					<label class="control-label" for="courseTerm">Term</label>
+					<div class="controls">
+						<input type="text" data-ng-model="course.courseTerm" id="courseTerm" class="form-control" required>
+					</div>
+					<label class="control-label" for="courseYear">Year</label>
+					<div class="controls">
+						<input type="text" data-ng-model="course.courseYear" id="courseYear" class="form-control" required>
+					</div>
 					<label class="control-label" for="outcomes">Select Outcomes</label>
 					<div multi-select input-model="outcomes" button-label="outcomeID" item-label="outcomeName" tick-property="ticked">
 					</div>

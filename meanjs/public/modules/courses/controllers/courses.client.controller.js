@@ -8,6 +8,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.userCourseOptions = [];
 		$scope.selectedOutcomes = [];
 		$scope.outcomeCount = 0;
+		//$scope.term = ["Fall", "Spring", "Summer A", "Summer B", "Summer C"];
+		//$scope.year = ['2015', '2016', '2017'];
 
 		var submitModal = '';
 
@@ -54,6 +56,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			openModal({
 				courseID: course.courseID,
 				courseName: course.courseName,
+				courseTerm: course.courseTerm,
+				courseYear: course.courseYear,
 				outcomes: outcomes
 			});
 		};
@@ -67,6 +71,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		function buildCourse(course, courseData) {
 			course.courseID = courseData.courseID;
 			course.courseName = courseData.courseName;
+			course.courseTerm = courseData.courseTerm;
+			course.courseYear = courseData.courseYear;
 			course.outcomes = courseData.outcomes;
 		}
 
@@ -233,7 +239,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 	$scope.outcomes = params.outcomes;
 	$scope.course = {
 		courseID: params.courseID,
-		courseName: params.courseName
+		courseName: params.courseName,
+		courseTerm: params.courseTerm,
+		courseYear: params.courseYear
 	}
 
 
