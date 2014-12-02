@@ -38,7 +38,7 @@ exports.generateHTML = function(req,res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-
+		req.courseCommittee.user = req.user;
 		var template = Handlebars.compile(data.toString());
 		var result = template(req.courseCommittee);
 
