@@ -43,24 +43,26 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			submitModal = $scope.update;
 			$scope.course = course;
 
-			var outcomes = [];
-			for(var i = 0; i < $scope.outcomes.length; i++) {
-				outcomes[i] =  angular.copy($scope.outcomes[i]);
-				if(course.outcomes.indexOf($scope.outcomes[i]) != -1)
-					outcomes[i].ticked = true;
+			var selectedOutcomes = [];
+			for(var i = 0; i < course.outcomes.length; i++)
+				selectedOutcomes.push(findPrototype(course.outcomes[i]));
+
+			for(var i = 0; i < $scope.outcomeProtos.length; i++) {
+				if(indexById(selectedOutcomes, $scope.outcomeProtos[i]) != -1)
+					$scope.outcomeProtos[i].ticked = true;
 			}
 
 			openModal({
 				courseID: course.courseID,
 				courseName: course.courseName,
-				outcomes: outcomes
+				outcomes: $scope.outcomeProtos
 			});
 		};
 
 		//open create course modal
 		$scope.new = function() {
 			submitModal = $scope.create;
-			openModal({ outcomes:$scope.outcomes });
+			openModal({ outcomes:$scope.outcomeProtos });
 		};
 
 		function buildCourse(course, courseData) {
@@ -69,16 +71,58 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			course.outcomes = courseData.outcomes;
 		}
 
+		function cloneOutcome(outcome) {
+			return new Outcomes({
+				outcomeID: outcome.outcomeID,
+				outcomeName: outcome.outcomeName
+			});
+		}
+
+		function cloneOutcomes(outcomes) {
+			var def = $q.defer();
+			var promises = [];
+			for(var i = 0; i < outcomes.length; i++) {
+				var o = outcomeById(outcomes[i]);
+				var outcome = cloneOutcome(o);
+				
+				promises.push(saveOutcome(outcome));
+			}
+
+			$q.all(promises).then(function(data) {
+				def.resolve(data);
+			});
+
+			return def.promise;
+		}
+
+		function saveOutcome(outcome) {
+			var d = $q.defer();
+			outcome.$save(function(response) {
+				$scope.outcomes.push(response);
+				d.resolve(response._id);
+			}, function(errorResponse) {
+				d.reject(errorResponse);
+			});
+			return d.promise;
+		}
+
 		//create new course in db
 		$scope.create = function(courseData) {
-			var course = new Courses();
-			buildCourse(course, courseData);
 
-			course.$save(function(response) {
-				$scope.courses.push(course);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+			cloneOutcomes(courseData.outcomes).then(function(data) {
+				courseData.outcomes = data;
+				var course = new Courses();
+				buildCourse(course, courseData);
+
+				//save course
+				course.$save(function(response) {
+					$scope.courses.push(course);
+					resolveOutcomes([course]);
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
 			});
+			
 		};
 
 		//update existing course in db
@@ -89,23 +133,20 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			for(var i = 0; i < courseData.outcomes.length; i++) {
 				var outcome = outcomeById(courseData.outcomes[i]);
 				if(course.outcomes.indexOf(outcome) == -1) {
-					newOutcomes.push(outcome);
+					newOutcomes.push(outcome._id);
 				}
 			}
 
-			$http.post('courses/' + course._id + '/outcomes', newOutcomes)
-				.success(function(response) {
-					courseData = response;
-					buildCourse(course, courseData);
-					course.$update(function() {
-						resolveOutcomes([course]);
-					}, function(errorResponse) {
-						$scope.error = errorResponse.data.message;
-						$scope.course = '';
-					});
-				}).error(function(errorResponse) {
+			cloneOutcomes(newOutcomes).then(function(data) {
+				courseData.outcomes = data;
+				buildCourse(course, courseData);
+				course.$update(function() {
+					resolveOutcomes([course]);
+				}, function(errorResponse) {
 					$scope.error = errorResponse.data.message;
+					$scope.course = '';
 				});
+			});
 		};
 
 		//remove existing course from db
@@ -151,6 +192,15 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			return d.promise;
 		};
 
+		$scope.getOutcomeProtos = function() {
+			var d = $q.defer();
+			$http.get('outcomes/prototypes').success(function(response) {
+				$scope.outcomeProtos = response;
+				d.resolve();
+			});
+			return d.promise;
+		}
+
 		//populate outcomes
 		$scope.getOutcomes = function() {
 			var d = $q.defer();
@@ -179,7 +229,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.initAdminManageCourses = function() {
 			$q.all([
 				$scope.getCourses(),
-				$scope.getOutcomes()
+				$scope.getOutcomes(),
+				$scope.getOutcomeProtos()
 			]).then(function(data) {
 				resolveOutcomes($scope.courses);
 			});
@@ -209,6 +260,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 
 			modalInstance.result.then(function (courseData) {
 				submitModal(courseData);
+				for(var i = 0; i < params.outcomes.length; i++) 
+					params.outcomes[i].ticked = false;
+			}, function() {
+				for(var i = 0; i < params.outcomes.length; i++) 
+					params.outcomes[i].ticked = false;
 			}); 
 		}
 
@@ -217,7 +273,14 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 				if($scope.outcomes[i]._id === id)
 					return $scope.outcomes[i];
 			}
-		};
+		}
+
+		function findPrototype(outcome) {
+			for(var i = 0; i < $scope.outcomes.length; i++) {
+				if($scope.outcomeProtos[i].outcomeID == outcome.outcomeID)
+					return $scope.outcomeProtos[i];
+			}
+		}
 
 		//take list of courses with list of outcome _id's
 		//and replace with actual outcome objects from
