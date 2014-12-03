@@ -17,7 +17,6 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var course = new Course(req.body);
-
 	course.save(function(err) {
 		if (err) {
 			res.status(400);

@@ -32,10 +32,10 @@ p {
           Electrical and Computer Engineering Department <br>
           Computer Engineering Program <br>
           Program Outcomes Assessment Report <br>
-          Outcome ( {{outcome}} ): Description: {{description}} <br>
-          Course Number: {{courseNumber}}  Term: {{term}} <br>
-          Course Title: {{courseTitle}} <br>
-          Instructor: {{instructor}}  Date: {{date}}
+          Outcome ( {{outcome.outcomeID}} ): Description: {{outcome.outcomeName}} <br>
+          Course Number: {{outcome.outcomeAssessmentForm.courseNumber}}  Term: {{term}} <br>
+          Course Title: {{outcome.outcomeAssessmentForm.courseTitle}} <br>
+          Instructor: {{outcome.outcomeAssessmentForm.instructor}}  Date: {{outcome.outcomeAssessmentForm.date}}
           <br><br>
           </p>
 
@@ -44,7 +44,7 @@ p {
               <th colspan="3">Assessment Instrument</th>
             </tr>
             <tr>
-              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="descriptionOfInstrument" cols="60" rows="5"></textarea>  
+              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="$scope.outcome.outcomeAssessmentForm.descriptionOfInstrument" cols="60" rows="5"></textarea>  
               </td>
             </tr>
             <tr>
@@ -53,30 +53,30 @@ p {
             </tr>
             <tr>
               <td colspan="2" ><li> Number of Students: </li> </td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.numberOfStudents}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.numberOfStudents}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Grading Scale (e.g. 0-10) </li></td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.gradingScale}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.gradingScale}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Score: </li></td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.averageScore}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.averageScore}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Score for Adequate Outcome Achievement (2 or better on the Likert 1-5 Scale):</li></td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.minimumAcceptableLikertValue}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.minimumAcceptableLikertValue}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> % of Students Achieving Outcome Adequately: </li></td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.percentageAchievingOutcome}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.percentageAchievingOutcome}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Likert-scale value: </li></td>
-              <td colspan="1" style="text-align:center"> {{parsedCSV.averageLikertScore}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.averageLikertScore}} </td>
             </tr>
             <tr>
-              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="instructorComments" cols="60" rows="5"></textarea>
+              <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="outcome.outcomeAssessmentForm.instructorComments" cols="60" rows="5"></textarea>
               </td>
             </tr>
             <!--
