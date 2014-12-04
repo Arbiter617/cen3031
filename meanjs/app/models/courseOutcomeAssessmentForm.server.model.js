@@ -12,7 +12,8 @@ var mongoose = require('mongoose'),
 var CourseOutcomeAssessmentFormSchema = new Schema({
 	courseNumber: {
 		type: String,
-		required: false
+		default: '',
+		required: true
 	},
 	term: {
 		type: String,
@@ -26,9 +27,6 @@ var CourseOutcomeAssessmentFormSchema = new Schema({
 		default: '',
 		required: false
 	},
-	/*
-		This might need to be its own small schema and then we would nest it.
-	*/
 	instructor: {
 		type: String,
 		trim: true,
@@ -44,14 +42,17 @@ var CourseOutcomeAssessmentFormSchema = new Schema({
 	descriptionOfInstrument: {
 		type: String,
 		trim: true,
-		default: '',
-		required: false
+		default: ''
 	},
 	numberOfStudents: {
 		type: Number,
 		required: false
 	},
-	/* I think this needs to be a string. e.g. 0-10 or 0-100 */
+	columns: {
+		type: String,
+		trim: true,
+		default: ''
+	},
 	gradingScale: {
 		type: String,
 		trim: true,
@@ -77,7 +78,26 @@ var CourseOutcomeAssessmentFormSchema = new Schema({
 	instructorComments: {
 		type: String,
 		trim: true,
-		default: '',
+		default: ''
+	},
+	score1: {
+		type: Number,
+		required:false
+	},
+	score2: {
+		type: Number,
+		required: false
+	},
+	score3: {
+		type: Number,
+		required: false
+	},
+	score4: {
+		type: Number,
+		required: false
+	},
+	score5: {
+		type: Number,
 		required: false
 	}
 });

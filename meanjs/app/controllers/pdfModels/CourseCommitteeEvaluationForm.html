@@ -142,9 +142,9 @@ td
 	<div class="section group">		
 		<div class="col span_1_of_1">
 			<ul>
-				<li>Course Number and Title: {{ outcomes.[0].outcomeAssessmentForm.courseNumber }} , {{ outcomes.0.outcomeAssessmentForm.courseTitle}} </li>
-				<li>Term and Year: {{  outcomes.[0].outcomeAssessmentForm.term }}</li>
-				<li>Instructor: {{  outcomes.[0].outcomeAssessmentForm.instructor }}</li>
+				<li>Course Number and Title: {{courseID}}, {{courseName}} </li>
+				<li>Term and Year: {{  term }}</li>
+				<li>Instructor: {{  user.displayName }}</li>
 				<li>Course Committee Participants: {{ courseCommitteeEvaluationForm.courseCommitteeParticipants }}</li>
 				<br>
 				<li>Date: {{ courseCommitteeEvaluationForm.date }}</li>
@@ -355,9 +355,9 @@ td
 	<div class="section group">	
 		
 			<ul>
-				<li>Course Number and Title: {{  outcomes.[0].outcomeAssessmentForm.courseNumber }}, {{  outcomes.[0].outcomeAssessmentForm.courseTitle }}</li>
-				<li>Term and Year: {{ outcomes.[0].outcomeAssessmentForm.term }}</li>
-				<li>Instructor: {{ outcomes.[0].outcomeAssessmentForm.instructor }}</li>
+				<li>Course Number and Title: {{courseID}}, {{courseName}}</li>
+				<li>Term and Year: {{ term }}</li>
+				<li>Instructor: {{ user.displayName }}</li>
 				<li>Course Committee Participants: {{ courseCommitteeEvaluationForm.courseCommitteeParticipants }}</li>
 				<br>
 				<li>Date: {{ courseCommitteeEvaluationForm.date }}</li>

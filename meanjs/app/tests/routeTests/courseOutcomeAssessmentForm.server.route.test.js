@@ -24,36 +24,46 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 
 	before(function(done) {
 		course = new Course({
-			description: 'test course',
-			courseNumber: 3101,
-			term: 'FA2014',
+			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'CEN3031',
+			term: 'Fall 2014',
 			courseTitle: 'Intro to Software Engineering',
-			instructor: 'Alin Dobra',
-			date: new Date(),
-			descriptionOfInstrument: 'this is test data.',
-			numberOfStudents: 700,
-			gradingScale: '0-100',
-			averageScore: 81,
+			instructor: 'Professor Dobra',
+			date: new Date(), // Is this proper syntax for
+			descriptionOfInstrument: 'String describing instrument..whatever this means',
+			numberOfStudents: 45,
+			gradingScale: '0-10',
+			averageScore: 82,
 			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 70,
-			averageLikertScaleValue: 2.5,
-			instructorComments: 'this is test data comments.'
+			percentOfStudentsAchievingOutcomeAdequately: 95,
+			averageLikertScaleValue: 4,
+			columns: '2,3,4,5',
+			instructorComments: 'Room for instructor comments.'
 		});
 		course2 = new Course({
-			description: 'test course2',
-			courseNumber: 4600,
-			term: 'SP2014',
-			courseTitle: 'Operating Systems.',
-			instructor: 'Test Instructor',
-			date: new Date(),
-			descriptionOfInstrument: 'this is test data.',
-			numberOfStudents: 600,
+			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'COP3503',
+			term: 'Fall 2014',
+			courseTitle: 'Programming Two',
+			instructor: 'Professor Roytman',
+			date: new Date(), //Same date concern as above
+			descriptionOfInstrument: 'Second time describing instrument',
+			numberOfStudents: 52,
 			gradingScale: '0-10',
-			averageScore: 55,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 10,
-			averageLikertScaleValue: 1.5,
-			instructorComments: 'this is test data comments.'
+			averageScore: 75,
+			scoreForAdequateOutcomeAchievement: 75,
+			percentOfStudentsAchievingOutcomeAdequately: 87,
+			averageLikertScaleValue: 3,
+			columns: '2,3,4,5',
+			instructorComments: 'No comments'
 		});
 
 		course3 = new Course({
@@ -76,7 +86,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
       			.end(function (err,res) {
       				res.status.should.equal(200);
       				var courseResponse = res.body;
-      				Course.findOne({instructor : 'Alin Dobra'}, function (err, courses) {
+      				Course.findOne({instructor : 'Professor Dobra'}, function (err, courses) {
 						id2 = course._id;
 						courses.term.should.equal(course.term);
 						done();
@@ -91,7 +101,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
       			.end(function (err,res) {
       				res.status.should.equal(200);
       				var courseResponse = res.body;
-      				Course.findOne({instructor : 'Test Instructor'}, function (err, courses) {
+      				Course.findOne({instructor : 'Professor Roytman'}, function (err, courses) {
       					id = courses._id;
 						courses.term.should.equal(course2.term);
 						done();
@@ -133,7 +143,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 	
 		//This test will need to be updated if we fix thte sorting of the get operation
 		it('should successfully update a form', function(done) {
-			course2.description = 'I am newly updated.';
+			course2.instructor = 'Kyle Kyrazis'
 			request
 				.put('/courseOutcomeAssessment/' + id)
 				.send(course2)
@@ -144,7 +154,7 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 						.end(function(err2,res2) {
 							var body = res2.body;
 							body.length.should.equal(2);
-							body[0].description.should.equal('I am newly updated.');
+							body[0].instructor.should.equal('Kyle Kyrazis');
 							done();
 						});
 				});
@@ -161,8 +171,8 @@ describe('CourseOutcomeAssessmentForm Route Functional Tests:', function() {
 						.end(function(err2,res2) {
 							var body = res2.body;
 							body.length.should.equal(1);
-							body[0].description.should.not.equal('I am newly updated.');
-							body[0].description.should.equal('test course');
+							body[0].instructor.should.not.equal('Kyle Kyrazis');
+							body[0].instructor.should.equal('Professor Dobra');
 							done();
 						});
 				});
