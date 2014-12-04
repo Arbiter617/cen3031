@@ -110,7 +110,7 @@ td
 		<button type="button" class="btn btn-default" 
 		ng-disabled="!hasPreviousState()" ng-click="previousState()">Back</button>
 		<button type="button" class="btn btn-default" 
-		ng-disabled="hasNextState()" ng-click="submit(form)">Submit</button>
+		ng-disabled="CommitteeEvalForm.$invalid" ng-click="submit(form)">Submit</button>
 	</div>
 	<div class="navbar-right" style="margin-right:20px">
 		<button type="button" class="btn btn-default" ng-click="showInstructions()">Instructions</button>
@@ -140,7 +140,7 @@ td
 						<li>Term and Year: {{ form.term }}</li>
 						<li>Instructor: {{ form.instructor }}</li>
 						<li>Course Committee Participants: 
-							<input type="text" ng-model="form.courseCommitteeParticipants">
+							<input type="text" ng-model="form.courseCommitteeParticipants" required>
 						</li>
 						<br>
 						<li>Date: {{ form.date }}</li>
@@ -161,9 +161,9 @@ td
 								<li>Syllabus: Does the syllabus reflect current content? </li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.syllabusReflectCurrentContent" ng-value="true">
+								<input type="radio" ng-model="form.syllabusReflectCurrentContent" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.syllabusReflectCurrentContent" ng-value="false">
+								<input type="radio" ng-model="form.syllabusReflectCurrentContent" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -173,9 +173,9 @@ td
 								<li>Are there topics that should be dropped from the course? </li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.droppedTopics" ng-value="true">
+								<input type="radio" ng-model="form.droppedTopics" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.droppedTopics" ng-value="false">
+								<input type="radio" ng-model="form.droppedTopics" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -185,9 +185,9 @@ td
 								<li>Are there topics that should be added to the course? </li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.addedTopics" ng-value="true">
+								<input type="radio" ng-model="form.addedTopics" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.addedTopics" ng-value="false">
+								<input type="radio" ng-model="form.addedTopics" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -197,9 +197,9 @@ td
 								<li>Textbook: Is the textbook working well?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.textbookWorkingWell" ng-value="true">
+								<input type="radio" ng-model="form.textbookWorkingWell" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.textbookWorkingWell" ng-value="false">
+								<input type="radio" ng-model="form.textbookWorkingWell" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -209,9 +209,9 @@ td
 								<li>Should changes be considered for the next academic year?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" ng-value="true">
+								<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" ng-value="false">
+								<input type="radio" ng-model="form.changesRequiredForNextAcademicYear" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -221,9 +221,9 @@ td
 								<li>Are there new books available that should be evaluated?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.newBooksToBeEvaluated" ng-value="true">
+								<input type="radio" ng-model="form.newBooksToBeEvaluated" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.newBooksToBeEvaluated" ng-value="false">
+								<input type="radio" ng-model="form.newBooksToBeEvaluated" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -233,9 +233,9 @@ td
 								<li>Does the book map well onto the syllabus?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.bookMapWellToSyllabus" ng-value="true">
+								<input type="radio" ng-model="form.bookMapWellToSyllabus" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.bookMapWellToSyllabus" ng-value="false">
+								<input type="radio" ng-model="form.bookMapWellToSyllabus" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -245,9 +245,9 @@ td
 								<li>Do other assessments (performance/exit surveys,student feedback) indicate issues that need to be addressed?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" ng-value="true">
+								<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" ng-value="false">
+								<input type="radio" ng-model="form.otherEvaluationsIndicateIssues" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -256,9 +256,9 @@ td
 								<li>Student Performance: Did students master the material?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.didStudentsMasterMaterial" ng-value="true">
+								<input type="radio" ng-model="form.didStudentsMasterMaterial" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.didStudentsMasterMaterial" ng-value="false">
+								<input type="radio" ng-model="form.didStudentsMasterMaterial" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -268,9 +268,9 @@ td
 							<li>Are there problems in the their knowledge of key concepts?</li>
 							</div>
 							<div class="col span_2_of_2">
-								<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" ng-value="true">
+								<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" ng-value="false">
+								<input type="radio" ng-model="form.problemsWithKnowledgeInKeyConcepts" required ng-value="false">
 								<label>NO</label>
 							</div>
 						</div>
@@ -281,7 +281,7 @@ td
 			<div class="section group">			
 				<div class="col span_1_of_1">
 					<h4>ACTIONS/RECOMMENDATIONS:</h4>
-						<textarea ng-model="form.sectionIActionsRecommendations" cols="95" rows="10"></textarea> 
+						<textarea ng-model="form.sectionIActionsRecommendations" required cols="95" rows="10"></textarea> 
 				</div>
 			</div>
 					
@@ -299,9 +299,9 @@ td
 							<li>Are the pre-requisites still appropriate for this course?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.prereqsStillAppropriate" ng-value="true">
+							<input type="radio" ng-model="form.prereqsStillAppropriate" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.prereqsStillAppropriate" ng-value="false">
+								<input type="radio" ng-model="form.prereqsStillAppropriate" required ng-value="false">
 								<label>NO</label>
 						</div>
 					</div>
@@ -311,9 +311,9 @@ td
 							<li>Does the course content satisfy the needs of follow-on courses?</li>
 						</div>
 						<div class="col span_2_of_2">
-							<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" ng-value="true">
+							<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" required ng-value="true">
 								<label>YES</label>
-								<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" ng-value="false">
+								<input type="radio" ng-model="form.satisfyNeedsOfFollowupCourses" required ng-value="false">
 								<label>NO</label>
 						</div>
 					</div>		
@@ -324,7 +324,7 @@ td
 			<div class="section group">			
 				<div class="col span_1_of_1">
 					<h4>ACTIONS/RECOMMENDATIONS:</h4>
-					<textarea ng-model="form.sectionIIActionsRecommendations" cols="95" rows="10"></textarea>
+					<textarea ng-model="form.sectionIIActionsRecommendations" required cols="95" rows="10"></textarea>
 				</div>
 			</div>
 
@@ -340,21 +340,21 @@ td
 			<div class="section group">	
 				<div class="col span_1_of_1">
 					<h3>Recommendations for course improvement:</h3>
-						<textarea ng-model="form.recommendationsForCourseImprovement" cols="95" rows="10"></textarea>
+						<textarea ng-model="form.recommendationsForCourseImprovement" required cols="95" rows="10"></textarea>
 						<br><br>
 				</div>
 			</div>
 			<div class="section group">	
 				<div class="col span_1_of_1">
 					<h3>Recommendations to CEN program governance (e.g. curriculum committee):</h3>
-						<textarea ng-model="form.recommendationsToCENProgramGovernance" cols="95" rows="10"></textarea>
+						<textarea ng-model="form.recommendationsToCENProgramGovernance" required cols="95" rows="10"></textarea>
 						<br><br>
 				</div>
 			</div>
 			<div class="section group">	
 				<div class="col span_1_of_1">
 					<h3>Comments/Recommendations on this process:</h3>
-						<textarea ng-model="form.sectionIIIRecommendationsComments" cols="95" rows="10"></textarea>
+						<textarea ng-model="form.sectionIIIRecommendationsComments" required cols="95" rows="10"></textarea>
 				</div>
 			</div>
 		</div>
@@ -406,7 +406,7 @@ td
 							  <tr>
 							    <td class="bold">1. Instruments Chosen</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.instrumentsChosen" cols="80" rows="5">
+							    	<textarea ng-model="outcome.outcomeEvaluation.instrumentsChosen" required cols="80" rows="5">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -414,7 +414,7 @@ td
 							  <tr>
 							    <td class="bold">2. Likert Scale Threshold(s)</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.likertScaleThresholds" cols="80" rows="5">
+							    	<textarea ng-model="outcome.outcomeEvaluation.likertScaleThresholds" required cols="80" rows="5">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -422,7 +422,7 @@ td
 							  <tr>
 							    <td class="bold">3. Sample Graded Student Work</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.sampleGradedStudentWork" cols="80" rows="5">
+							    	<textarea ng-model="outcome.outcomeEvaluation.sampleGradedStudentWork" required cols="80" rows="5">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -430,7 +430,7 @@ td
 							  <tr>
 							    <td class="bold">4. Percentage of Students Achieving Outcome</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.percentageOfStudentsAchievingOutcome" cols="80" rows="2">
+							    	<textarea ng-model="outcome.outcomeEvaluation.percentageOfStudentsAchievingOutcome" required cols="80" rows="2">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -438,7 +438,7 @@ td
 							  <tr>
 							    <td class="bold">5. Average Likert Value</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.averageLikertValue" cols="80" rows="1">
+							    	<textarea ng-model="outcome.outcomeEvaluation.averageLikertValue" required cols="80" rows="1">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -446,7 +446,7 @@ td
 							  <tr>
 							    <td class="bold">Achievement of Outcome</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.achievementOfOutcome" cols="80" rows="5">
+							    	<textarea ng-model="outcome.outcomeEvaluation.achievementOfOutcome" required cols="80" rows="5">
 							    	</textarea>
 							    </td>
 							  </tr>
@@ -454,7 +454,7 @@ td
 							  <tr>
 							    <td class="bold">Suggested Improvements on Achieving Outcome</td>
 							    <td>
-							    	<textarea ng-model="outcome.outcomeEvaluation.suggestedImprovements" cols="80" rows="5">
+							    	<textarea ng-model="outcome.outcomeEvaluation.suggestedImprovements" required cols="80" rows="5">
 							    	</textarea>
 							    </td>
 

@@ -32,6 +32,12 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             	$scope.outcome.outcomeAssessmentForm.minimumAcceptableLikertValue= parsedCSV.minimumAcceptableLikertValue;
             	$scope.outcome.outcomeAssessmentForm.percentageAchievingOutcome = parsedCSV.percentageAchievingOutcome;
             	$scope.outcome.outcomeAssessmentForm.averageLikertScore= parsedCSV.averageLikertScore;
+            	var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
+				$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
+
+				}).error(function(response){
+					console.log(response);
+				});
             	d.resolve();
             }).err(function(res) {
             	$scope.error = res.message;
@@ -123,8 +129,14 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 				$scope.outcome.outcomeAssessmentForm.instructor = user.firstName +" " +user.lastName;
 				$scope.outcome.outcomeAssessmentForm.date = new Date();
 				$http.post('/courseOutcomeAssessment', $scope.outcome.outcomeAssessmentForm).success(function(response) {
-					console.log(response);
+					
 					$scope.outcome.outcomeAssessmentForm=response;
+					var path = '/outcomes/'+$scope.outcome._id;
+					$http.put(path,$scope.outcome).success(function(response) {
+
+					}).error(function(response){
+						console.log(response);	
+					});
 					d.resolve();
 				}).error(function(response) {
 					console.log(response);
