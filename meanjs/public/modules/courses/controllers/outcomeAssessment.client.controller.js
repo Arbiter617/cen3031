@@ -26,12 +26,12 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             	likert: $scope.likert
             }).success(function(res) {
             	$scope.parsedCSV = res;
-            	$scope.outcome.outcomeAssessmentForm.numberOfStudents= parsedCSV.numberOfStudents;
-            	$scope.outcome.outcomeAssessmentForm.gradingScale= parsedCSV.gradingScale;
-            	$scope.outcome.outcomeAssessmentForm.averageScore= parsedCSV.averageScore;
-            	$scope.outcome.outcomeAssessmentForm.minimumAcceptableLikertValue= parsedCSV.minimumAcceptableLikertValue;
-            	$scope.outcome.outcomeAssessmentForm.percentageAchievingOutcome = parsedCSV.percentageAchievingOutcome;
-            	$scope.outcome.outcomeAssessmentForm.averageLikertScore= parsedCSV.averageLikertScore;
+            	$scope.outcome.outcomeAssessmentForm.numberOfStudents= $scope.parsedCSV.numberOfStudents;
+            	$scope.outcome.outcomeAssessmentForm.gradingScale=  $scope.parsedCSV.gradingScale;
+            	$scope.outcome.outcomeAssessmentForm.averageScore=  $scope.parsedCSV.averageScore;
+            	$scope.outcome.outcomeAssessmentForm.minimumAcceptableLikertValue=  $scope.parsedCSV.minimumAcceptableLikertValue;
+            	$scope.outcome.outcomeAssessmentForm.percentageAchievingOutcome =  $scope.parsedCSV.percentageAchievingOutcome;
+            	$scope.outcome.outcomeAssessmentForm.averageLikertScore=  $scope.parsedCSV.averageLikertScore;
             	d.resolve();
             }).err(function(res) {
             	$scope.error = res.message;
