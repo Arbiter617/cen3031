@@ -54,10 +54,16 @@ exports.read = function(req, res) {
 
 exports.update = function(req, res) {
 	var outcome = req.outcome;
+	
+	if(req.body.outcomeEvaluation)
+		req.body.outcomeEvaluation= req.body.outcomeEvaluation._id;
+	if(req.body.outcomeAssessmentForm){
+		req.body.outcomeAssessmentForm= req.body.outcomeAssessmentForm._id;
+	}
 	outcome = _.extend(outcome, req.body);
-
 	outcome.save(function(err) {
 		if (err) {
+			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -85,7 +91,7 @@ exports.remove = function(req, res) {
 
 
 exports.list = function(req, res) {
-	Outcome.find().populate('outcomeEvaluation','outcomeAssessmentForm').exec(function(err, outcomes) {
+	Outcome.find().populate('outcomeEvaluation').populate('outcomeAssessmentForm').exec(function(err, outcomes) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

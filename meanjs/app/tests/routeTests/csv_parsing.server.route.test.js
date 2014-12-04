@@ -44,7 +44,10 @@ describe('CSV Parsing Route Functional Tests:', function() {
 		 				score3: 20,
 		 				score4: 25,
 		 				score5: 30,
-		 			}
+		 			},
+		 			courseTitle: 'Intro to software engineering',
+		 			courseNumber: 'CEN3101',
+		 			instructor: 'Kyle'
 		 		})
    				.end(function (err,res) {
        				res.status.should.equal(200);
@@ -65,15 +68,18 @@ describe('CSV Parsing Route Functional Tests:', function() {
 		 				score3: 20,
 		 				score4: 25,
 		 				score5: 30,
-		 			}
+		 			},
+		 			courseTitle: 'Intro to software engineering',
+		 			courseNumber: 'CEN3101',
+		 			instructor: 'Kyle'
 		 		})
    				.end(function (err,res) {
        				res.status.should.equal(200);
        				// Contains parsed csv file
        				var csv_data_response = res.body;
        				csv_data_response.numberOfStudents.should.equal(18);
-       				csv_data_response.averageScore.should.equal('14.28');
-       				csv_data_response.averageLikertScore.should.equal(3);
+       				csv_data_response.averageScore.should.equal(14.28);
+       				csv_data_response.averageLikertScaleValue.should.equal(3);
        				csv_data_response.gradingScale.should.equal('0-30');
        				done();
 		 		});
@@ -92,17 +98,20 @@ describe('CSV Parsing Route Functional Tests:', function() {
 		 				score3: 20,
 		 				score4: 25,
 		 				score5: 30,
-		 			}
+		 			},
+		 			courseTitle: 'Intro to software engineering',
+		 			courseNumber: 'CEN3101',
+		 			instructor: 'Kyle'
 		 		})
    				.end(function (err,res) {
        				res.status.should.equal(200);
        				// Contains parsed csv file
        				var csv_data_response = res.body;
-
+       				
        				csv_data_response.numberOfStudents.should.equal(18);
-       				csv_data_response.averageScore.should.equal('14.89');
-       				csv_data_response.averageLikertScore.should.equal(3);
-       				csv_data_response.percentageAchievingOutcome.should.equal('88.89');
+       				csv_data_response.averageScore.should.equal(14.89);
+       				csv_data_response.averageLikertScaleValue.should.equal(3);
+       				csv_data_response.percentOfStudentsAchievingOutcomeAdequately.should.equal(88.89);
        				csv_data_response.gradingScale.should.equal('0-30');
        				
        				done();

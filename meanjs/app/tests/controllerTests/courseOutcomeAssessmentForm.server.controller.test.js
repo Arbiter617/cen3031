@@ -27,38 +27,47 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 
 	beforeEach(function(done) {
 		course = new Course({
-			outcome: 3,
-			description: 'test course',
-			courseNumber: 3101,
-			term: 'FA2014',
+ 			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'CEN3031',
+			term: 'Fall 2014',
 			courseTitle: 'Intro to Software Engineering',
-			instructor: 'Kyle Kyrazis',
-			date: new Date(),
-			descriptionOfInstrument: 'this is test data.',
-			numberOfStudents: 700,
-			gradingScale: '0-100',
-			averageScore: 81,
+			instructor: 'Professor Dobra',
+			date: new Date(), // Is this proper syntax for
+			descriptionOfInstrument: 'String describing instrument..whatever this means',
+			numberOfStudents: 45,
+			gradingScale: '0-10',
+			averageScore: 82,
+			columns: '2,3,4,5',
 			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 70,
-			averageLikertScaleValue: 2.5,
-			instructorComments: 'this is test data comments.'
+			percentOfStudentsAchievingOutcomeAdequately: 95,
+			averageLikertScaleValue: 4,
+			instructorComments: 'Room for instructor comments.'
 		});
 		course2 = new Course({
-			outcome: 1,
-			description: 'test course2',
-			courseNumber: 4600,
-			term: 'SP2014',
-			courseTitle: 'Operating Systems.',
-			instructor: 'Test Instructor',
-			date: new Date(),
-			descriptionOfInstrument: 'this is test data.',
-			numberOfStudents: 600,
+			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'COP3503',
+			term: 'Fall 2014',
+			courseTitle: 'Programming Two',
+			instructor: 'Professor Roytman',
+			date: new Date(), //Same date concern as above
+			descriptionOfInstrument: 'Second time describing instrument',
+			numberOfStudents: 52,
 			gradingScale: '0-10',
-			averageScore: 55,
-			scoreForAdequateOutcomeAchievement: 70,
-			percentOfStudentsAchievingOutcomeAdequately: 10,
-			averageLikertScaleValue: 1.5,
-			instructorComments: 'this is test data comments.'
+			averageScore: 75,
+			columns: '2,3,4,5',
+			scoreForAdequateOutcomeAchievement: 75,
+			percentOfStudentsAchievingOutcomeAdequately: 87,
+			averageLikertScaleValue: 3,
+			instructorComments: 'No comments'
+
 		});
 	
 		
@@ -157,7 +166,7 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 				},
 				jsonp: function(object) {
 	            	this.statusCode.should.equal(200);
-	            	object.courseNumber.should.equal(1004);
+	            	object.courseNumber.should.equal('1004');
 	            	this.done();
 				},
 				statusCode: 200,
@@ -172,7 +181,7 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 	            	var id = object._id;
 	            	Course.findById(id).exec(function(err, course) {
 						req.course = course;
-						req.body = {courseNumber : 1004};
+						req.body = {courseNumber : '1004'};
 						controller.update(req,res2);
 					});
 				},
@@ -202,7 +211,7 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 	            	var id = object._id;
 	            	Course.findById(id).exec(function(err, course) {
 						req.course = course;
-						req.body = {courseNumber : 'Random data'};
+						req.body = {courseNumber : ''};
 						controller.update(req,res2);
 					});
 				},
@@ -222,7 +231,7 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 				},
 				jsonp: function(object) {
 					this.statusCode.should.equal(200);
-					object.courseNumber.should.equal(3101);
+					object.courseNumber.should.equal('CEN3031');
 					this.done();
 				},
 				statusCode: 200,

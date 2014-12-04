@@ -28,7 +28,6 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 			$q.all(promises).then(function(data) {
 				for(var i = 0; i < $scope.outcomes.length; i++) {
 					var outcome = $scope.outcomes[i];
-					outcome.outcomeEvaluation = data[i]._id;
 					outcome.$update();
 				}
 			});
