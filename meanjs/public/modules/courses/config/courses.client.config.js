@@ -1,9 +1,11 @@
-/*'use strict';
+'use strict';
 
 // Configuring the Articles module
 angular.module('courses').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Manage courses', 'courses', '/courses');
+		Menus.addMenuItem('topbar', 'Manage courses', 'manage-courses');
+		Menus.addMenuItem('topbar', 'Admin Manage courses', 'manage-courses-admin');
+		Menus.addMenuItem('topbar', 'Manage Outcomes', 'manage-outcomes', '/manage-outcomes');
 	}
-]);*/
+]);

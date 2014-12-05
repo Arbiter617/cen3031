@@ -28,7 +28,14 @@ angular.module('courses').config(['$stateProvider',
 		state('manageCoursesAdmin', {
 			url: '/manage-courses-admin',
 			templateUrl: 'modules/courses/views/manage-courses-admin.client.view.html'
+		}).
+		state('courseCommitteeEvalForm', {
+			url: '/{courseID}/courseCommitteeEvalForm',
+			templateUrl: 'modules/courses/views/CourseCommitteeEvaluationForm.html'
+		}).
+		state('courseOutcomeAssessmentForm', {
+			url: '/{courseID}/{outcomeID}/outcomeAssessmentForm',
+			templateUrl: 'modules/courses/views/CourseOutcomeAssessmentForm.html'
 		});
-
 	}
 ]);

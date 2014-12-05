@@ -16,10 +16,32 @@ var CourseSchema = new Schema({
 		trim: true,
 		required: 'Must have course ID'
 	},
-	user: {
+	courseName: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Must have course Name'
+	},
+	courseTerm: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Must have course term'
+	},
+	courseYear: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Must have course year'
+	},
+	outcomes: [{
 		type: Schema.ObjectId,
-		ref: 'User'
+		ref: 'Outcome'
+	}],
+	courseCommitteeEvaluationForm: {
+		type: Schema.ObjectId,
+		ref: 'CourseCommitteeEvaluationForm'
 	}
-});
+}, {versionKey: false});
 
 mongoose.model('Course', CourseSchema);
