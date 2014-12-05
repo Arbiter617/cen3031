@@ -5,14 +5,11 @@
 		</div>
 	</div>
 	<div class = "text-left">
-		<h3 class = "lead">Select a course to get started:  <b><i>{{dispMessage}}</b></i></h3>
+		<h3 class = "lead">Select a course to get started:</h3>
 	</div>
 	<accordion close-others="true">
 		<accordion-group data-ng-repeat="course in userCourses">
 			<accordion-heading>
-			<div class="text-right">
-				<h5>{{outcomeCount}} of {{course.outcomes.length + 1}} items complete</h5>
-			</div>
 			<h3>{{course.courseTerm}} {{course.courseYear}}</h3>
 			<h3>{{course.courseID}}:</h3>
 			{{course.courseName}}
@@ -27,6 +24,11 @@
 			<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} >
 				Outcomes Evaluation Assessment Form
 			</a>
+			<a href={{"/committeePDF/"+course._id}} download>
+				<button ng-show="course.courseCommitteeEvaluationForm" class="btn btn-primary" >Download PDF</button>
+			</a>
 		</accordion-group>
 	</accordion>
 </section>
+
+<!--ng-click="downloadPDF(course._id)"-->

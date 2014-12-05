@@ -42,6 +42,6 @@ var CourseSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'CourseCommitteeEvaluationForm'
 	}
-});
+}, {versionKey: false});
 
 mongoose.model('Course', CourseSchema);

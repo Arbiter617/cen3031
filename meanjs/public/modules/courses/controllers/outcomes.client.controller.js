@@ -2,8 +2,8 @@
 
 'use strict';
 
-angular.module('courses').controller('OutcomesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', 'Courses', 'Outcomes', 
-	function($scope, $stateParams, $location, $modal, Authentication, Courses, Outcomes) {
+angular.module('courses').controller('OutcomesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', '$http', 'Outcomes', 
+	function($scope, $stateParams, $location, $modal, Authentication, $http, Outcomes) {
 		$scope.Authentication = Authentication;
 		$scope.outcomeIndex = 0;
 
@@ -16,8 +16,9 @@ angular.module('courses').controller('OutcomesController', ['$scope', '$statePar
 
 		// query the db for the outcomes
 		$scope.find = function() {
-			$scope.outcomes = Outcomes.query();
-			$scope.courses = Courses.query();
+			$http.get('outcomes/prototypes').success(function(response) {
+				$scope.outcomes = response;
+			});
 		};
 
 		// creates outcomes via ID and name and saves
@@ -27,10 +28,8 @@ angular.module('courses').controller('OutcomesController', ['$scope', '$statePar
 				outcomeName: outcomeData.outcomeName
 			});
 
-			outcome.$save(function(response) {
+			$http.post('/outcomes/prototypes', outcome).success(function(response) {
 				$scope.outcomes.push(outcome);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
 			});
 		};
 

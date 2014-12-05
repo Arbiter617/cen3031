@@ -54,7 +54,7 @@ exports.getCourses = function(req, res) {
 			message: 'User not logged in'
 		});
 	}
-	Course.find( { _id: { $in: req.user.courses } } ).exec(function(err, courses) {
+	Course.find( { _id: { $in: req.user.courses } } ).populate('courseCommitteeEvaluationForm').exec(function(err, courses) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

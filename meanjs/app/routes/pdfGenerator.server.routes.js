@@ -9,11 +9,14 @@ var pdfGenerator = require('../../app/controllers/pdfGenerator');
 
 module.exports = function(app) {
 	// Article Routes
-	app.route('/outcomePDF')
-		.get(pdfGenerator.generatePDF);
+	app.route('/outcomePDF/:outcomeAssessmentId')
+		.post(pdfGenerator.getOutcomeFile)
+		.get(pdfGenerator.returnPDF);
 
 	app.route('/committeePDF/:courseId')
-		.get(pdfGenerator.getFile);
+		.post(pdfGenerator.getCommitteeFile)
+		.get(pdfGenerator.returnPDF);
 
 	app.param('courseId', pdfGenerator.courseByID);
+	app.param('outcomeAssessmentId', pdfGenerator.outcomeAssessmentByID);
 };

@@ -23,35 +23,45 @@ var courseModel1, courseModel2, courseModel3fail, id;
 */
 
 
-describe('Course Model Unit Tests:', function(){
+describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 	beforeEach(function(done)	{
 		courseModel1 = new courseModel({
-			description: 'First string describing the class...software engineering',
-			courseNumber: 1234,
+ 			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'CEN3031',
 			term: 'Fall 2014',
-			courseTitle: 'CEN3031',
+			courseTitle: 'Intro to Software Engineering',
 			instructor: 'Professor Dobra',
 			date: new Date(), // Is this proper syntax for
 			descriptionOfInstrument: 'String describing instrument..whatever this means',
 			numberOfStudents: 45,
 			gradingScale: '0-10',
 			averageScore: 82,
+			columns: '2,3,4,5',
 			scoreForAdequateOutcomeAchievement: 70,
 			percentOfStudentsAchievingOutcomeAdequately: 95,
 			averageLikertScaleValue: 4,
 			instructorComments: 'Room for instructor comments.'
 		});
 		courseModel2 = new courseModel({
-			description: 'Second string describing the class',
-			courseNumber: 2345,
+			score1: 10,
+ 			score2: 15,
+ 			score3: 20,
+ 			score4: 25,
+ 			score5: 30,
+			courseNumber: 'COP3503',
 			term: 'Fall 2014',
-			courseTitle: 'COP3503',
+			courseTitle: 'Programming Two',
 			instructor: 'Professor Roytman',
 			date: new Date(), //Same date concern as above
 			descriptionOfInstrument: 'Second time describing instrument',
 			numberOfStudents: 52,
 			gradingScale: '0-10',
 			averageScore: 75,
+			columns: '2,3,4,5',
 			scoreForAdequateOutcomeAchievement: 75,
 			percentOfStudentsAchievingOutcomeAdequately: 87,
 			averageLikertScaleValue: 3,
@@ -105,8 +115,44 @@ describe('Course Model Unit Tests:', function(){
 
 		});
 
-		it('should be able to show an error when try to save without description', function(done){
-			courseModel1.description = '';
+		it('should be able to show an error when try to save without score1', function(done){
+			courseModel1.score1 = null;
+
+			return courseModel1.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without score2', function(done){
+			courseModel1.score2= null;
+
+			return courseModel1.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without score3', function(done){
+			courseModel1.score3= null;
+
+			return courseModel1.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without score4', function(done){
+			courseModel1.score4= null;
+
+			return courseModel1.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without score5', function(done){
+			courseModel1.score5= null;
 
 			return courseModel1.save(function(err){
 				should.exist(err);
@@ -115,8 +161,8 @@ describe('Course Model Unit Tests:', function(){
 		});
 
 		it('should be able to show an error when try to save without courseNumber', function(done){
-			courseModel1.courseNumber = null;
-
+			courseModel1.courseNumber = '';
+						
 			return courseModel1.save(function(err) {
 				should.exist(err);
 				done();
@@ -143,15 +189,6 @@ describe('Course Model Unit Tests:', function(){
 
 		it('should be able to show an error when try to save without instructor', function(done){
 			courseModel1.instructor = '';
-
-			return courseModel1.save(function(err) {
-				should.exist(err);
-				done();
-			});
-		});
-
-		it('should be able to show an error when try to save without description of instrument', function(done){
-			courseModel1.descriptionOfInstrument = '';
 
 			return courseModel1.save(function(err) {
 				should.exist(err);

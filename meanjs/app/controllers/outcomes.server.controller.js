@@ -8,12 +8,30 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Outcome = mongoose.model('Outcome'),
+	OutcomeEvaluation = mongoose.model('OutcomeEvaluation'),
+	OutcomePrototypes = mongoose.model('OutcomePrototypes'),
 	_ = require('lodash');
 
-/**
- * Create an outcome
- */
+var outcomePrototypes = new OutcomePrototypes();
+outcomePrototypes.save();
+
 exports.create = function(req, res) {
+	var outcome = new Outcome(req.body);
+	outcome.user = req.user;
+
+	outcome.save(function(err) {
+		if (err) {
+			console.log(err);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(outcome);
+		}
+	});
+};
+
+exports.createPrototype = function(req, res) {
 	var outcome = new Outcome(req.body);
 	outcome.user = req.user;
 
@@ -23,6 +41,8 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			outcomePrototypes.elements.push(outcome._id);
+			outcomePrototypes.save();
 			res.jsonp(outcome);
 		}
 	});
@@ -34,11 +54,16 @@ exports.read = function(req, res) {
 
 exports.update = function(req, res) {
 	var outcome = req.outcome;
-	console.log(req.body);
+	
+	if(req.body.outcomeEvaluation)
+		req.body.outcomeEvaluation= req.body.outcomeEvaluation._id;
+	if(req.body.outcomeAssessmentForm){
+		req.body.outcomeAssessmentForm= req.body.outcomeAssessmentForm._id;
+	}
 	outcome = _.extend(outcome, req.body);
-
 	outcome.save(function(err) {
 		if (err) {
+			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -51,14 +76,14 @@ exports.update = function(req, res) {
 exports.remove = function(req, res) {
 
 	var outcome = req.outcome;
-
-
 	outcome.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			outcomePrototypes.elements.push(outcome._id);
+			outcomePrototypes.save();
 			res.jsonp(outcome);
 		}
 	});
@@ -66,7 +91,20 @@ exports.remove = function(req, res) {
 
 
 exports.list = function(req, res) {
-	Outcome.find().sort('-created').populate('user', 'displayName').exec(function(err, outcomes) {
+	Outcome.find().populate('outcomeEvaluation').populate('outcomeAssessmentForm').exec(function(err, outcomes) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(outcomes);
+		}
+	});
+};
+
+exports.listPrototypes = function(req, res) {
+	OutcomePrototypes.find().populate('elements').exec(function(err, oP) {
+		var outcomes = oP[0].elements;
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

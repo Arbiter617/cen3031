@@ -83,7 +83,8 @@ describe('User Controller Unit Tests:', function() {
 			req.body.courses= [course,course2];
 			req.login = function(user, func){
 							func(false); 
-							return true;}
+							return true;
+						}
 			var res = {
 	            jsonp: function(object) {
 	            	object.courses[0].should.equal(course._id);
@@ -114,6 +115,7 @@ describe('User Controller Unit Tests:', function() {
 	});
 	after(function(done) {
 		User.remove().exec();
+		Course.remove().exec();
 		done();
 	});
 });
