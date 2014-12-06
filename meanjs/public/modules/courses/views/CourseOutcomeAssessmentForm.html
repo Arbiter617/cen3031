@@ -44,7 +44,7 @@ p {
               <th colspan="3">Assessment Instrument</th>
             </tr>
             <tr>
-              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="$scope.outcome.outcomeAssessmentForm.descriptionOfInstrument" cols="60" rows="5"></textarea>  
+              <td colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Description of Instrument: <textarea ng-model="outcome.outcomeAssessmentForm.descriptionOfInstrument" cols="60" rows="5"></textarea>  
               </td>
             </tr>
             <tr>
@@ -65,15 +65,15 @@ p {
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Score for Adequate Outcome Achievement (2 or better on the Likert 1-5 Scale):</li></td>
-              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.minimumAcceptableLikertValue}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.scoreForAdequateOutcomeAchievement}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> % of Students Achieving Outcome Adequately: </li></td>
-              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.percentageAchievingOutcome}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.percentOfStudentsAchievingOutcomeAdequately}} </td>
             </tr>
             <tr>
               <td colspan="2"><li style-"list-style-type:disc:"> Average Likert-scale value: </li></td>
-              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.averageLikertScore}} </td>
+              <td colspan="1" style="text-align:center"> {{outcome.outcomeAssessmentForm.averageLikertScaleValue}} </td>
             </tr>
             <tr>
               <td rowspan="2" colspan="3" style="height:90px;vertical-align:top;text-align:left;"> Instructor Comments: <textarea ng-model="outcome.outcomeAssessmentForm.instructorComments" cols="60" rows="5"></textarea>
@@ -174,7 +174,7 @@ p {
                       <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
                       <div class="text-center form-group">
                     <button type="button" class="btn btn-large btn-primary" ng-click="submit()" style="width:50%">Submit</button>
-                    <button type="button" class="btn btn-large btn-primary" ng-click="generate()" style="width:50%">Generate</button>
+                    <button type="button" class="btn btn-large btn-primary" ng-click="save()" style="width:50%">Done</button>
                   </div>
                   <div data-ng-show="success" class="text-center text-success">
                     <strong>Likert Submitted</strong>

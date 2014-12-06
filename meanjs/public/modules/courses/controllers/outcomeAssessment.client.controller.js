@@ -1,6 +1,6 @@
 'use strict';
-angular.module('courses').controller('outcomeAssessmentController', ['$scope', '$http','$stateParams','$q', 'Authentication','Courses', 'Users', 'Outcomes',
-	function($scope, $http, $stateParams,$q, Authentication,Courses,Users,Outcomes) {
+angular.module('courses').controller('outcomeAssessmentController', ['$scope', '$http','$location','$stateParams','$q', 'Authentication','Courses', 'Users', 'Outcomes',
+	function($scope, $http, $location,$stateParams,$q, Authentication,Courses,Users,Outcomes) {
 		$scope.authentication = Authentication;
 		$scope.user = new Users(Authentication.user);
 		$scope.form = {};
@@ -26,12 +26,13 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             	likert: $scope.likert
             }).success(function(res) {
             	$scope.parsedCSV = res;
+            	console.log(res);	
             	$scope.outcome.outcomeAssessmentForm.numberOfStudents= $scope.parsedCSV.numberOfStudents;
             	$scope.outcome.outcomeAssessmentForm.gradingScale=  $scope.parsedCSV.gradingScale;
             	$scope.outcome.outcomeAssessmentForm.averageScore=  $scope.parsedCSV.averageScore;
-            	$scope.outcome.outcomeAssessmentForm.minimumAcceptableLikertValue=  $scope.parsedCSV.minimumAcceptableLikertValue;
-            	$scope.outcome.outcomeAssessmentForm.percentageAchievingOutcome =  $scope.parsedCSV.percentageAchievingOutcome;
-            	$scope.outcome.outcomeAssessmentForm.averageLikertScore=  $scope.parsedCSV.averageLikertScore;
+            	$scope.outcome.outcomeAssessmentForm.scoreForAdequateOutcomeAchievement=  $scope.parsedCSV.scoreForAdequateOutcomeAchievement;
+            	$scope.outcome.outcomeAssessmentForm.percentOfStudentsAchievingOutcomeAdequately=  $scope.parsedCSV.percentOfStudentsAchievingOutcomeAdequately;
+            	$scope.outcome.outcomeAssessmentForm.averageLikertScaleValue=  $scope.parsedCSV.averageLikertScaleValue;
 				var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
 				$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
 
@@ -45,20 +46,15 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             return d.promise;
 		}
 
-		$scope.generate = function(){
-			var body = {};
-			body._id = "test";
-			body.data = "doo"
-			var htlm  = document.getElementById("form");
-			body.data = htlm.innerHTML;
-			console.log(body.data);
-			$http.post('/outcomePDF', body).success(function(response) {
-				
-
-			}).error(function(response) {
-				console.log(response);
+		$scope.save = function(){
+		var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
+		$scope.outcome.outcomeAssessmentForm.isDone=true;
+			$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
+				$location.path('/list-courses');
+			}).error(function(response){
+					console.log(response);
 			});
-		} 
+		}
 
 		$scope.getUserCourses = function() {
 			var d = $q.defer();
