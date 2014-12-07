@@ -7,6 +7,7 @@ var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Outcome = mongoose.model('Outcome'),
+	OutcomePrototype = mongoose.model('OutcomePrototypes'),
 	fs = require('fs'),
 	controller = require('../../controllers/courseOutcomeMapping'),
     XLSX = require('xlsx'),
@@ -14,7 +15,7 @@ var should = require('should'),
 
 
 var user, user2, course2, course3, course4, course5, course6, outcome,
-	outcome2, outcome3, outcome4, outcome5, outcome6, req, res, outcomeArray = [];
+	outcome2, outcome3, outcome4, outcome5, outcome6, req, res, outcomePrototype, outcomeArray = [];
 
 describe('Course Outcome Mapping Controller Unit Tests', function(){
 	beforeEach(function(done){
@@ -26,6 +27,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 			username: 'broyt',
 			password: 'goodluck'
 		});
+	
 
 		user2.save(function() {
 			outcome2 = new Outcome({
@@ -62,6 +64,12 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 								user: user2
 							});
 							outcome6.save(function(){
+								outcomeArray.push(outcome6);
+								outcomePrototype = new OutcomePrototype({
+									elements: outcomeArray
+								});
+								outcomePrototype.save(function() {
+
 								course2 = new Course({
 									courseID: 'COP3530',
 									courseName: 'Data Structures and Algorithms',
@@ -101,7 +109,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 													req = {};
 												});
 											});
-											
+											});
 										});
 									});
 								});
@@ -121,6 +129,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 				status: function(value) {
 					this.statusCode = value;
 				},
+
 				download: function(object1,object2,object3) {
 					this.statusCode.should.equal(200);
 					this.done();
@@ -136,6 +145,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 		User.remove().exec();
 		Course.remove().exec();
 		Outcome.remove().exec();
+		OutcomePrototype.remove().exec();
 		done();
 	});		
 });	

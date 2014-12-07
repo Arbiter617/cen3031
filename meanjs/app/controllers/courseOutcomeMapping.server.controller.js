@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Course = mongoose.model('Course'),
 	Outcome = mongoose.model('Outcome'),
+	OutcomePrototype = mongoose.model('OutcomePrototypes'),
+	controller = require('./outcomes'),
 	XLSX = require('xlsx'),
 	fs = require('fs');
 
@@ -60,7 +62,19 @@ exports.generate = function(req, res) {
 	
 	var potentialOutcomes = [];
 	var potentialNames = [];
-	Outcome.find().sort('outcomeID').exec(function(err, outcomes) {
+	/*sort('outcomeID')*/
+	console.log('here');
+	OutcomePrototype.find().populate('elements').exec(function(err, outcomes) {
+		outcomes= outcomes[0].elements;
+		outcomes.sort(function (a, b) {
+ 			if (a.outcomeID.toLowerCase() > b.outcomeID.toLowerCase()) {
+    			return 1;
+  			}
+  			if (a < b) {
+    			return -1;
+  			}
+  			return 0;
+  		})
 		for(var i = 0; i < outcomes.length; i++) {
 			potentialOutcomes.push(outcomes[i].outcomeID);
 			potentialNames.push(outcomes[i].outcomeName);

@@ -80,6 +80,10 @@ var CourseOutcomeAssessmentFormSchema = new Schema({
 		trim: true,
 		default: ''
 	},
+	isDone: {
+		type: Boolean,
+		default: 'false'
+	},
 	score1: {
 		type: Number,
 		required:false

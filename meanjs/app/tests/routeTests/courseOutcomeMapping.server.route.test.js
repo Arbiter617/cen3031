@@ -8,15 +8,16 @@ var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Outcome = mongoose.model('Outcome'),
+	OutcomePrototype = mongoose.model('OutcomePrototypes'),
 	fs = require('fs'),
     XLSX = require('xlsx'),
 	Course = mongoose.model('Course'),
 	request = require('supertest');
 
 var user, user2, course2, course3, course4, course5, course6, outcome,
-	outcome2, outcome3, outcome4, outcome5, outcome6, req, res, outcomeArray = [];
+	outcome2, outcome3, outcome4, outcome5, outcome6, outcomePrototype, req, res, outcomeArray = [];
 
-describe('Course Outcome Mapping Controller Unit Tests', function(){
+describe('Course Outcome Mapping Route Functional Tests', function(){
 	beforeEach(function(done){
 		user2 = new User({
 			firstName: 'Brian',
@@ -62,6 +63,10 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 								user: user2
 							});
 							outcome6.save(function(){
+								outcomePrototype = new OutcomePrototype({
+									elements: outcomeArray
+								});
+								outcomePrototype.save(function() {
 								course2 = new Course({
 									courseID: 'COP3530',
 									courseName: 'Data Structures and Algorithms',
@@ -101,7 +106,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 													req = {};
 												});
 											});
-											
+											});
 										});
 									});
 								});
@@ -134,6 +139,7 @@ describe('Course Outcome Mapping Controller Unit Tests', function(){
 		User.remove().exec();
 		Course.remove().exec();
 		Outcome.remove().exec();
+		OutcomePrototype.remove().exec();
 		done();
 	});		
 });
