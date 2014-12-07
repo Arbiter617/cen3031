@@ -7,6 +7,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.user = new Users(Authentication.user);
 		$scope.userCourseOptions = [];
 		$scope.selectedOutcomes = [];
+		$scope.administrator = false;
+
+		if($scope.user.roles == "admin") {
+			$scope.administrator = true;
+		}
 
 		var submitModal = '';
 
