@@ -12,8 +12,16 @@ var mongoose = require('mongoose'),
 	OutcomePrototypes = mongoose.model('OutcomePrototypes'),
 	_ = require('lodash');
 
-var outcomePrototypes = new OutcomePrototypes();
-outcomePrototypes.save();
+var outcomePrototypes;
+OutcomePrototypes.find().exec(function(err, oP) {
+	if(oP.length == 0) {
+		outcomePrototypes = new OutcomePrototypes();
+		outcomePrototypes.save();
+	} else {
+		outcomePrototypes = oP[0];
+	}
+});
+
 
 exports.create = function(req, res) {
 	var outcome = new Outcome(req.body);
@@ -42,8 +50,19 @@ exports.createPrototype = function(req, res) {
 			});
 		} else {
 			outcomePrototypes.elements.push(outcome._id);
-			outcomePrototypes.save();
-			res.jsonp(outcome);
+			outcomePrototypes.save(function(err) {
+				if(err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					console.log("success");
+					console.log(outcomePrototypes);
+					res.jsonp(outcome);
+				}
+			});
+			
 		}
 	});
 };
@@ -110,6 +129,7 @@ exports.listPrototypes = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(oP);
 			res.jsonp(outcomes);
 		}
 	});
