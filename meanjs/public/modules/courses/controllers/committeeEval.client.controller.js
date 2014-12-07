@@ -94,6 +94,16 @@ angular.module('courses').controller('committeeEvalController', ['$scope', '$htt
 					//so push id to formsInDB
 					if(outcome.outcomeEvaluation) {
 						formsInDB.push(outcome.outcomeEvaluation._id);
+					} else {
+						var outcomeEval = {};
+						outcomeEval.instrumentsChosen = 'satisfactory';
+						outcomeEval.likertScaleThresholds = 'satisfactory';
+						outcomeEval.sampleGradedStudentWork = 'satisfactory';
+						outcomeEval.percentageOfStudentsAchievingOutcome = 'satisfactory';
+						outcomeEval.averageLikertValue = 'satisfactory';
+						outcomeEval.achievementOfOutcome = 'satisfactory';
+						outcomeEval.suggestedImprovements = '';
+						outcome.outcomeEvaluation = outcomeEval;
 					}
 				}
 			}
