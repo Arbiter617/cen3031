@@ -64,6 +64,8 @@
 				courseName: 'soft eng',
 				outcomes: []
 			});
+
+			console.log("\n\n\n\nNEW TEST BINGER\n\n\n\n");
 		}));
 		
 		it('$scope.addCourse() with valid course should send a PUT to update user with new course', inject(function(Courses, Users) {
