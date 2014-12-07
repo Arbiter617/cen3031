@@ -115,8 +115,7 @@ describe('CourseOutcomeAssessmentForm Contoller Unit Tests:', function() {
 				statusCode: 200,
 				done: done
 			};
-
-			console.log(req.body);
+			
 		 	controller.create(req,res);
       	});
 

@@ -24,7 +24,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(course);
+
 			res.jsonp(course);
 		}
 	});	
