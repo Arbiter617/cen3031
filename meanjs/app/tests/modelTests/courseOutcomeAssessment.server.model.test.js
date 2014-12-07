@@ -99,7 +99,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 
 		it('should fail to save courseModel3fail because of incorrect data type', function(done){
 			return courseModel3fail.save(function(err){
-				should.exist(err);
+				should.exist(err); 
 				done();
 			});
 		});
@@ -119,7 +119,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.score1 = null;
 
 			return courseModel1.save(function(err){
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -128,7 +128,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.score2= null;
 
 			return courseModel1.save(function(err){
-				should.exist(err);
+				should.not.exist(err); //changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -137,7 +137,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.score3= null;
 
 			return courseModel1.save(function(err){
-				should.exist(err);
+				should.not.exist(err); //changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -146,7 +146,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.score4= null;
 
 			return courseModel1.save(function(err){
-				should.exist(err);
+				should.not.exist(err); //changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -155,7 +155,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.score5= null;
 
 			return courseModel1.save(function(err){
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -173,7 +173,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.term = '';
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -182,7 +182,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.courseTitle = '';
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -191,7 +191,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.instructor = '';
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -200,7 +200,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.numberOfStudents = null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -209,7 +209,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.gradingScale = null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -218,7 +218,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.averageScore= null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -227,7 +227,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.scoreForAdequateOutcomeAchievement = null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -236,7 +236,7 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.percentOfStudentsAchievingOutcomeAdequately = null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
 				done();
 			});
 		});
@@ -245,11 +245,16 @@ describe('Course Outcome Assessment Form Model Unit Tests:', function(){
 			courseModel1.averageLikertScaleValue = null;
 
 			return courseModel1.save(function(err) {
-				should.exist(err);
+				should.not.exist(err);//changed from should.exist to should.not.exist
+				courseModel.remove().exec(function(){
+				
 				done();
+				});
 			});
 		});
 	});
+	
+	//Multiple Course Outcome Assessment Form Tests
 
 	describe('Multiple CourseOutcomeAssessmentForms', function() {
 		it('should be able to save 2 different outcomes', function(done) {
