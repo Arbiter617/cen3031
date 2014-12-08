@@ -2,6 +2,7 @@
 	<div class = "jumbotron text-center">
 		<div class = "row">
 			<h1> My Courses </h1>
+			<h5>Administrator: {{administrator}}</h5>
 		</div>
 	</div>
 	<div class = "text-left">
@@ -10,6 +11,8 @@
 	<accordion close-others="true">
 		<accordion-group data-ng-repeat="course in userCourses">
 			<accordion-heading>
+			<h5 class="text-right">x of {{course.outcomes.length + 1}} done</h5>
+			<h3>{{course.courseTerm}} {{course.courseYear}}</h3>
 			<h3>{{course.courseID}}:</h3>
 			{{course.courseName}}
 			</accordion-heading>

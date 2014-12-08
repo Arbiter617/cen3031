@@ -84,6 +84,8 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 			for(var i = 0; i < courses.length; i++) {
 				if($stateParams.courseID == courses[i].courseID){
 					$scope.courseTitle = courses[i].courseName;
+					$scope.courseTerm = courses[i].courseTerm;
+					$scope.courseYear = courses[i].courseYear;
 					var _cID=courses[i]._id;
 
 				}
@@ -105,6 +107,8 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 			
 				$scope.outcome.outcomeAssessmentForm.courseNumber=$stateParams.courseID;
 				$scope.outcome.outcomeAssessmentForm.courseTitle=$scope.courseTitle;
+				$scope.outcome.outcomeAssessmentForm.courseTerm = $scope.courseTerm;
+				$scope.outcome.outcomeAssessmentForm.courseYear = $scope.courseYear;
 				$scope.outcome.outcomeAssessmentForm.instructor = user.firstName +" " +user.lastName;
 				$scope.outcome.outcomeAssessmentForm.date = new Date();
 				var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
@@ -122,6 +126,8 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 				$scope.outcome.outcomeAssessmentForm={};
 				$scope.outcome.outcomeAssessmentForm.courseNumber=$stateParams.courseID;
 				$scope.outcome.outcomeAssessmentForm.courseTitle=$scope.courseTitle;
+				$scope.outcome.outcomeAssessmentForm.courseTerm = $scope.courseTerm;
+				$scope.outcome.outcomeAssessmentForm.courseYear = $scope.courseYear;
 				$scope.outcome.outcomeAssessmentForm.instructor = user.firstName +" " +user.lastName;
 				$scope.outcome.outcomeAssessmentForm.date = new Date();
 				$http.post('/courseOutcomeAssessment', $scope.outcome.outcomeAssessmentForm).success(function(response) {

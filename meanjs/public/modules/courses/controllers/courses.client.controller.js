@@ -7,6 +7,11 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		$scope.user = new Users(Authentication.user);
 		$scope.userCourseOptions = [];
 		$scope.selectedOutcomes = [];
+		$scope.administrator = false;
+
+		if($scope.user.roles == "admin") {
+			$scope.administrator = true;
+		}
 
 		var submitModal = '';
 
@@ -55,6 +60,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			openModal({
 				courseID: course.courseID,
 				courseName: course.courseName,
+				courseTerm: course.courseTerm,
+				courseYear: course.courseYear,
 				outcomes: $scope.outcomeProtos
 			});
 		};
@@ -68,6 +75,8 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 		function buildCourse(course, courseData) {
 			course.courseID = courseData.courseID;
 			course.courseName = courseData.courseName;
+			course.courseTerm = courseData.courseTerm;
+			course.courseYear = courseData.courseYear;
 			course.outcomes = courseData.outcomes;
 		}
 
@@ -314,7 +323,9 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 	$scope.outcomes = params.outcomes;
 	$scope.course = {
 		courseID: params.courseID,
-		courseName: params.courseName
+		courseName: params.courseName,
+		courseTerm: params.courseTerm,
+		courseYear: params.courseYear
 	}
 
 
