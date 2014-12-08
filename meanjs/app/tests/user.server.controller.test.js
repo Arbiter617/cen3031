@@ -22,11 +22,15 @@ describe('User Controller Unit Tests:', function() {
 		course = new Course({
 			courseID: 'Boooppin',
 			courseName: 'cmon',
+			courseTerm: 'Spring',
+			courseYear: '2015',
 			outcomes: []
 		});
 		course2 = new Course({
 			courseID: 'getit',
 			courseName: 'boi',
+			courseTerm: 'Fall',
+			courseYear: '2014',
 			outcomes: []
 		});
 		course.save();

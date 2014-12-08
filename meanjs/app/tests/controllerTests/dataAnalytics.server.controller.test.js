@@ -71,7 +71,7 @@ describe('Data Analytics Controller Unit Test', function(){
 			courseModel2.save(function() {
 			courseModel1.save(function() {
 				outcome1 = new Outcome({
-						outcomeID: 'a',
+					outcomeID: 'a',
 					outcomeName: 'Something',
 					outcomeAssessmentForm: courseModel1,
 					user: user
@@ -97,6 +97,8 @@ describe('Data Analytics Controller Unit Test', function(){
 							course = new Course({
 								courseID: '3101',
 								courseName: 'Intro to Software',
+								courseTerm: 'Fall',
+								courseYear: '2014',
 								outcomes: outcomeArray
 										
 							});
@@ -104,12 +106,16 @@ describe('Data Analytics Controller Unit Test', function(){
 								course2 = new Course({
 									courseID: '3101f',
 									courseName: 'Intro to Softwareasdf',
+									courseTerm: 'Spring',
+									courseYear: '2015',
 									outcomes: outcomeArray
 								});
 								course2.save(function() {
 									course3 = new Course({
 										courseID: 'aksd;ljf',
 										courseName: 'kasjdf;aksl',
+										courseTerm: 'Spring',
+										courseYear: '2015',
 										outcomes: outcomeArray
 									});
 									course3.save(function() {
