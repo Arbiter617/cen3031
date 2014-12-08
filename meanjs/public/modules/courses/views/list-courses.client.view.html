@@ -10,12 +10,17 @@
 	<accordion close-others="true">
 		<accordion-group data-ng-repeat="course in userCourses">
 			<accordion-heading>
+			<h3 class="text-right">x of {{course.outcomes.length + 1}} done</h3>
 			<h3>{{course.courseID}}:</h3>
 			{{course.courseName}}
+
 			</accordion-heading>
 			<h4>Course Outcomes:</h4>
 			<div class="list-group">
 				<a href={{"/#!/"+course.courseID+"/"+outcome.outcomeID+"/outcomeAssessmentForm"}} data-ng-repeat="outcome in course.outcomes" class="list-group-item">
+				<div data-ng-controller="outcomeAssessmentController">
+					<h3 class="text-right">{{checkIsDone}}</h3>
+				</div>
 					<h4>Outcome {{outcome.outcomeID}}:</h4>
 					<h5>{{outcome.outcomeName}}</h5>
 				</a> 

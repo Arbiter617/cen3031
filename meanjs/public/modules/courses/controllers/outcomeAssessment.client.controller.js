@@ -9,6 +9,7 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		$scope.outcome={};
 		$scope.description;
 		$scope.parsedCSV;
+		$scope.isDone;
 
 		$scope.submit = function() {			
 			var reader = new FileReader();
@@ -46,11 +47,21 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             return d.promise;
 		}
 
+		$scope.set = function(done) {
+			$scope.isDone = done;
+		}
+
+		$scope.get = function() {
+			return $scope.isDone;
+		}
+
 		$scope.save = function(){
-		var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
-		$scope.outcome.outcomeAssessmentForm.isDone=true;
+			var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
+			//$scope.outcome.outcomeAssessmentForm.isDone=true;
+			$scope.set(true);
 			$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
 				$location.path('/list-courses');
+
 			}).error(function(response){
 					console.log(response);
 			});
