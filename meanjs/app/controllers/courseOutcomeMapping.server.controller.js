@@ -62,8 +62,6 @@ exports.generate = function(req, res) {
 	
 	var potentialOutcomes = [];
 	var potentialNames = [];
-	/*sort('outcomeID')*/
-	console.log('here');
 	OutcomePrototype.find().populate('elements').exec(function(err, outcomes) {
 		outcomes= outcomes[0].elements;
 		outcomes.sort(function (a, b) {
@@ -74,7 +72,7 @@ exports.generate = function(req, res) {
     			return -1;
   			}
   			return 0;
-  		})
+  		});
 		for(var i = 0; i < outcomes.length; i++) {
 			potentialOutcomes.push(outcomes[i].outcomeID);
 			potentialNames.push(outcomes[i].outcomeName);

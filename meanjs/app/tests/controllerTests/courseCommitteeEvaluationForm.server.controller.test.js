@@ -54,8 +54,6 @@ describe('CourseCommitteeEvaluationForm Contoller Unit Tests:', function() {
 			sectionIIIRecommendationsComments: 'This is test for section III'
 		});
 
-			// console.log('util.inspect: '+util.inspect(courseEvaluation));
-
 			req = httpMocks.createRequest({
 				method: 'POST',
 				url: '/courseCommitteeEvaluation',

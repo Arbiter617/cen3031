@@ -30,7 +30,6 @@ exports.update = function(req, res, next) {
 	outcomeEval = _.extend(outcomeEval, req.body);
 	outcomeEval.save(function(err) {
 		if (err) {
-			console.log(errorHandler.getErrorMessage(err));
 			res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
