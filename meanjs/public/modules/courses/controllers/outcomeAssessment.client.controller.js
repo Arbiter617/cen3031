@@ -19,6 +19,16 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
             reader.readAsText($scope.files[0]);
 		}
 
+		$scope.update = function() {
+			var outcome = $scope.outcome;
+			outcome.checkIsDone = true;
+			outcome.$update(function() {
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+			$scope.outcome = '';
+		};
+
 		function parseCSV(d,reader) {
 			$http.post('csv_parsing/', { 
             	name: $scope.files[0].name, 
@@ -48,7 +58,8 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 
 		$scope.save = function(){
 		var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
-		$scope.outcome.outcomeAssessmentForm.isDone=true;
+		//$scope.outcome.outcomeAssessmentForm.isDone=true;
+		$scope.update();
 			$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
 				$location.path('/list-courses');
 			}).error(function(response){

@@ -25,6 +25,10 @@ var OutcomeSchema = new Schema({
 		trim: true,
 		required: 'Must have outcome name (description)'
 	},
+	checkIsDone: {
+		type: Boolean,
+		default: false
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

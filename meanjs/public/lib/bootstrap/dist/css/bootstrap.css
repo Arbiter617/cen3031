@@ -2417,6 +2417,7 @@ input[type="button"].btn-block {
 }
 .glyphicon-ok-sign:before {
   content: "\e084";
+  font-size: 20px;
 }
 .glyphicon-question-sign:before {
   content: "\e085";
