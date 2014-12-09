@@ -12,8 +12,8 @@ Front-end Team:
 
 Back-end Team:
 
-1. (kkyrazis)
-2. (zachschultz)
-3. (brianroytman)
-4. (balindenberg)
-5. (abcronin)
+1. Kyle Kyrazis (kkyrazis)
+2. Zach Schultz (zachschultz)
+3. Brian Roytman (brianroytman)
+4. Brett Lindenberg (balindenberg)
+5. Adam Cronin (abcronin)
