@@ -47,9 +47,11 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 		}
 
 		$scope.save = function(){
-		var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
-		$scope.outcome.outcomeAssessmentForm.isDone=true;
+			var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
+			//$scope.outcome.outcomeAssessmentForm.isDone=true;
+
 			$http.put(path,$scope.outcome.outcomeAssessmentForm).success(function(response){
+				$http.post('outcomePDF/' + $scope.outcome.outcomeAssessmentForm._id);
 				$location.path('/list-courses');
 			}).error(function(response){
 					console.log(response);
@@ -84,6 +86,8 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 			for(var i = 0; i < courses.length; i++) {
 				if($stateParams.courseID == courses[i].courseID){
 					$scope.courseTitle = courses[i].courseName;
+					$scope.courseTerm = courses[i].courseTerm;
+					$scope.courseYear = courses[i].courseYear;
 					var _cID=courses[i]._id;
 
 				}
@@ -105,6 +109,9 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 			
 				$scope.outcome.outcomeAssessmentForm.courseNumber=$stateParams.courseID;
 				$scope.outcome.outcomeAssessmentForm.courseTitle=$scope.courseTitle;
+				$scope.outcome.outcomeAssessmentForm.term = $scope.courseTerm+" "+ $scope.courseYear;
+				$scope.outcome.outcomeAssessmentForm.outcome=$scope.outcome.outcomeID;
+				$scope.outcome.outcomeAssessmentForm.description = $scope.outcome.outcomeName;
 				$scope.outcome.outcomeAssessmentForm.instructor = user.firstName +" " +user.lastName;
 				$scope.outcome.outcomeAssessmentForm.date = new Date();
 				var path ='/courseOutcomeAssessment/'+$scope.outcome.outcomeAssessmentForm._id;
@@ -122,7 +129,11 @@ angular.module('courses').controller('outcomeAssessmentController', ['$scope', '
 				$scope.outcome.outcomeAssessmentForm={};
 				$scope.outcome.outcomeAssessmentForm.courseNumber=$stateParams.courseID;
 				$scope.outcome.outcomeAssessmentForm.courseTitle=$scope.courseTitle;
+				$scope.outcome.outcomeAssessmentForm.courseTerm = $scope.courseTerm;
+				$scope.outcome.outcomeAssessmentForm.courseYear = $scope.courseYear;
 				$scope.outcome.outcomeAssessmentForm.instructor = user.firstName +" " +user.lastName;
+				$scope.outcome.outcomeAssessmentForm.outcome=$scope.outcome.outcomeID;
+				$scope.outcome.outcomeAssessmentForm.description = $scope.outcome.outcomeName;
 				$scope.outcome.outcomeAssessmentForm.date = new Date();
 				$http.post('/courseOutcomeAssessment', $scope.outcome.outcomeAssessmentForm).success(function(response) {
 					

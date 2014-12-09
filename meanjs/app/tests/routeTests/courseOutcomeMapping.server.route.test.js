@@ -70,6 +70,8 @@ describe('Course Outcome Mapping Route Functional Tests', function(){
 								course2 = new Course({
 									courseID: 'COP3530',
 									courseName: 'Data Structures and Algorithms',
+									courseTerm: 'Spring',
+									courseYear: '2015',
 									outcomes: outcomeArray
 								});
 								course2.save(function(){
@@ -77,6 +79,8 @@ describe('Course Outcome Mapping Route Functional Tests', function(){
 									course3 = new Course({
 										courseID: 'CIS4204',
 										courseName: 'Ethical Hacking and Penetration Testing',
+										courseTerm: 'Spring',
+										courseYear: '2015',
 										outcomes: outcomeArray
 									});
 									course3.save(function(){
@@ -84,6 +88,8 @@ describe('Course Outcome Mapping Route Functional Tests', function(){
 										course4 = new Course({
 											courseID: 'COP3502',
 											courseName: 'Java Programming Fundamentals I',
+											courseTerm: 'Spring',
+											courseYear: '2015',
 											outcomes: outcomeArray
 										});
 										course4.save(function(){
@@ -92,6 +98,8 @@ describe('Course Outcome Mapping Route Functional Tests', function(){
 											course5 = new Course({
 												courseID: 'COP3503',
 												courseName: 'Java Programming Fundamentals II',
+												courseTerm: 'Spring',
+												courseYear: '2015',
 												outcomes: outcomeArray
 											});
 											course5.save(function(){
@@ -99,6 +107,8 @@ describe('Course Outcome Mapping Route Functional Tests', function(){
 												course6 = new Course({
 													courseID: 'CEN3031',
 													courseName: 'Intro to Software Engineering',
+													courseTerm: 'Spring',
+													courseYear: '2015',
 													outcomes: outcomeArray
 												});
 												course6.save(function(){

@@ -152,6 +152,8 @@ describe('PDFGenerator Route Functional Tests:', function() {
 										course = new Course({
 											courseID: '3101',
 											courseName: 'Intro to Software',
+											courseTerm: 'Spring',
+											courseYear: '2015',
 											outcomes: outcomeArray,
 											courseCommitteeEvaluationForm: courseEvaluation
 										});

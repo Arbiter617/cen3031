@@ -27,6 +27,18 @@ var CourseOutcomeAssessmentFormSchema = new Schema({
 		default: '',
 		required: false
 	},
+	outcome: {
+		type: String,
+		trim: true,
+		default: '',
+		required: false
+	},
+	description: {
+		type: String,
+		trim: true,
+		default: '',
+		required: false
+	},
 	instructor: {
 		type: String,
 		trim: true,

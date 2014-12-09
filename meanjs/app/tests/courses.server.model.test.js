@@ -32,6 +32,8 @@ describe('Course Model Unit Tests:', function() {
 			course = new Course({
 				courseID: 'CourseID',
 				courseName: 'CourseName',
+				courseTerm: 'CourseTerm',
+				courseYear: 'courseYear',
 				user: user
 			});
 

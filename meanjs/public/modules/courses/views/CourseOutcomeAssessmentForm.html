@@ -33,7 +33,7 @@ p {
           Computer Engineering Program <br>
           Program Outcomes Assessment Report <br>
           Outcome ( {{outcome.outcomeID}} ): Description: {{outcome.outcomeName}} <br>
-          Course Number: {{outcome.outcomeAssessmentForm.courseNumber}}  Term: {{term}} <br>
+          Course Number: {{outcome.outcomeAssessmentForm.courseNumber}}  Term: {{outcome.outcomeAssessmentForm.term}}<br>
           Course Title: {{outcome.outcomeAssessmentForm.courseTitle}} <br>
           Instructor: {{outcome.outcomeAssessmentForm.instructor}}  Date: {{outcome.outcomeAssessmentForm.date}}
           <br><br>
@@ -173,8 +173,9 @@ p {
                     <tr>
                       <td colspan="2" style=" border-right-style: hidden;border-bottom-style: hidden;border-left-style: hidden;">
                       <div class="text-center form-group">
-                    <button type="button" class="btn btn-large btn-primary" ng-click="submit()" style="width:50%">Submit</button>
-                    <button type="button" class="btn btn-large btn-primary" ng-click="save()" style="width:50%">Done</button>
+                    <button type="button" class="btn btn-large btn-primary" ng-click="submit()" style="width:50%">Parse CSV</button>
+                    </br>
+                    <button type="button" class="btn btn-large btn-primary" ng-click="save()" style="width:50%">Generate PDF</button>
                   </div>
                   <div data-ng-show="success" class="text-center text-success">
                     <strong>Likert Submitted</strong>

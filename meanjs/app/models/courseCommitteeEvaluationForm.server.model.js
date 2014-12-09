@@ -16,6 +16,12 @@ var CourseCommitteeEvaluationFormSchema = new Schema({
 		default: '',
 		required: true
 	},
+	term: {
+		type: String,
+		trim: true,
+		default: '',
+		required: true
+	},
 	date: {
 		type: Date,
 		trim: true,

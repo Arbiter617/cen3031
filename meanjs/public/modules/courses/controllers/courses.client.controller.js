@@ -302,6 +302,18 @@ angular.module('courses').controller('CoursesController', ['$scope', '$http', '$
 			}
 		}
 
+		$scope.courseCompleted = function(course) {
+			var outcomesComplete = true;
+			for(var i = 0; i < course.outcomes.length; i++) {
+				if(!course.outcomes[i].outcomeAssessmentForm) {
+					outcomesComplete = false;
+					break;
+				}
+			}
+
+			return course.courseCommitteeEvaluationForm && outcomesComplete;
+		}
+
 		function indexById(list, element) {
 			for(var i = 0; i < list.length; i++) {
 				if(list[i]._id == element._id)

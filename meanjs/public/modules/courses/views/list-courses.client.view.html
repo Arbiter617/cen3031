@@ -1,33 +1,72 @@
 <section ng-app="courses" data-ng-controller="CoursesController" data-ng-init="initListCourses()">
-	<div class = "jumbotron text-center">
+	<h1 style="text-align: center">
 		<div class = "row">
 			<h1> My Courses </h1>
-			<h3>Administrator: {{administrator}}</h3>
 		</div>
-	</div>
+	</h1>
+	<br><br>
 	<div class = "text-left">
 		<h3 class = "lead">Select a course to get started:</h3>
 	</div>
 	<accordion close-others="true">
 		<accordion-group data-ng-repeat="course in userCourses">
 			<accordion-heading>
-			<h3>{{course.courseTerm}} {{course.courseYear}}</h3>
-			<h3>{{course.courseID}}:</h3>
-			{{course.courseName}}
+			<table style="border:0px">
+				<tr style="border:0px; width:100%">
+					<td style="text-align: left;border:0px; width:90%">
+						<h3>{{course.courseTerm}} {{course.courseYear}}</h3>
+						<h3>{{course.courseID}}:</h3>
+						{{course.courseName}}
+					</td>
+					<td style="border:0px; text-align:right">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color:#3f4a90"><i class="glyphicon glyphicon-ok-sign" ng-show="courseCompleted(course)"></i></span>
+					</td>
+				</tr>
+			</table>
 			</accordion-heading>
-			<h4>Course Outcomes:</h4>
+			<h4>Outcome Assessment Forms:</h4>
 			<div class="list-group">
-				<a href={{"/#!/"+course.courseID+"/"+outcome.outcomeID+"/outcomeAssessmentForm"}} data-ng-repeat="outcome in course.outcomes" class="list-group-item">
-					<h4>Outcome {{outcome.outcomeID}}:</h4>
-					<h5>{{outcome.outcomeName}}</h5>
-				</a> 
+				<div data-ng-repeat="outcome in course.outcomes" class="row list-group-item">
+					<a href={{"/#!/"+course.courseID+"/"+outcome.outcomeID+"/outcomeAssessmentForm"}}  
+						class="col-md-8" style="">
+						<h4>Outcome {{outcome.outcomeID}}:</h4>
+						<h5>{{outcome.outcomeName}}</h5>
+					</a>
+					<table border="0" ng-show="{{outcome.outcomeAssessmentForm}}">
+						<tr style="border:0px">
+							<td width="70%" style="border:0px">
+								<a href={{"/outcomePDF/"+outcome.outcomeAssessmentForm._id}} download  class="col-md-4" style="height:100%">
+									<h4>Download</br></h4>
+								</a>
+							</td width="30%">
+							<td style="border:0px">
+								<span style="color:#3f4a90"><i class="glyphicon glyphicon-ok-sign"></i></span>
+							</td>
+					</tr>
+					</table>
+				</div>
 			</div>	
-			<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} >
-				Outcomes Evaluation Assessment Form
-			</a>
-			<a href={{"/committeePDF/"+course._id}} download>
-				<button ng-show="course.courseCommitteeEvaluationForm" class="btn btn-primary" >Download PDF</button>
-			</a>
+			<h4>Course Committee Evaluation Form</h4>
+			<div class="list-group">
+				<div class="row list-group-item">
+					<a href={{"/#!/"+course.courseID+"/courseCommitteeEvalForm"}} class="col-md-8">
+						</br><h4>Edit Form</h4>
+					</a>
+					<table border="0" ng-show="{{course.courseCommitteeEvaluationForm}}">
+						<tr style="border:0px">
+							<td width="70%" style="border:0px">
+
+								<a href={{"/committeePDF/"+course._id}} download  class="col-md-4" style="height:100%">
+									<h4>Download</br></h4>
+								</a>
+							</td width="30%">
+							<td style="border:0px">
+								<span style="color:#3f4a90"><i class="glyphicon glyphicon-ok-sign"></i></span>
+							</td>
+					</tr>
+					</table>
+				</div>
+			</div>	
 		</accordion-group>
 	</accordion>
 </section>

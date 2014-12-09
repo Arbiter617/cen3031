@@ -25,14 +25,12 @@ var CourseSchema = new Schema({
 	courseTerm: {
 		type: String,
 		default: '',
-		trim: true,
-		required: 'Must have course term'
+		trim: true
 	},
 	courseYear: {
 		type: String,
 		default: '',
-		trim: true,
-		required: 'Must have course year'
+		trim: true
 	},
 	outcomes: [{
 		type: Schema.ObjectId,

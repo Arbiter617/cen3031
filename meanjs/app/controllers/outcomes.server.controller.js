@@ -73,12 +73,13 @@ exports.read = function(req, res) {
 
 exports.update = function(req, res) {
 	var outcome = req.outcome;
-	
+	console.log(req.body.outcomeEvaluation);
 	if(req.body.outcomeEvaluation)
 		req.body.outcomeEvaluation= req.body.outcomeEvaluation._id;
 	if(req.body.outcomeAssessmentForm){
 		req.body.outcomeAssessmentForm= req.body.outcomeAssessmentForm._id;
 	}
+	console.log(req.body);
 	outcome = _.extend(outcome, req.body);
 	outcome.save(function(err) {
 		if (err) {
