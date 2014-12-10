@@ -16,6 +16,7 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res,next) {
 	var courseCommittee = new CourseCommittee(req.body);
+
 	courseCommittee.save(function(err) {
 		if (err) {
 			res.status(400);

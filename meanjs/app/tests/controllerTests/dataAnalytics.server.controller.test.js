@@ -132,7 +132,7 @@ describe('Data Analytics Controller Unit Test', function(){
 	});
 
 	describe('DataAnalytics', function() {
-		it('Should Create Goddamn graphs', function(done) {
+		/*it('Should Create Goddamn graphs', function(done) {
 			var req = {};
 			var res = {
 				done: done,
@@ -147,6 +147,7 @@ describe('Data Analytics Controller Unit Test', function(){
 			};
 			controller.dataAnalytics(req,res);
 		});
+*/
 
 	});
 
