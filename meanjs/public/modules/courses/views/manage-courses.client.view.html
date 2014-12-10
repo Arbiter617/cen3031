@@ -14,12 +14,12 @@
 	<div style="width:200px">
 		<h4>Add Course</h1>
 			<span  class="nullable">
-				<select class="form-control" ng-model="userCourse" ng-options="course.courseID for course in userCourseOptions">
-			    	<option value="">-- choose course --</option>
+				<select class="form-control" id = "courseOption" ng-model="userCourse" ng-options="course.courseID for course in userCourseOptions">
+			    	<option value="" id = "chooseCourse">-- choose course --</option>
 				</select>
 			</span>
 		</br>
-		<button type="button" class="btn btn-large btn-primary" ng-click="addCourse(userCourse)">Add course</button>
+		<button type="button" id="addButton" class="btn btn-large btn-primary" ng-click="addCourse(userCourse)">Add course</button>
 	</div>
 </div>
 
