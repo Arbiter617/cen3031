@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="text-right">
-	<button class="btn btn-default btn-success btn-md"  data-toggle="tooltip" data-placement="bottom" title="Create New Outcome" ng-click="addOutcome()"><span class="glyphicon glyphicon-plus"></button>
+	<button class="btn btn-default btn-success btn-md" id="addButton" data-toggle="tooltip" data-placement="bottom" title="Create New Outcome" ng-click="addOutcome()"><span class="glyphicon glyphicon-plus"></button>
 	</div>
 	<script type="text/ng-template" id="OutcomeModal.html">
         <div class="modal-header">
@@ -30,7 +30,7 @@
 		</form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submit(outcome)">Submit</button>
+            <button class="btn btn-primary" id="submit" ng-click="submit(outcome)">Submit</button>
             <div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
