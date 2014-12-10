@@ -143,7 +143,7 @@ td
 		<div class="col span_1_of_1">
 			<ul>
 				<li>Course Number and Title: {{courseID}}, {{courseName}} </li>
-				<li>Term and Year: {{  term }}</li>
+				<li>Term and Year: {{courseTerm}} {{courseYear}}</li>
 				<li>Instructor: {{  user.displayName }}</li>
 				<li>Course Committee Participants: {{ courseCommitteeEvaluationForm.courseCommitteeParticipants }}</li>
 				<br>
@@ -356,7 +356,7 @@ td
 		
 			<ul>
 				<li>Course Number and Title: {{courseID}}, {{courseName}}</li>
-				<li>Term and Year: {{ term }}</li>
+				<li>Term and Year: {{courseTerm}} {{courseYear}}</li>
 				<li>Instructor: {{ user.displayName }}</li>
 				<li>Course Committee Participants: {{ courseCommitteeEvaluationForm.courseCommitteeParticipants }}</li>
 				<br>

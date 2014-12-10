@@ -12,14 +12,11 @@ Front-end Team:
 
 Back-end Team:
 
-1. (kkyrazis)
-2. (zachschultz)
-3. (brianroytman)
-4. (balindenberg)
-5. (abcronin)
-
-To create admin:
-
-a={id:1, salt:"",displayName:"Administrator Test", provider:"local",username:”admin”, courses: [ ], created: "", roles: ["admin"], password: “password”, email: "administrator@admin.com", lastName: "Tester", firstName: "Administrator", "__v" : 1}
-
-db.users.insert(a)
+1. Kyle Kyrazis (kkyrazis)
+2. Zach Schultz (zachschultz)
+3. Brian Roytman (brianroytman)
+4. Brett Lindenberg (balindenberg)
+5. Adam Cronin (abcronin)
+ 
+User Video:
+https://www.youtube.com/watch?v=QjINmT-E9EU&feature=youtu.be

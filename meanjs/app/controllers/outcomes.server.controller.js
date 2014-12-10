@@ -29,7 +29,6 @@ exports.create = function(req, res) {
 
 	outcome.save(function(err) {
 		if (err) {
-			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -52,7 +51,6 @@ exports.createPrototype = function(req, res) {
 			outcomePrototypes.elements.push(outcome._id);
 			outcomePrototypes.save(function(err) {
 				if(err) {
-					console.log(err);
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});

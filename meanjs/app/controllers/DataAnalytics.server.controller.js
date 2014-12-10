@@ -51,7 +51,7 @@ var plotting = function(req,res) {
     				format:     'pdf'
 			});
 	}
-	res.jsonp({message: 'hi'});
+	res.jsonp(obj);
 
 };
 

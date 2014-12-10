@@ -62,7 +62,6 @@ exports.getOutcomeFile = function(req, res) {
 }
 
 exports.courseByID = function(req, res, next, id) { 
-	console.log('Im here');
 	Course.findById(id)
 		.populate('courseCommitteeEvaluationForm')
 		.populate('outcomes')

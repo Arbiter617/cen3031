@@ -65,6 +65,22 @@ describe('Course Model Unit Tests:', function() {
 				done();
 			});
 		});
+		it('should be able to throw an error when trying to save without courseTerm', function(done){
+			course.courseTerm = '';
+
+			return course.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+		it('should be able to throw an error when trying to save without courseYear', function(done){
+			course.courseYear = '';
+
+			return course.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
 	});
 
 	afterEach(function(done) {

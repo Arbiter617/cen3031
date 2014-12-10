@@ -21,7 +21,6 @@ var user, user2, course, course2, course3, course4, course5, course6, outcome1, 
 
 describe('Data Analytics Controller Unit Test', function(){
 	before(function(done) {
-		console.log('Im in the hook');
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
