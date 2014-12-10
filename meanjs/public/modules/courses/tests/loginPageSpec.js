@@ -27,7 +27,7 @@ describe('login page page', function() {
   });*/
 
   it('should log in user', function() {
-    userName.sendKeys('raymondwclark');
+    userName.sendKeys('administrator');
     password.sendKeys('Masterchief117');
     signin.click();
   });

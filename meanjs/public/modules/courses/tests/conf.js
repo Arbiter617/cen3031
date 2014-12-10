@@ -16,7 +16,7 @@ exports.config = {
  
   // Spec patterns are relative to the current working directly when
   // protractor is called.
-  specs: ['loginPageSpec.js', 'manageCoursesSpec.js', 'manageOutcomeSpec.js'],
+  specs: ['loginPageSpec.js', 'manageCoursesAdminSpec.js', 'manageCoursesSpec.js', 'manageOutcomeSpec.js'],
  
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {

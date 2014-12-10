@@ -4,8 +4,8 @@
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="course in userCourses" class="list-group-item">
-			<h4 class="list-group-item-heading" data-ng-bind="course.courseID"></h4>
-			<h5 class = "list-group-item-heading" data-ng-bind = "course.courseName"></h5>
+			<h4 class="list-group-item-heading" id="courseID" data-ng-bind="course.courseID"></h4>
+			<h5 class = "list-group-item-heading" id="courseName" data-ng-bind = "course.courseName"></h5>
 			<button type="button" class="btn btn-large btn-primary" ng-click="removeCourse(course)">Remove</button>
 		</a>
 	</div>
