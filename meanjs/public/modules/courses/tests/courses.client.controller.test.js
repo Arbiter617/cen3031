@@ -11,7 +11,8 @@
 			$stateParams,
 			$location,
 			sampleCourse,
-			sampleCourseData;
+			sampleCourseData,
+			sampleOutcome;
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -38,7 +39,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, Courses) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, Courses, Outcomes) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -65,7 +66,12 @@
 				outcomes: []
 			});
 
-			console.log("\n\n\n\nNEW TEST BINGER\n\n\n\n");
+			sampleOutcome = new Outcomes({
+				_id:' 525cf20451979dea2c000002',
+				outcomeID: 'a',
+				outcomeName: 'outcomeA'
+			});
+
 		}));
 		
 		it('$scope.addCourse() with valid course should send a PUT to update user with new course', inject(function(Courses, Users) {
@@ -182,6 +188,19 @@
 			// Test scope value
 			expect(scope.userCourses).toEqualData(sampleCourses);
 			scope.userCourses = [];
+		}));
+
+		it('scope.getOutcomes should send GET and populate scope.outcomes', inject(function() {
+
+			var sampleOutcomes = [sampleOutcome];
+
+			$httpBackend.expectGET('outcomes').respond(sampleOutcomes);
+
+			scope.getOutcomes();
+			$httpBackend.flush();
+
+			expect(scope.outcomes).toEqualData(sampleOutcomes);
+			scope.outcomes = [];
 		}));
 
 		it('$scope.initUserManageCourses() should call getCourses and getUserCourses and populate $scope.userCourseOptions with courses not in userCourses', inject(function(Courses) {

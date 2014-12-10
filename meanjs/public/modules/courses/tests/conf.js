@@ -1,4 +1,4 @@
-exports.config = {
+/*exports.config = {
   
   allScriptsTimeout: 99999,
  
@@ -25,4 +25,4 @@ exports.config = {
     isVerbose : true,
     includeStackTrace : true
   }
-};
+};*/
